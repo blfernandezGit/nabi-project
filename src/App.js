@@ -1,10 +1,13 @@
-import { HashRouter as Router, Route, Switch } from 'react-router-dom';
+import Layout from './components/MainApp/Layout'
+import AppContextProvider from './components/Context/AppContext'
 
 function App() {
   return (
-    <div className="App">
-
-    </div>
+    <>
+      <AppContextProvider>
+        <Layout/>
+      </AppContextProvider>
+    </>
   );
 }
 
