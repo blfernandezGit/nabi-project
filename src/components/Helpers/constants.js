@@ -1,0 +1,1 @@
+export const baseUrl = 'https://nabi-project-api.herokuapp.com/api/v1/'
