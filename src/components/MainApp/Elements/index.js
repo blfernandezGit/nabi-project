@@ -15,7 +15,6 @@ export const Box = styled(MaterialBox) `
 
 export const Container = styled( MaterialContainer ) `
     display: flex !important;
-    flex-direction: column !important;
     align-items: center !important;
     height: 100vh !important;
     text-align: center;
