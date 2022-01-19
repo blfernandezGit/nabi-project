@@ -17,17 +17,17 @@ const useHooks = () => {
             email: email.current.value,
             password: password.current.value
         }
-        setIsLoading(true)
+        setIsLoading( true )
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
         postAPI(loginUrl, requestData, null, loginAuditText, 'POST')
             .then( data => {
-                setIsLoading(false)
+                setIsLoading( false )
                 Cookies.set('user', true, { expires: 1 })
                 setCurrentUser( data )
                 setIsSignedIn( true )
             })
             .catch(error => {
-                setIsLoading(false)
+                setIsLoading( false )
                 //TODO: add error message handling
             })
     }
