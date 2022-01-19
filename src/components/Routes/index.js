@@ -14,17 +14,17 @@ const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
         />
         <Route exact path="/login"
           element={
-            isSignedIn ? <Navigate replace to={`/app/${currentUser.data?.data?.attributes?.username}`}/> : <Login />
+            isSignedIn ? <Navigate replace to={`/app/${currentUser[0].username}`}/> : <Login />
           }
         />
         <Route exact path="/register"
           element={
-            isSignedIn ? <Navigate replace to={`/app/${currentUser.data?.data?.attributes?.username}`}/> : <Register />
+            isSignedIn ? <Navigate replace to={`/app/${currentUser[0].username}`}/> : <Register />
           }
         />
         <Route exact path="/"
           element={
-            isSignedIn ? <Navigate replace to={`/app/${currentUser.data?.data?.attributes?.username}`}/> : <Login />
+            isSignedIn ? <Navigate replace to={`/app/${currentUser[0].username}`}/> : <Login />
           } 
         />
       </Routes>

@@ -1,13 +1,14 @@
-import { createContext } from 'react'
+import { createContext, useState } from 'react'
 import useSessionStorage from '../Helpers/useSessionStorage'
 import useLocalStorage from '../Helpers/useLocalStorage'
 export const AppContext = createContext();
 
 const AppContextProvider = ( props ) => {
-    const [ isSignedIn, setIsSignedIn ] = useSessionStorage( 'isSignedIn', '' );
+    const [ isSignedIn, setIsSignedIn ] = useSessionStorage( 'isSignedIn', '' )
     const [ currentUser, setCurrentUser ] = useLocalStorage( 'currentUser', '' )
-    const state = { isSignedIn, currentUser }
-    const setState = { setIsSignedIn, setCurrentUser }
+    const [ isLoading, setIsLoading ] = useState( true )
+    const state = { isSignedIn, currentUser, isLoading }
+    const setState = { setIsSignedIn, setCurrentUser, setIsLoading }
 
     return (
         <AppContext.Provider value={{ ...state, ...setState }}>

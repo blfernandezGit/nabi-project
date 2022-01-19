@@ -4,7 +4,7 @@ import Cookies from 'js-cookie'
 
 
 const useHooks = () => {
-    const { isSignedIn, setIsSignedIn, currentUser, setCurrentUser } = useContext( AppContext )
+    const { isSignedIn, setIsSignedIn, currentUser, setCurrentUser, isLoading } = useContext( AppContext )
 
     useEffect(() => {
         readCookie()
@@ -24,7 +24,8 @@ const useHooks = () => {
         isSignedIn,
         setIsSignedIn,
         currentUser,
-        setCurrentUser
+        setCurrentUser,
+        isLoading
     }
 }
 
