@@ -6,7 +6,7 @@ import Cookies from 'js-cookie'
 
 
 const useHooks = () => {
-    const {isSignedIn, setIsSignedIn, currentUser, setCurrentUser, setIsLoading} = useContext(AppContext)
+    const { setIsSignedIn, setCurrentUser, setIsLoading } = useContext( AppContext )
     const firstName = useRef()
     const lastName = useRef()
     const username = useRef()
@@ -14,9 +14,8 @@ const useHooks = () => {
     const password = useRef()
     const passwordConfirmation = useRef()
 
-    const handleSignUp = (e) => {
+    const handleSignUp = ( e ) => {
         e.preventDefault()
-        // data needed to fulfill API request
         const requestData = {
             first_name: firstName.current.value,
             last_name: lastName.current.value,
@@ -26,12 +25,12 @@ const useHooks = () => {
             password_confirmation: passwordConfirmation.current.value,
         }
         setIsLoading( true )
-        // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
+        // Call function from postAPI.js - postAPI(url, requestData, headers, auditTrail, method)
         postAPI(registerUrl, requestData, null, registerAuditText, 'POST')
             .then( data => {
                 setIsLoading( false )
                 Cookies.set('user', true, { expires: 1 })
-                setCurrentUser( data )
+                setCurrentUser( {details: data[0], headers: data[1] } )
                 setIsSignedIn( true )
             })
             .catch(error => {
@@ -42,10 +41,6 @@ const useHooks = () => {
 
     return {
         handleSignUp,
-        isSignedIn,
-        setIsSignedIn,
-        currentUser,
-        setCurrentUser,
         firstName,
         lastName,
         username,

@@ -6,13 +6,12 @@ import Cookies from 'js-cookie'
 
 
 const useHooks = () => {
-    const {isSignedIn, setIsSignedIn, currentUser, setCurrentUser, setIsLoading} = useContext(AppContext)
+    const { setIsSignedIn, setCurrentUser, setIsLoading } = useContext( AppContext )
     const email = useRef()
     const password = useRef()
 
-    const handleLogin = (e) => {
+    const handleLogin = ( e ) => {
         e.preventDefault()
-        // data needed to fulfill API request
         const requestData = {
             email: email.current.value,
             password: password.current.value
@@ -23,7 +22,7 @@ const useHooks = () => {
             .then( data => {
                 setIsLoading( false )
                 Cookies.set('user', true, { expires: 1 })
-                setCurrentUser( data )
+                setCurrentUser( {details: data[0], headers: data[1] } )
                 setIsSignedIn( true )
             })
             .catch(error => {
@@ -34,10 +33,6 @@ const useHooks = () => {
 
     return {
         handleLogin,
-        isSignedIn,
-        setIsSignedIn,
-        currentUser,
-        setCurrentUser,
         email,
         password
     }
