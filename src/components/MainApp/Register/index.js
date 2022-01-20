@@ -9,6 +9,7 @@ import { LogoContainer, LogoFormContainer, RegisterContainer } from './customCom
 import nabi_logo from '../../../assets/nabi_logo.png'
 
 // TODO: make this prettier
+// TODO: add more validations from backend
 const Index = () => {
     const { firstName, lastName, username, email, password, passwordConfirmation, handleSignUp} = useHooks();
 
@@ -38,6 +39,9 @@ const Index = () => {
                     <Formik
                         initialValues={{ firstName: '', lastName: '', username: '', email: '', password: '', passwordConfirmation: ''}}
                         validationSchema={Yup.object().shape({
+                            firstName: Yup.string().max(255).required('First Name is required'),
+                            lastName: Yup.string().max(255).required('Last Name is required'),
+                            username: Yup.string().max(255).required('Username is required'),
                             email: Yup.string().email('Invalid email').max(255).required('Email is required'),
                             password: Yup.string().max(255).required('Password is required')
                         })}
