@@ -1,51 +1,54 @@
-import { useState, useEffect } from 'react'
+import { useContext, useState, useEffect } from 'react'
 import axios from 'axios'
 import { baseUrl } from './constants'
+import { AppContext } from '../Context/AppContext'
 
 /* Custom hook for using axios */
 const useAxios = ( url, headers, requestData, auditTrail, method ) => {
+    const { setIsLoading } = useContext( AppContext )
     // States for data, loading and error
-    const [fetchedData, setFetchedData] = useState(null)
-    const [isLoading, setIsLoading] = useState(true)
-    const [errorMessage, setErrorMessage] = useState(null)
+    const [ fetchedData, setFetchedData ] = useState( null )
+    const [ errorMessage, setErrorMessage ] = useState( null )
 
     axios.defaults.baseURL = baseUrl
 
     useEffect(() => {
         let isActive = true
+        setIsLoading( true )
         axios({
             // Axios needed parameters to fetch API
             url: url,
             data: requestData || {},
-            headers: {...headers, 'Access-Control-Allow-Origin': '*'} || {}, 
+            headers: { ...headers, 'Access-Control-Allow-Origin': '*' } || {}, 
             method: method
         })
         .then(response => {
             if( isActive ){
                 // Loading set to false when response is retrieved
-                setIsLoading(false)
+                setIsLoading( false )
                 // Get response data
-                setFetchedData(response.data?.data)
-                setErrorMessage(response.data?.errors)
+                setFetchedData( response.data?.data )
                 // Display action done via API in console
-                console.log(auditTrail)
+                console.log( auditTrail )
+                console.log(response) //TODO: remove this line
+                console.log(response.data?.messages) //TODO: handle messages
             }
         })
         .catch(error => {
             if( isActive ){
                 // Loading set to false when error is retrieved
-                setIsLoading(false)
+                setIsLoading( false )
                 // set error message from error response
-                setErrorMessage(error.response?.data?.errors)
+                setErrorMessage( error.response?.data?.errors )
             }
         })
 
         return () => { isActive = false }
         //eslint-disable-next-line
-    }, [ url ]) // checker used for re-requesting api every time the checker value changes
+    }, [ url ])
 
     // when api is called, these values can be retrieved
-    return { fetchedData, isLoading, errorMessage}
+    return { fetchedData, errorMessage }
 }
 
 export default useAxios
