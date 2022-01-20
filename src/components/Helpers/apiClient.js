@@ -11,5 +11,4 @@ export const apiClient = (url, headers, requestData, method) => {
         method: method
     })
     .then( response => method === 'GET' ? response.data?.data : response )
-    .catch( error => error.response?.data?.errors )
 }
