@@ -4,7 +4,6 @@ import { baseUrl } from './constants'
 /* Reusable function for using axios post */
 export const postAPI = (url, requestData, headers, auditTrail, method) => {
     axios.defaults.baseURL = baseUrl
-    console.log(requestData)
     return axios({
         // Axios needed parameters to fetch API
         url: url,
