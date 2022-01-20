@@ -22,6 +22,16 @@ export const Container = styled( MaterialContainer ) `
     background: #6667ab !important;
     animation: 1s ${ fadeInAnimation };
 `
+
+export const ColumnContainer = styled( MaterialContainer ) `
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    min-height: 100vh !important;
+    background: #6667ab !important;
+    animation: 1s ${ fadeInAnimation };
+`
+
 export const Button = styled( MaterialButton ) `
     background: #6667ab !important;
     &:hover {
