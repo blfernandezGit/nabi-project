@@ -1,15 +1,15 @@
-import { userListUrl } from '../../Helpers/constants'
+import { projectListUrl } from '../../../Helpers/constants'
 import { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../Context/AppContext'
-import User from './User'
+import { AppContext } from '../../../Context/AppContext'
+import Project from './Project'
 import { useQuery } from 'react-query'
-import { apiClient } from '../../Helpers/apiClient'
+import { apiClient } from '../../../Helpers/apiClient'
 
 const Index = () => {
     const { currentUser, setIsLoading} = useContext( AppContext )
     const [ errorMessage, setErrorMessage ] = useState('')
 
-    const {isLoading, error, data, refetch } = useQuery('userList', apiClient(userListUrl, currentUser.headers, null, 'GET'))
+    const {isLoading, error, data, refetch } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'))
 
     useEffect(() => {
         setIsLoading( isLoading )
@@ -18,13 +18,13 @@ const Index = () => {
     
     return (
         <div>
-            UserList
+            ProjectList
             { data && 
                 data
-                .map( user => {
-                    return <User
-                                key={user.id} 
-                                user = {user}
+                .map( project => {
+                    return <Project
+                                key={project.id} 
+                                project = {project}
                             />
                 }) 
             }
