@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { Link } from "react-router-dom"
 import { ProjectContainer } from './customComponents' 
 import MaterialTypography from '@mui/material/Typography'
 
@@ -24,14 +24,16 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, se
     return (
         <>
         <ProjectContainer maxWidth="sm" sx={{my: 1, borderRadius: 3, p: 2}} >
-            <MaterialTypography
-                variant="h6">
-                {projectDetails?.name}
-            </MaterialTypography>
-            <MaterialTypography
-                variant="h7">
-                {projectDetails?.description}
-            </MaterialTypography>
+            <Link to={`${projectDetails.code}`}>
+                <MaterialTypography
+                    variant="h6">
+                    {projectDetails?.name}
+                </MaterialTypography>
+                <MaterialTypography
+                    variant="h7">
+                    {projectDetails?.description}
+                </MaterialTypography>
+            </Link>
             <MaterialTypography
                 variant="body2">
                 No. of Tickets: { projectTicketCount }

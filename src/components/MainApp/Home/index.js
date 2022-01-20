@@ -1,11 +1,11 @@
-import { Routes, Route, Navigate } from 'react-router-dom'
-import AdminAuthRoute from '../../Routes/AdminAuthRoute'
-
 const Index = () => {
 
     return (
         <>
-            Home
+            My Latest Ticket
+            My Latest Assigned Ticket
+            My Latest Comment
+            My Latest Project
         </>
     )
 }
