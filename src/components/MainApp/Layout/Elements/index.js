@@ -4,6 +4,10 @@ import MaterialButton from '@mui/material/Button'
 import MaterialLink from '@mui/material/Link'
 import styled, { keyframes } from 'styled-components'
 import { fadeIn } from 'react-animations'
+import ListItem from '@mui/material/ListItem'
+import ListItemButton from '@mui/material/ListItemButton'
+import ListItemIcon from '@mui/material/ListItemIcon'
+import ListItemText from '@mui/material/ListItemText'
 
 const fadeInAnimation = keyframes`${ fadeIn }`
 
@@ -28,7 +32,6 @@ export const ColumnContainer = styled( MaterialContainer ) `
     flex-direction: column !important;
     align-items: center !important;
     min-height: 100vh !important;
-    background: #6667ab !important;
     animation: 1s ${ fadeInAnimation };
 `
 

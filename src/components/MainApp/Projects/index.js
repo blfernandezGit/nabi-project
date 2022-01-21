@@ -5,6 +5,11 @@ import Project from './Project'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../Helpers/apiClient'
 import { Button, ColumnContainer, Link, Logo } from '../Layout/Elements'
+import List from '@mui/material/List'
+import TableContainer from '@mui/material/TableContainer'
+import { ProjectContainer } from './customComponents'
+import Table from '@mui/material/Table'
+import TableBody from '@mui/material/TableBody'
 
 const Index = () => {
     const { currentUser, setIsLoading} = useContext( AppContext )
@@ -24,22 +29,30 @@ const Index = () => {
     return (
         <ColumnContainer maxWidth='xl'>
             My Projects
-            { myProjects && 
-                myProjects
-                .map( project => {
-                    return <Project
-                                key = { project.id } 
-                                project = { project }
-                                projectListUrl = { projectListUrl }
-                                ticketListUrl = { ticketListUrl }
-                                userListUrl = { userListUrl }
-                                useQuery = { useQuery }
-                                apiClient = { apiClient }
-                                currentUser = { currentUser }
-                                setIsLoading = { setIsLoading }
-                            />
-                }) 
-            }
+            <ProjectContainer maxWidth='md'>
+                    <TableContainer>
+                        <Table>
+                            <TableBody>
+                            { myProjects && 
+                                myProjects
+                                .map( project => {
+                                    return <Project
+                                                key = { project.id } 
+                                                project = { project }
+                                                projectListUrl = { projectListUrl }
+                                                ticketListUrl = { ticketListUrl }
+                                                userListUrl = { userListUrl }
+                                                useQuery = { useQuery }
+                                                apiClient = { apiClient }
+                                                currentUser = { currentUser }
+                                                setIsLoading = { setIsLoading }
+                                            />
+                                }) 
+                            }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+            </ProjectContainer>
         </ColumnContainer>
     )
 }

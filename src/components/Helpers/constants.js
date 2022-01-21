@@ -10,3 +10,9 @@ export const ticketListUrl = 'tickets'
 export const loginAuditText = 'Create User Session'
 export const registerAuditText = 'Create User Account'
 export const userListAuditText = 'Retrieve all users'
+
+export const dateFormatter = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit"
+  });
