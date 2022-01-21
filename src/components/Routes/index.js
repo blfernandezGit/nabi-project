@@ -8,6 +8,7 @@ import AdminProjects from '../MainApp/Admin/Projects'
 import AdminUsers from '../MainApp/Admin/Users'
 import Projects from '../MainApp/Projects'
 import Project from '../MainApp/Projects/ProjectPage'
+import Ticket from '../MainApp/Tickets'
 
 const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
   return (
@@ -17,7 +18,7 @@ const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
           <Route exact path = "app/:username" element = { <Home/> }/>
           <Route exact path = "app/:username/projects" element = { <Projects/> }/>
           <Route exact path = "app/:username/projects/:code" element = { <Project/> }/>
-          {/* <Route exact path = "app/:username/projects/:code/:ticket_no" element = { <Ticket/> }/> */}
+          <Route exact path = "app/:username/projects/:code/:ticket_no" element = { <Ticket/> }/>
           <Route exact path = "app/:username/admin" element = { <AdminAuthRoute currentUser = { currentUser }/> }>
             <Route exact path = "" element = { <Home/> }/>
             <Route exact path = "users" element = { <AdminUsers/> }/>
