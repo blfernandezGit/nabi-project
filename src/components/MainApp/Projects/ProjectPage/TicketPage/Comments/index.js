@@ -1,8 +1,12 @@
+import { useState } from 'react'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../../../../Helpers/apiClient'
 import { projectListUrl, ticketListUrl, commentsListUrl } from '../../../../../Helpers/constants'
 import Comment from './Comment'
+import CommentEdit from '../CommentEdit'
+import { CommentContainer } from '../customComponents'
 import MaterialContainer from '@mui/material/Container'
+import MaterialModal from '@mui/material/Modal'
 
 const Index = ({ code, ticket_no, currentUser }) => {
 
@@ -10,6 +14,7 @@ const Index = ({ code, ticket_no, currentUser }) => {
 
     console.log( ticketCommentsData )
     return (
+        <>
         <MaterialContainer maxWidth = 'md'>
            { ticketCommentsData && 
                 ticketCommentsData
@@ -17,6 +22,9 @@ const Index = ({ code, ticket_no, currentUser }) => {
                     return <Comment
                                 key = { comment.id } 
                                 comment = { comment }
+                                code = { code }
+                                ticket_no = { ticket_no }
+                                getNewComments = { getNewComments }
                                 apiClient = { apiClient }
                                 useQuery = { useQuery }
                                 currentUser = { currentUser }
@@ -24,6 +32,7 @@ const Index = ({ code, ticket_no, currentUser }) => {
                 }) 
             }
         </MaterialContainer>
+        </>
     );
 };
 
