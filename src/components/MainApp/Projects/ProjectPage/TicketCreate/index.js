@@ -5,6 +5,7 @@ import useHooks from './hooks'
 import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
+import MaterialMenuItem from '@mui/material/MenuItem'
 
 const Index = ({ code, handleclose, getNewTickets }) => {
     const { title, description, status, assignee, handleCreateTicket } = useHooks(code);
@@ -62,7 +63,14 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                         helperText = { touched.status && errors.status }
                         fullWidth
                         sx = {{ my: 3 }}
-                    />
+                        select
+                    >
+                        <MaterialMenuItem value='Open'>Open</MaterialMenuItem>
+                        <MaterialMenuItem value='ForFixing'>For Fixing</MaterialMenuItem>
+                        <MaterialMenuItem value='ForTesting'>For Testing</MaterialMenuItem>
+                        <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
+                        <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
+                    </MaterialTextField>
                     <MaterialTextField
                         label = "Assignee"
                         type = "text"
@@ -74,7 +82,7 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                         error = {Boolean( touched.assignee && errors.assignee )}
                         helperText = { touched.assignee && errors.assignee }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mb: 3 }}
                     />
                     <MaterialTextField
                         label = "Description"
@@ -89,7 +97,7 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                         fullWidth
                         multiline
                         rows = {4}
-                        sx = {{ my: 3 }}
+                        sx = {{ mb: 3 }}
                     />
                     <Button 
                         type = "submit"

@@ -5,6 +5,7 @@ import useHooks from './hooks'
 import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
+import MaterialMenuItem from '@mui/material/MenuItem'
 
 const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResolution, code, ticket_no, handleclose, getUpdatedTicket }) => {
     const { title, description, status, assignee, resolution, handleEditTicket } = useHooks( code, ticket_no );
@@ -62,8 +63,15 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                         error = {Boolean( touched.status && errors.status )}
                         helperText = { touched.status && errors.status }
                         fullWidth
+                        select
                         sx = {{ mt: 2 }}
-                    />
+                    >
+                        <MaterialMenuItem value='Open'>Open</MaterialMenuItem>
+                        <MaterialMenuItem value='ForFixing'>For Fixing</MaterialMenuItem>
+                        <MaterialMenuItem value='ForTesting'>For Testing</MaterialMenuItem>
+                        <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
+                        <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
+                    </MaterialTextField>
                     <MaterialTextField
                         label = "Assignee"
                         type = "text"
