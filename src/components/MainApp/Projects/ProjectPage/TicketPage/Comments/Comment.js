@@ -13,8 +13,8 @@ const Comment = ({ comment, apiClient, useQuery, currentUser }) => {
     const author = usersData && commentDetails?.user_id && usersData.filter(author => author?.id === commentDetails?.user_id )[0]?.attributes
 
     return (
-        <Paper sx = {{ m: 2, p: 2 }}>
-            <TitleContainer sx = {{ my: 2 }}>
+        <Paper sx = {{ my: 2, py: 2 }}>
+            <TitleContainer sx = {{ m: 1 }}>
                 {author &&
                     <>
                         <Avatar {...stringAvatar(`${author?.first_name} ${author?.last_name}`)}/>
@@ -28,7 +28,7 @@ const Comment = ({ comment, apiClient, useQuery, currentUser }) => {
             </TitleContainer>
             <MaterialTypography
                 variant = "body1"
-                sx = {{ m: 1 }}>
+                sx = {{ m: 2 }}>
                 { commentDetails?.comment_text }
             </MaterialTypography>
         </Paper>

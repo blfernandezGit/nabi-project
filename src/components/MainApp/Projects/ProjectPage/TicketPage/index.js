@@ -11,6 +11,7 @@ import TicketEdit from '../TicketEdit'
 import Comments from './Comments'
 import CommentCreate from './CommentCreate'
 import { FormContainer } from '../customComponents'
+import { CommentContainer } from './customComponents'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
 import MaterialChip from '@mui/material/Chip'
@@ -18,6 +19,7 @@ import MaterialAvatar from '@mui/material/Avatar'
 import MaterialMessageIcon from '@mui/icons-material/Message'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialFab from '@mui/material/Fab'
+import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
 
 const Index = () => {
@@ -76,9 +78,9 @@ const Index = () => {
                 <MaterialTypography
                     variant = "h5">
                     #{ticketDetails?.ticket_no}: {ticketDetails?.title}
-                    <MaterialFab size = 'small' aria-label="edit" sx = {{ mx: 2}}  onClick = {handleOpen}>
+                    <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpen}>
                         <MaterialEditIcon />
-                    </MaterialFab>
+                    </MaterialIconButton>
                 </MaterialTypography>
             </TitleContainer>
             <TitleContainer maxWidth = 'md' sx = {{ my: 2 }}>
@@ -144,14 +146,14 @@ const Index = () => {
                 aria-describedby="modal-for-creating-new-comments"
                 sx = {{overflow: 'scroll'}}
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
+                <CommentContainer maxWidth="md" sx={{borderRadius: 2}}>
                     <CommentCreate 
                         code = { code } 
                         ticket_no = { ticketDetails?.ticket_no }
                         handleclose = { handleCloseComment } 
                         getNewComments = { getNewComments }
                     />
-                </FormContainer>
+                </CommentContainer>
             </MaterialModal>
         </ColumnContainer>
     );

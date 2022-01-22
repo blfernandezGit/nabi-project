@@ -45,10 +45,9 @@ const Index = ({ code, ticket_no, handleclose, getNewComments }) => {
                         error = {Boolean( touched.comment_text && errors.comment_text )}
                         helperText = { touched.comment_text && errors.comment_text }
                         fullWidth
-                        sx = {{ m: 2 }}
+                        sx = {{ my: 2 }}
                         multiline
-                        rows = { 4 }
-
+                        rows = { 8 }
                     />
                     <Button 
                         type = "submit"
