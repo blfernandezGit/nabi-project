@@ -2,10 +2,6 @@ import MaterialContainer from '@mui/material/Container'
 import styled from 'styled-components'
 import LinearProgress, { linearProgressClasses } from '@mui/material/LinearProgress';
 
-
-export const ProjectContainer = styled( MaterialContainer ) `
-`
-
 export const BorderLinearProgress = styled( LinearProgress )(({ theme }) => ({
   height: 10,
   borderRadius: 5,

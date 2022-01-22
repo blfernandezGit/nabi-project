@@ -4,10 +4,6 @@ import MaterialButton from '@mui/material/Button'
 import MaterialLink from '@mui/material/Link'
 import styled, { keyframes } from 'styled-components'
 import { fadeIn } from 'react-animations'
-import ListItem from '@mui/material/ListItem'
-import ListItemButton from '@mui/material/ListItemButton'
-import ListItemIcon from '@mui/material/ListItemIcon'
-import ListItemText from '@mui/material/ListItemText'
 
 const fadeInAnimation = keyframes`${ fadeIn }`
 
@@ -35,6 +31,12 @@ export const ColumnContainer = styled( MaterialContainer ) `
     animation: 1s ${ fadeInAnimation };
 `
 
+export const TitleContainer = styled( MaterialContainer ) `
+    display: flex !important;
+    align-items: center !important;
+    text-align: center;
+`
+
 export const Button = styled( MaterialButton ) `
     background: #6667ab !important;
     &:hover {
@@ -46,3 +48,18 @@ export const Link = styled( MaterialLink ) `
 `
 
 export const Logo = styled.img ``
+
+export const LogoImg = styled.img `
+    width: 29 px;
+    height: 40px;
+    padding-right: 11px;
+`
+
+export const LoadingContainer = styled( MaterialContainer ) `
+  position: absolute !important;
+  display: from !important;
+  align-items: center !important;
+  height: 100vh !important;
+  text-align: center;
+  justify-content: center;
+`

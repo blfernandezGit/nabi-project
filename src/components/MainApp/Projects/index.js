@@ -4,9 +4,9 @@ import { AppContext } from '../../Context/AppContext'
 import Project from './Project'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../Helpers/apiClient'
-import { Button, ColumnContainer, Link, Logo } from '../Layout/Elements'
+import { ColumnContainer, LogoImg, TitleContainer } from '../Layout/Elements'
+import MainLoading from '../LoadingScreen/MainLoading'
 import TableContainer from '@mui/material/TableContainer'
-import { ProjectContainer } from './customComponents'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import useDebounce from '../../Helpers/useDebounce'
@@ -14,15 +14,17 @@ import MaterialTextField from '@mui/material/TextField'
 import SavedSearchIcon from '@mui/icons-material/SavedSearch'
 import InputAdornment from '@mui/material/InputAdornment'
 import MaterialTypography from '@mui/material/Typography'
+import MaterialContainer from '@mui/material/Container'
+import nabi_logo_img from '../../../assets/nabi_logo_img.png'
 
 const Index = () => {
-    const { currentUser, setIsLoading} = useContext( AppContext )
-    const [ errorMessage, setErrorMessage ] = useState()
+    const { currentUser } = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
+    const [ isLoading, setIsLoading ] = useState('')
     const debouncedFilter = useDebounce(filter, 500);
 
-    const {isLoading: isLoadingUser, error: userError, data: userData, refetch: getUserData } = useQuery('currentUserData', apiClient(`${userListUrl}/${currentUser.details.username}`, currentUser.headers, null, 'GET'), {retry: false})
-    const {isLoading: isLoadingProjects, error: projectsError, data: projectsData, refetch: getProjectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), {retry: false})
+    const {isLoading: isLoadingUser, data: userData } = useQuery('currentUserData', apiClient(`${userListUrl}/${currentUser.details.username}`, currentUser.headers, null, 'GET'), {retry: false})
+    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), {retry: false})
 
     useEffect(() => {
         setIsLoading( isLoadingUser || isLoadingProjects )
@@ -34,12 +36,18 @@ const Index = () => {
     
     return (
         <ColumnContainer maxWidth='xl'>
-            <MaterialTypography
-                variant = "h4"
-                sx ={{my: 2}}>
-                My Projects
-            </MaterialTypography>
-            <ProjectContainer maxWidth='md' sx ={{my: 2}}>
+            <MainLoading isLoading = { isLoading } />
+            <TitleContainer maxWidth='md'>
+                <LogoImg
+                    src={nabi_logo_img}
+                />
+                <MaterialTypography
+                    variant = "h4"
+                    sx ={{my: 2}}>
+                    My Projects
+                </MaterialTypography>
+            </TitleContainer>
+            <MaterialContainer maxWidth = 'md' sx = {{ my: 2 }}>
                 <MaterialTextField 
                     label = 'Search Projects'
                     onChange={(e) => setFilter(e.target.value)}
@@ -50,14 +58,14 @@ const Index = () => {
                         </InputAdornment>
                     )}}
                 />
-            </ProjectContainer>
-            <ProjectContainer maxWidth='md'>
+            </MaterialContainer>
+            <MaterialContainer maxWidth = 'md'>
                     <TableContainer>
                         <Table>
                             <TableBody>
                             { myProjects && 
                                 myProjects
-                                .filter( project => filter === '' || project?.attributes?.name?.toLowerCase().includes(filter?.toLowerCase()) )
+                                .filter( project => debouncedFilter === '' || project?.attributes?.name?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
                                 .map( project => {
                                     return <Project
                                                 key = { project.id } 
@@ -75,7 +83,7 @@ const Index = () => {
                             </TableBody>
                         </Table>
                     </TableContainer>
-            </ProjectContainer>
+            </MaterialContainer>
         </ColumnContainer>
     )
 }

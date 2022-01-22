@@ -1,6 +1,6 @@
 import { HashRouter as Router, Route, Routes } from 'react-router-dom'
 import RouteComponent from '../../Routes'
-import LoadingScreen from '../LoadingScreen'
+import LoginLoading from '../LoadingScreen/LoginLoading'
 import useHooks from './hooks'
 
 const Index = () => {
@@ -9,7 +9,7 @@ const Index = () => {
     return (
         <>
             <Router>
-                {isLoading && <LoadingScreen/>}
+                {isLoading && <LoginLoading/>}
                 <RouteComponent 
                     Routes = { Routes } 
                     Route = { Route } 
