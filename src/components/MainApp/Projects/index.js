@@ -2,6 +2,7 @@ import { userListUrl, projectListUrl, ticketListUrl } from '../../Helpers/consta
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../Context/AppContext'
 import Project from './Project'
+import Search from '../Search'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../Helpers/apiClient'
 import { ColumnContainer, LogoImg, TitleContainer } from '../Layout/Elements'
@@ -10,9 +11,6 @@ import TableContainer from '@mui/material/TableContainer'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import useDebounce from '../../Helpers/useDebounce'
-import MaterialTextField from '@mui/material/TextField'
-import SavedSearchIcon from '@mui/icons-material/SavedSearch'
-import InputAdornment from '@mui/material/InputAdornment'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
 import nabi_logo_img from '../../../assets/nabi_logo_img.png'
@@ -47,18 +45,7 @@ const Index = () => {
                     My Projects
                 </MaterialTypography>
             </TitleContainer>
-            <MaterialContainer maxWidth = 'md' sx = {{ my: 2 }}>
-                <MaterialTextField 
-                    label = 'Search Projects'
-                    onChange={(e) => setFilter(e.target.value)}
-                    InputProps={{
-                        endAdornment: (
-                        <InputAdornment position="end">
-                            <SavedSearchIcon />
-                        </InputAdornment>
-                    )}}
-                />
-            </MaterialContainer>
+            <Search setFilter = { setFilter } label = 'Search Projects' />
             <MaterialContainer maxWidth = 'md'>
                     <TableContainer>
                         <Table>
