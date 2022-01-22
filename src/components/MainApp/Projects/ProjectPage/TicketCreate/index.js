@@ -8,7 +8,9 @@ import MaterialTypography from '@mui/material/Typography'
 import MaterialMenuItem from '@mui/material/MenuItem'
 
 const Index = ({ code, handleclose, getNewTickets }) => {
-    const { title, description, status, assignee, handleCreateTicket } = useHooks(code);
+    const { title, description, status, handleCreateTicket,
+        // assignee
+     } = useHooks(code);
 
     return (
         <>
@@ -20,12 +22,14 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                 Create New Ticket
             </MaterialTypography>
             <Formik
-                initialValues={{ title: '', description: '', status: 'Open', assignee: ''}}
+                initialValues={{ title: '', description: '', status: 'Open',
+                //  assignee: ''
+                }}
                 validationSchema={Yup.object().shape({
                     title: Yup.string().max(255).required('Title is required'),
                     description: Yup.string().nullable(),
                     status: Yup.string().required('Status is required'),
-                    assignee: Yup.string().nullable()
+                    // assignee: Yup.string().nullable()
                 })}
             >
             {({
@@ -71,7 +75,7 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                         <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
                         <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
                     </MaterialTextField>
-                    <MaterialTextField
+                    {/* <MaterialTextField
                         label = "Assignee"
                         type = "text"
                         name = "assignee"
@@ -83,7 +87,7 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                         helperText = { touched.assignee && errors.assignee }
                         fullWidth
                         sx = {{ mb: 3 }}
-                    />
+                    /> */}
                     <MaterialTextField
                         label = "Description"
                         type = "text"

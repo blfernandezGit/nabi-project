@@ -8,10 +8,10 @@ const Ticket = ({ ticket, ticketData, useEffect, apiClient, useQuery, userListUr
     const ticketDetails = ticket?.attributes
     const [ color, setColor ] = useState('error')
 
-    useEffect(() => { 
-        ticketDetails?.assignee_id && getUsersData()
-        // eslint-disable-next-line
-    }, [ticketDetails?.assignee_id])
+    // useEffect(() => { 
+    //     ticketDetails?.assignee_id && getUsersData()
+    //     // eslint-disable-next-line
+    // }, [ticketDetails?.assignee_id])
 
     useEffect(() => {
         switch(ticketDetails?.status){
@@ -33,8 +33,8 @@ const Ticket = ({ ticket, ticketData, useEffect, apiClient, useQuery, userListUr
         //eslint-disable-next-line
     }, [ticketData])
 
-    const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
-    const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
+    // const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
+    // const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
 
     return (
         <MaterialTableRow>
@@ -57,13 +57,13 @@ const Ticket = ({ ticket, ticketData, useEffect, apiClient, useQuery, userListUr
                     sx = {{ width: 90}}
                 />
             </MaterialTableCell>
-            <HideTableCell>
+            {/* <HideTableCell>
                 {assignee &&
                     <MaterialTypography>
                         { assignee?.username }
                     </MaterialTypography>
                 }
-            </HideTableCell>
+            </HideTableCell> */}
         </MaterialTableRow>
     );
 };

@@ -73,9 +73,9 @@ const Index = () => {
                                     <MaterialTableCell>
                                         Status
                                     </MaterialTableCell>
-                                    <HideTableCell>
+                                    {/* <HideTableCell>
                                         Assignee
-                                    </HideTableCell>
+                                    </HideTableCell> */}
                                 </MaterialTableRow>
                             </MaterialTableHeader>
                             <MaterialTableBody>

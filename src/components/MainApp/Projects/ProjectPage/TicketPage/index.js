@@ -10,6 +10,7 @@ import FloatingButton from '../../../FloatingButton'
 import TicketEdit from '../TicketEdit'
 import Comments from './Comments'
 import CommentCreate from './CommentCreate'
+import MainLoading from '../../../LoadingScreen/MainLoading'
 import { FormContainer } from '../customComponents'
 import { CommentContainer } from './customComponents'
 import MaterialTypography from '@mui/material/Typography'
@@ -18,7 +19,6 @@ import MaterialChip from '@mui/material/Chip'
 import MaterialAvatar from '@mui/material/Avatar'
 import MaterialMessageIcon from '@mui/icons-material/Message'
 import MaterialEditIcon from '@mui/icons-material/Edit'
-import MaterialFab from '@mui/material/Fab'
 import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
 
@@ -29,6 +29,7 @@ const Index = () => {
     const {  stringAvatar } = useHooks()
     const [ open, setOpen ] = useState(false)
     const [ openComment, setOpenComment ] = useState(false)
+    const [ isLoading, setIsLoading ] = useState()
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
     const handleOpenComment = () => setOpenComment(true)
@@ -37,10 +38,15 @@ const Index = () => {
     const { isLoading: isLoadingTicket, data: ticketData, refetch: getUpdatedTicket } = useQuery( `${ code }_${ticket_no}`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, currentUser.headers, null, 'GET' ), {retry: false})
     const ticketDetails = ticketData?.attributes
     const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false})
-    const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
+    // const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
     const author = usersData && usersData.filter(author => author?.id === ticketDetails?.author_id )[0]?.attributes
 
     const { isLoading: isLoadingComments, data: ticketCommentsData, refetch: getNewComments } = useQuery( `${ code }_${ticket_no}_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false, enabled: false})
+
+    useEffect(() => {
+        setIsLoading( isLoadingTicket || isLoadingUsers || isLoadingComments)
+        // eslint-disable-next-line
+    }, [ isLoadingTicket, isLoadingUsers, isLoadingComments ])
 
     useEffect(() => {
         switch(ticketDetails?.status){
@@ -95,6 +101,7 @@ const Index = () => {
                     </>
                 }
             </TitleContainer>
+            <MainLoading isLoading = { isLoading } />
             <MaterialContainer maxWidth = 'md'>
                 <MaterialTypography
                     variant = "body1"
@@ -129,7 +136,7 @@ const Index = () => {
                         origTitle = { ticketDetails?.title } 
                         origDescription = {ticketDetails?.description}
                         origStatus = { ticketDetails?.status }
-                        origAssignee = { ticketDetails?.assignee_id }
+                        // origAssignee = { ticketDetails?.assignee_id }
                         origResolution = { ticketDetails?.resolution }
                         code = { code } 
                         ticket_no = { ticketDetails?.ticket_no }

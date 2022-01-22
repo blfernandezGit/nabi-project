@@ -8,7 +8,9 @@ import MaterialTypography from '@mui/material/Typography'
 import MaterialMenuItem from '@mui/material/MenuItem'
 
 const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResolution, code, ticket_no, handleclose, getUpdatedTicket }) => {
-    const { title, description, status, assignee, resolution, handleEditTicket } = useHooks( code, ticket_no );
+    const { title, description, status, resolution, handleEditTicket,
+        // assignee
+     } = useHooks( code, ticket_no );
 
     return (
         <>
@@ -20,11 +22,13 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                 Edit Ticket
             </MaterialTypography>
             <Formik
-                initialValues={{ title: origTitle, description: origDescription || '', status: origStatus, assignee: origAssignee || '', resolution: origResolution || ''}}
+                initialValues={{ title: origTitle, description: origDescription || '', status: origStatus, resolution: origResolution || '',
+                //  assignee: origAssignee || ''
+            }}
                 validationSchema={Yup.object().shape({
                     title: Yup.string().max(255).required('Title is required'),
                     description: Yup.string().nullable(),
-                    assignee: Yup.string().nullable(),
+                    // assignee: Yup.string().nullable(),
                     status: Yup.string().required('Status is required'),
                     resolution: Yup.string().nullable()
                 })}
@@ -72,7 +76,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                         <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
                         <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
                     </MaterialTextField>
-                    <MaterialTextField
+                    {/* <MaterialTextField
                         label = "Assignee"
                         type = "text"
                         name = "assignee"
@@ -84,7 +88,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                         helperText = { touched.assignee && errors.assignee }
                         fullWidth
                         sx = {{ mt: 2 }}
-                    />
+                    /> */}
                     <MaterialTextField
                         label = "Description"
                         type = "text"
