@@ -29,6 +29,7 @@ const Index = () => {
     const {  stringAvatar } = useHooks()
     const [ open, setOpen ] = useState(false)
     const [ openComment, setOpenComment ] = useState(false)
+    const [ isAuthor, setIsAuthor ] = useState()
     const [ isLoading, setIsLoading ] = useState()
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
@@ -43,6 +44,13 @@ const Index = () => {
 
     const { isLoading: isLoadingComments, data: ticketCommentsData, refetch: getNewComments } = useQuery( `${ code }_${ticket_no}_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false, enabled: false})
 
+    useEffect(() => {
+        if( author?.username === currentUser?.details?.username ) {
+            setIsAuthor( true )
+        }
+        // eslint-disable-next-line
+    }, [ isLoadingUsers ])
+    
     useEffect(() => {
         setIsLoading( isLoadingTicket || isLoadingUsers || isLoadingComments)
         // eslint-disable-next-line
@@ -84,9 +92,11 @@ const Index = () => {
                 <MaterialTypography
                     variant = "h5">
                     #{ticketDetails?.ticket_no}: {ticketDetails?.title}
-                    <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpen}>
-                        <MaterialEditIcon />
-                    </MaterialIconButton>
+                    { isAuthor &&
+                        <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpen}>
+                            <MaterialEditIcon />
+                        </MaterialIconButton>
+                    }
                 </MaterialTypography>
             </TitleContainer>
             <TitleContainer maxWidth = 'md' sx = {{ my: 2 }}>

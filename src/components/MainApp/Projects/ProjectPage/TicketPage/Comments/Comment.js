@@ -22,7 +22,6 @@ const Comment = ({ code,ticket_no, getNewComments, comment, apiClient, useQuery,
     const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
     const author = usersData && commentDetails?.user_id && usersData.filter(author => author?.id === commentDetails?.user_id )[0]?.attributes
 
-    console.log(author, currentUser)
     useEffect(() => {
         if( author?.username === currentUser?.details?.username ) {
             setIsAuthor( true )
