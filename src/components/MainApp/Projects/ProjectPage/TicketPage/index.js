@@ -8,6 +8,7 @@ import { userListUrl, projectListUrl, ticketListUrl } from '../../../../Helpers/
 import { ColumnContainer, TitleContainer } from '../../../Layout/Elements'
 import FloatingButton from '../../../FloatingButton'
 import TicketEdit from '../TicketEdit'
+import Comments from './Comments'
 import { FormContainer } from '../customComponents'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
@@ -24,8 +25,11 @@ const Index = () => {
     const [ color, setColor ] = useState('default')
     const {  stringAvatar } = useHooks()
     const [ open, setOpen ] = useState(false)
+    const [ openComment, setOpenComment ] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
+    const handleOpenComment = () => setOpenComment(true)
+    const handleCloseComment = () => setOpenComment(false)
 
     const { isLoading: isLoadingTicket, data: ticketData, refetch: getUpdatedTicket } = useQuery( `${ code }_${ticket_no}`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, currentUser.headers, null, 'GET' ), {retry: false})
     const ticketDetails = ticketData?.attributes
@@ -107,12 +111,12 @@ const Index = () => {
                     </MaterialTypography>
                 </MaterialContainer>
             }
-            <FloatingButton Icon = { MaterialMessageIcon }/>
+            <Comments code = { code } ticket_no = { ticket_no } currentUser = { currentUser }/>
             <MaterialModal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                aria-labelledby="edit-ticket-modal"
+                aria-describedby="modal-for-ticket-editing"
                 sx = {{overflow: 'scroll'}}
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
@@ -129,6 +133,23 @@ const Index = () => {
                     />
                 </FormContainer>
             </MaterialModal>
+            <FloatingButton Icon = { MaterialMessageIcon }/>
+            {/* <MaterialModal
+                open={open}
+                onClose={handleCloseComment}
+                aria-labelledby="edit-ticket-modal"
+                aria-describedby="modal-for-ticket-editing"
+                sx = {{overflow: 'scroll'}}
+            >
+                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
+                    <AddComment 
+                        code = { code } 
+                        ticket_no = { ticketDetails?.ticket_no }
+                        handleclose = { handleCloseComment } 
+                        getUpdatedTicket = { getUpdatedTicket }
+                    />
+                </FormContainer>
+            </MaterialModal> */}
         </ColumnContainer>
     );
 };

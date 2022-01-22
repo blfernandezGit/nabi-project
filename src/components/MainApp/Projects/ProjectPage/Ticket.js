@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from "react-router-dom"
 import { dateFormatter } from '../../../Helpers/constants'
 import MaterialBugReportIcon from '@mui/icons-material/BugReport'

@@ -9,10 +9,13 @@ import MaterialGrid from '@mui/material/Grid'
 const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, ticketListUrl, userListUrl, MaterialTypography }) => {
     const projectDetails = project?.attributes
     let projectOpenTicketCount
+    let projectForFixingTicketCount
+    let projectForTestingTicketCount
     let latestTicket
     let latestTicketSubmitDate
     let latestTicketAuthor
     let percentTicketsClosed
+    let totalActionTickets
 
     const { isLoading: isLoadingTicket, data: ticketData } = useQuery( `${ projectDetails.code }_ticketsData`, apiClient(`${projectListUrl}/${projectDetails.code}/${ticketListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
     const { data: usersData } = useQuery( 'userList', apiClient( userListUrl, currentUser.headers, null, 'GET' ))
@@ -21,10 +24,13 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, ti
 
     if( projectTicketCount > 0 ) {
         projectOpenTicketCount = ticketData?.filter(ticket => ticket?.attributes?.status === 'Open').length
+        projectForFixingTicketCount = ticketData?.filter(ticket => ticket?.attributes?.status === 'ForFixing').length
+        projectForTestingTicketCount = ticketData?.filter(ticket => ticket?.attributes?.status === 'ForTesting').length
+        totalActionTickets = projectOpenTicketCount + projectForTestingTicketCount + projectForFixingTicketCount
         latestTicket = ticketData[ticketData?.length-1]?.attributes
         latestTicketSubmitDate = dateFormatter.format(Date.parse(latestTicket?.created_at))
         latestTicketAuthor = usersData?.filter(user => user?.id === ticketData[ticketData?.length-1]?.attributes?.author_id)[0].attributes?.username
-        percentTicketsClosed = projectTicketCount > 0 ? (projectTicketCount - projectOpenTicketCount) * 100 / projectTicketCount : 0
+        percentTicketsClosed = projectTicketCount > 0 ? ( projectTicketCount - ( totalActionTickets )) * 100 / projectTicketCount : 0
     }
 
     return (
@@ -49,7 +55,7 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, ti
                         <MaterialBugReportIcon/>
                         <MaterialTypography
                             variant="body1">
-                            { projectOpenTicketCount ? projectOpenTicketCount : 0 } { projectOpenTicketCount === 1 ? <span>bug</span> : <span>bugs</span> } need action
+                            { totalActionTickets ? totalActionTickets : 0 } { totalActionTickets === 1 ? <span>bug</span> : <span>bugs</span> } need action
                         </MaterialTypography>
                         <BorderLinearProgress sx={{pb: 0.75, mt: 1}} variant = "determinate" value = { percentTicketsClosed ? percentTicketsClosed : 0 } ></BorderLinearProgress>
                         <MaterialTypography
