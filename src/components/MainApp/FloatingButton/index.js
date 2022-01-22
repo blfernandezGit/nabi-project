@@ -1,10 +1,16 @@
-import { Fab } from './customComponents'
+import { FabRight, FabLeft } from './customComponents'
 
-const Index = ({ Icon, func }) => {
+const Index = ({ Icon, func, position, color = 'secondary' }) => {
+    let Element = FabRight
+    let size = 'large'
+    if( position === 'left') {
+        Element = FabLeft
+        size = 'small'
+    }
     return (
-        <Fab color="secondary" onClick = { func } aria-label="add" sx={{my: 4, mx: 2}}>
+        <Element size = { size } color= {color} onClick = { func } aria-label="add" sx={{my: 4, mx: 2}}>
             <Icon />
-        </Fab>
+        </Element>
     );
 };
 

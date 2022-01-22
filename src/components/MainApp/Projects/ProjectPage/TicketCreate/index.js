@@ -22,8 +22,9 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                 initialValues={{ title: '', description: '', status: 'Open', assignee: ''}}
                 validationSchema={Yup.object().shape({
                     title: Yup.string().max(255).required('Title is required'),
-                    description: Yup.string(),
-                    status: Yup.string().required('Status is required')
+                    description: Yup.string().nullable(),
+                    status: Yup.string().required('Status is required'),
+                    assignee: Yup.string().nullable()
                 })}
             >
             {({

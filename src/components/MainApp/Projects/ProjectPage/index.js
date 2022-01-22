@@ -9,7 +9,7 @@ import useDebounce from '../../../Helpers/useDebounce'
 import MainLoading from '../../LoadingScreen/MainLoading'
 import Search from '../../Search'
 import Ticket from './Ticket'
-import TicketForm from './TicketForm'
+import TicketCreate from './TicketCreate'
 import FloatingButton from '../../FloatingButton'
 import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
 import { HideTableCell, FormContainer } from './customComponents'
@@ -86,6 +86,7 @@ const Index = () => {
                                     return <Ticket
                                                 key = { ticket.id } 
                                                 ticket = { ticket }
+                                                ticketData = { ticketData }
                                                 userListUrl = { userListUrl }
                                                 apiClient = { apiClient }
                                                 useQuery = { useQuery }
@@ -109,7 +110,7 @@ const Index = () => {
                 aria-describedby="modal-modal-description"
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <TicketForm code = { code } handleclose = { handleClose } getNewTickets = { getNewTickets }/>
+                    <TicketCreate code = { code } handleclose = { handleClose } getNewTickets = { getNewTickets }/>
                 </FormContainer>
             </MaterialModal>
             <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>

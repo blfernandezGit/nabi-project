@@ -34,7 +34,6 @@ export const ColumnContainer = styled( MaterialContainer ) `
 export const TitleContainer = styled( MaterialContainer ) `
     display: flex !important;
     align-items: center !important;
-    text-align: center;
 `
 
 export const Button = styled( MaterialButton ) `

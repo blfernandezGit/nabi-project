@@ -6,28 +6,30 @@ import { useQuery } from 'react-query'
 import { apiClient } from '../../../../Helpers/apiClient'
 
 
-const useHooks = ( code  ) => {
+const useHooks = ( code, ticket_no ) => {
     const { currentUser } = useContext( AppContext )
     const title = useRef()
     const description = useRef()
     const status = useRef()
     const assignee = useRef()
+    const resolution = useRef()
 
     // const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
 
-    const handleCreateTicket = ( e, handleclose, getNewTickets ) => {
+    const handleEditTicket = ( e, handleclose, getUpdatedTicket ) => {
         e.preventDefault()
         const requestData = {
             title: title.current.value,
             description: description.current.value,
             status: status.current.value,
-            assignee: description.current.value
+            // assignee_id: assignee.current.value,
+            resolution: resolution.current.value
         }
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
-        postAPI(`${projectListUrl}/${code}/${ticketListUrl}`, requestData, currentUser.headers, createTicketAuditText, 'POST')
+        postAPI(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, requestData, currentUser.headers, createTicketAuditText, 'PATCH')
             .then( data => {
                 handleclose()
-                getNewTickets()
+                getUpdatedTicket()
             })
             .catch(error => {
                 //TODO: add error message handling
@@ -35,11 +37,12 @@ const useHooks = ( code  ) => {
     }
 
     return {
-        handleCreateTicket,
+        handleEditTicket,
         title,
         description,
         status,
-        assignee
+        assignee,
+        resolution
     }
 }
 

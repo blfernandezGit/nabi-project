@@ -8,7 +8,7 @@ import AdminProjects from '../MainApp/Admin/Projects'
 import AdminUsers from '../MainApp/Admin/Users'
 import Projects from '../MainApp/Projects'
 import Project from '../MainApp/Projects/ProjectPage'
-import Ticket from '../MainApp/Tickets'
+import Ticket from '../MainApp/Projects/ProjectPage/TicketPage'
 
 const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
   return (
