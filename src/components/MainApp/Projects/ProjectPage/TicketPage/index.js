@@ -4,11 +4,12 @@ import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { apiClient } from '../../../../Helpers/apiClient'
 import useHooks from './hooks'
-import { userListUrl, projectListUrl, ticketListUrl } from '../../../../Helpers/constants'
+import { userListUrl, projectListUrl, ticketListUrl, commentsListUrl } from '../../../../Helpers/constants'
 import { ColumnContainer, TitleContainer } from '../../../Layout/Elements'
 import FloatingButton from '../../../FloatingButton'
 import TicketEdit from '../TicketEdit'
 import Comments from './Comments'
+import CommentCreate from './CommentCreate'
 import { FormContainer } from '../customComponents'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
@@ -36,6 +37,8 @@ const Index = () => {
     const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false})
     const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
     const author = usersData && usersData.filter(author => author?.id === ticketDetails?.author_id )[0]?.attributes
+
+    const { isLoading: isLoadingComments, data: ticketCommentsData, refetch: getNewComments } = useQuery( `${ code }_${ticket_no}_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false, enabled: false})
 
     useEffect(() => {
         switch(ticketDetails?.status){
@@ -133,23 +136,23 @@ const Index = () => {
                     />
                 </FormContainer>
             </MaterialModal>
-            <FloatingButton Icon = { MaterialMessageIcon }/>
-            {/* <MaterialModal
-                open={open}
+            <FloatingButton Icon = { MaterialMessageIcon } func = { handleOpenComment }/>
+            <MaterialModal
+                open={openComment}
                 onClose={handleCloseComment}
-                aria-labelledby="edit-ticket-modal"
-                aria-describedby="modal-for-ticket-editing"
+                aria-labelledby="add-comment-modal"
+                aria-describedby="modal-for-creating-new-comments"
                 sx = {{overflow: 'scroll'}}
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <AddComment 
+                    <CommentCreate 
                         code = { code } 
                         ticket_no = { ticketDetails?.ticket_no }
                         handleclose = { handleCloseComment } 
-                        getUpdatedTicket = { getUpdatedTicket }
+                        getNewComments = { getNewComments }
                     />
                 </FormContainer>
-            </MaterialModal> */}
+            </MaterialModal>
         </ColumnContainer>
     );
 };

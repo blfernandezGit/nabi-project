@@ -12,6 +12,8 @@ export const loginAuditText = 'Create User Session'
 export const registerAuditText = 'Create User Account'
 export const userListAuditText = 'Retrieve all users'
 export const createTicketAuditText = 'Create New Ticket in Current Project'
+export const updateTicketAuditText = 'Update Current Ticket'
+export const createCommentAuditText = 'Create New Comment in Current Ticket'
 
 export const dateFormatter = new Intl.DateTimeFormat("en-GB", {
     year: "numeric",
