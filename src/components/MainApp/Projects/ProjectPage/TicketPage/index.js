@@ -49,7 +49,7 @@ const Index = () => {
             setIsAuthor( true )
         }
         // eslint-disable-next-line
-    }, [ isLoadingUsers ])
+    }, [ isLoadingUsers, author ])
     
     useEffect(() => {
         setIsLoading( isLoadingTicket || isLoadingUsers || isLoadingComments)
