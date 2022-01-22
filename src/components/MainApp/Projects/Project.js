@@ -1,15 +1,12 @@
 import { Link } from "react-router-dom"
-import { BorderLinearProgress } from './customComponents' 
-import MaterialTypography from '@mui/material/Typography'
-import TableCell from '@mui/material/TableCell'
-import TableRow from '@mui/material/TableRow'
-import BugReportIcon from '@mui/icons-material/BugReport'
 import { dateFormatter } from '../../Helpers/constants'
-import Grid from '@mui/material/Grid'
+import { BorderLinearProgress } from './customComponents' 
+import MaterialTableCell from '@mui/material/TableCell'
+import MaterialTableRow from '@mui/material/TableRow'
+import MaterialBugReportIcon from '@mui/icons-material/BugReport'
+import MaterialGrid from '@mui/material/Grid'
 
-
-// TODO: deal with useQuery errors - limit fetching
-const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, setIsLoading, ticketListUrl, userListUrl }) => {
+const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, ticketListUrl, userListUrl, MaterialTypography }) => {
     const projectDetails = project?.attributes
     let projectOpenTicketCount
     let latestTicket
@@ -31,10 +28,10 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, se
     }
 
     return (
-        <TableRow>
-            <TableCell>
-                <Grid container>
-                    <Grid item xs={12} sm={12} md={5}>
+        <MaterialTableRow>
+            <MaterialTableCell>
+                <MaterialGrid container>
+                    <MaterialGrid item xs={12} sm={12} md={5}>
                         <Link to={`${projectDetails.code}`} style = {{textDecoration: 'none', color: 'black'}}>
                             <MaterialTypography
                                 variant="h6">
@@ -47,9 +44,9 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, se
                                 {projectDetails?.description}
                             </MaterialTypography>
                         </Link>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={2} sx={{textAlign: 'center'}}>
-                        <BugReportIcon/>
+                    </MaterialGrid>
+                    <MaterialGrid item xs={12} sm={6} md={2} sx={{textAlign: 'center'}}>
+                        <MaterialBugReportIcon/>
                         <MaterialTypography
                             variant="body1">
                             { projectOpenTicketCount ? projectOpenTicketCount : 0 } { projectOpenTicketCount === 1 ? <span>bug</span> : <span>bugs</span> } need action
@@ -59,8 +56,8 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, se
                             variant="body1">
                             out of { projectTicketCount ? projectTicketCount : 0 } { projectTicketCount === 1 ? <span>bug</span> : <span>total bugs</span> }
                         </MaterialTypography>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={5} sx={{textAlign: 'center'}}>
+                    </MaterialGrid>
+                    <MaterialGrid item xs={12} sm={6} md={5} sx={{textAlign: 'center'}}>
                         {latestTicket && 
                             <Link to={`${projectDetails.code}/${latestTicket?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
                                 <MaterialTypography
@@ -73,10 +70,10 @@ const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, se
                                 </MaterialTypography>
                             </Link>
                         }
-                    </Grid>
-                </Grid>
-            </TableCell>
-        </TableRow>
+                    </MaterialGrid>
+                </MaterialGrid>
+            </MaterialTableCell>
+        </MaterialTableRow>
     )
 }
 

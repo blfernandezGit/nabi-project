@@ -1,25 +1,25 @@
-import { userListUrl, projectListUrl, ticketListUrl } from '../../Helpers/constants'
 import { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../../Context/AppContext'
-import Project from './Project'
-import Search from '../Search'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../Helpers/apiClient'
-import { ColumnContainer, LogoImg, TitleContainer } from '../Layout/Elements'
-import MainLoading from '../LoadingScreen/MainLoading'
-import TableContainer from '@mui/material/TableContainer'
-import Table from '@mui/material/Table'
-import TableBody from '@mui/material/TableBody'
 import useDebounce from '../../Helpers/useDebounce'
+import { userListUrl, projectListUrl, ticketListUrl } from '../../Helpers/constants'
+import Project from './Project'
+import Search from '../Search'
+import MainLoading from '../LoadingScreen/MainLoading'
+import { ColumnContainer, LogoImg, TitleContainer } from '../Layout/Elements'
+import nabi_logo_img from '../../../assets/nabi_logo_img.png'
+import MaterialTableContainer from '@mui/material/TableContainer'
+import MaterialTable from '@mui/material/Table'
+import MaterialTableBody from '@mui/material/TableBody'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
-import nabi_logo_img from '../../../assets/nabi_logo_img.png'
 
 const Index = () => {
     const { currentUser } = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const [ isLoading, setIsLoading ] = useState('')
-    const debouncedFilter = useDebounce(filter, 500);
+    const debouncedFilter = useDebounce(filter, 500)
 
     const {isLoading: isLoadingUser, data: userData } = useQuery('currentUserData', apiClient(`${userListUrl}/${currentUser.details.username}`, currentUser.headers, null, 'GET'), {retry: false})
     const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), {retry: false})
@@ -47,9 +47,9 @@ const Index = () => {
             </TitleContainer>
             <Search setFilter = { setFilter } label = 'Search Projects' />
             <MaterialContainer maxWidth = 'md'>
-                    <TableContainer>
-                        <Table>
-                            <TableBody>
+                    <MaterialTableContainer>
+                        <MaterialTable>
+                            <MaterialTableBody>
                             { myProjects && 
                                 myProjects
                                 .filter( project => debouncedFilter === '' || project?.attributes?.name?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
@@ -64,12 +64,13 @@ const Index = () => {
                                                 apiClient = { apiClient }
                                                 currentUser = { currentUser }
                                                 setIsLoading = { setIsLoading }
+                                                MaterialTypography = { MaterialTypography }
                                             />
                                 }) 
                             }
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
+                            </MaterialTableBody>
+                        </MaterialTable>
+                    </MaterialTableContainer>
             </MaterialContainer>
         </ColumnContainer>
     )
