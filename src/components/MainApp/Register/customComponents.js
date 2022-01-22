@@ -9,7 +9,6 @@ export const RegisterContainer = styled( MaterialContainer ) `
     width: 40vw !important;
     text-align: center;
     justify-content: center;
-    box-border: rounded !important;
     background: #FFFFFF !important;
     @media (max-width: 900px) {
         width: 100vw !important;
@@ -24,7 +23,6 @@ export const LogoContainer = styled( MaterialContainer ) `
     width: 60vw !important;
     text-align: center;
     justify-content: center;
-    box-border: rounded !important;
     @media (max-width: 900px) {
         display: none !important;
     }

@@ -8,7 +8,6 @@ export const LoginContainer = styled( MaterialContainer ) `
     height: 100vh !important;
     text-align: center;
     justify-content: center;
-    box-border: rounded !important;
     background: #FFFFFF !important;
     @media (min-width: 600px) {
         height: 80vh !important;

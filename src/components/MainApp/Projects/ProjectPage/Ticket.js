@@ -14,8 +14,6 @@ const Ticket = ({ ticket, useEffect, apiClient, useQuery, userListUrl, currentUs
     const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
     const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
 
-    console.log(assignee)
-
     return (
         <MaterialTableRow>
             <HideTableCell>

@@ -9,6 +9,10 @@ import useDebounce from '../../../Helpers/useDebounce'
 import MainLoading from '../../LoadingScreen/MainLoading'
 import Search from '../../Search'
 import Ticket from './Ticket'
+import TicketForm from './TicketForm'
+import FloatingButton from '../../FloatingButton'
+import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
+import { HideTableCell, FormContainer } from './customComponents'
 import MaterialTableContainer from '@mui/material/TableContainer'
 import MaterialTable from '@mui/material/Table'
 import MaterialTableBody from '@mui/material/TableBody'
@@ -17,19 +21,22 @@ import MaterialTableRow from '@mui/material/TableRow'
 import MaterialTableCell from '@mui/material/TableCell'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
-import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
-import { HideTableCell } from './customComponents'
+import MaterialAddIcon from '@mui/icons-material/Add'
+import MaterialModal from '@mui/material/Modal'
 
+// TODO: how to search like google - not exact
 const Index = () => {
     const { code } = useParams()
     const { currentUser } = useContext( AppContext )
     const [ isLoading, setIsLoading ] = useState()
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
-
+    const [ open, setOpen ] = useState(false)
+    const handleOpen = () => setOpen(true)
+    const handleClose = () => setOpen(false)
 
     const { isLoading: isLoadingProject, data: projectData } = useQuery( `${ code }`, apiClient(`${projectListUrl}/${code}`, currentUser.headers, null, 'GET' ), {retry: false})
-    const { isLoading: isLoadingTicket, data: ticketData } = useQuery( `${ code }_ticketsData`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
+    const { isLoading: isLoadingTicket, data: ticketData, refetch: getNewTickets} = useQuery( `${ code }_ticketsData`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
     
     const projectDetails = projectData?.attributes
 
@@ -95,6 +102,17 @@ const Index = () => {
                         </MaterialTable>
                     </MaterialTableContainer>
             </MaterialContainer>
+            <MaterialModal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
+                    <TicketForm code = { code } handleclose = { handleClose } getNewTickets = { getNewTickets }/>
+                </FormContainer>
+            </MaterialModal>
+            <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
         </ColumnContainer>
     )
 }

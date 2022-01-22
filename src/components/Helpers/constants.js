@@ -10,6 +10,7 @@ export const ticketListUrl = 'tickets'
 export const loginAuditText = 'Create User Session'
 export const registerAuditText = 'Create User Account'
 export const userListAuditText = 'Retrieve all users'
+export const createTicketAuditText = 'Create New Ticket in Current Project'
 
 export const dateFormatter = new Intl.DateTimeFormat("en-GB", {
     year: "numeric",
