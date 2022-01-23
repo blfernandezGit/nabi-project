@@ -1,4 +1,4 @@
-import { LoadingContainer } from '../../Layout/Elements'
+import { LoadingContainer } from '../../Elements'
 import CircularProgress from '@mui/material/CircularProgress'
 
 const Index = ({ isLoading }) => {

@@ -1,6 +1,6 @@
 import { HashRouter as Router, Route, Routes } from 'react-router-dom'
 import RouteComponent from '../../Routes'
-import LoginLoading from '../LoadingScreen/LoginLoading'
+import LoginLoading from './LoadingScreen/LoginLoading'
 import useHooks from './hooks'
 
 const Index = () => {

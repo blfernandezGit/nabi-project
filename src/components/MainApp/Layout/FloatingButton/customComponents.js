@@ -6,8 +6,3 @@ export const FabRight = styled(MaterialFab) `
     bottom: 2px;
     right: 2px;
 `
-
-export const FabLeft = styled(MaterialFab) `
-    position: fixed !important;
-    right: 2px;
-`

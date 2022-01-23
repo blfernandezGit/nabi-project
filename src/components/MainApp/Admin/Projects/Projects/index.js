@@ -1,16 +1,17 @@
+import { projectListUrl, userListUrl } from '../../../../Helpers/constants'
 import { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../../Context/AppContext'
+import { useParams } from 'react-router-dom'
+import { AppContext } from '../../../../Context/AppContext'
+import Project from './Project'
+import AddUserProjects from './AddUserProjects'
 import { useQuery } from 'react-query'
-import { apiClient } from '../../../Helpers/apiClient'
-import { userListUrl } from '../../../Helpers/constants'
-import User from './User'
-import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../Layout/Elements'
-import useDebounce from '../../../Helpers/useDebounce'
-import MainLoading from '../../Layout/LoadingScreen/MainLoading'
-import Search from '../../Layout/Search'
-import UserCreate from './UserCreate'
-import FloatingButton from '../../Layout/FloatingButton'
-import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
+import { apiClient } from '../../../../Helpers/apiClient'
+import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../../Layout/Elements'
+import useDebounce from '../../../../Helpers/useDebounce'
+import MainLoading from '../../../LoadingScreen/MainLoading'
+import Search from '../../../Search'
+import FloatingButton from '../../../Home/FloatingButton'
+import nabi_logo_img from '../../../../../assets/nabi_logo_img.png'
 import MaterialTableContainer from '@mui/material/TableContainer'
 import MaterialTable from '@mui/material/Table'
 import MaterialTableBody from '@mui/material/TableBody'
@@ -24,6 +25,7 @@ import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
+    const { user_username } = useParams()
     const { currentUser, setIsLoading} = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
@@ -31,18 +33,21 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingUsers, data: userData, refetch: getNewUsers } = useQuery('userList', apiClient(userListUrl, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingUser, data: userData, refetch: getNewProjects  } = useQuery(`${user_username}`, apiClient(`${userListUrl}/${user_username}`, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
 
+    
     useEffect(() => {
-        setIsLoading( isLoadingUsers )
+        setIsLoading( isLoadingUser || isLoadingProjects )
         // eslint-disable-next-line
-    }, [ isLoadingUsers ])
+    }, [ isLoadingUser, isLoadingProjects ])
 
-    console.log(userData)
+    const userProjectsData = userData?.relationships?.projects?.data
+    const userProjects = projectsData?.filter(project => userProjectsData?.map(userProject => { return userProject.id }).includes(project.id))
     
     return (
         <ColumnContainer maxWidth = 'xl'>
-            <MainLoading isLoading = { isLoadingUsers } />
+            <MainLoading isLoading = { isLoadingProjects } />
             <TitleContainer maxWidth = 'l'>
                 <MaterialGrid container>
                     <MaterialGrid item xs={12} sm={12} md={6}>
@@ -53,13 +58,13 @@ const Index = () => {
                             <MaterialTypography
                                 variant = "h4"
                                 sx ={{my: 2}}>
-                                All Users
+                                Projects of { user_username }
                             </MaterialTypography>
                         </TitleContainer>
                     </MaterialGrid>
                     <MaterialGrid item xs={12} sm={12} md={6}>
                         <TitleContainer sx = {{ height: '100%' }}>
-                            <Search setFilter = { setFilter } label = 'Search Users' />
+                            <Search setFilter = { setFilter } label = 'Search Projects' />
                         </TitleContainer>
                     </MaterialGrid>
                 </MaterialGrid>
@@ -70,25 +75,16 @@ const Index = () => {
                             <MaterialTableHeader>
                                 <MaterialTableRow>
                                     <MaterialTableCell>
-                                        Username
+                                        Name
                                     </MaterialTableCell>
                                     <HideTableCell>
-                                        First Name
+                                        Description
                                     </HideTableCell>
                                     <HideTableCell>
-                                        Last Name
-                                    </HideTableCell>
-                                    <HideTableCell>
-                                        Email Address
-                                    </HideTableCell>
-                                    <HideTableCell>
-                                        Tickets
-                                    </HideTableCell>
-                                    <HideTableCell>
-                                        Projects
+                                        # Tickets
                                     </HideTableCell>
                                     <MaterialTableCell>
-                                        Admin
+                                        # Members
                                     </MaterialTableCell>
                                     <HideTableCell>
                                         Created At
@@ -101,20 +97,19 @@ const Index = () => {
                                 </MaterialTableRow>
                             </MaterialTableHeader>
                             <MaterialTableBody>
-                            { userData && 
-                                userData
-                                .filter( user => debouncedFilter === '' || user?.attributes?.username?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
-                                .map( user => {
-                                    return <User
-                                                key = { user.id } 
-                                                user = { user }
-                                                userData = { userData }
+                            { userProjects && 
+                                userProjects
+                                .filter( project => debouncedFilter === '' || project?.attributes?.name?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
+                                .map( project => {
+                                    return <Project
+                                                key = { project.id } 
+                                                project = { project }
+                                                userProjects = { userProjects }
                                                 HideTableCell = { HideTableCell }
                                                 MaterialTableCell = { MaterialTableCell }
                                                 MaterialTableRow = { MaterialTableRow }
                                                 MaterialTypography = { MaterialTypography }
                                                 FormContainer = { FormContainer }
-                                                getNewUsers = { getNewUsers }
                                             />
                                 }) 
                             }
@@ -125,14 +120,22 @@ const Index = () => {
             <MaterialModal
                 open={open}
                 onClose={handleClose}
-                aria-labelledby="add-user-modal"
-                aria-describedby="modal-for-creating-users-in-admin-screen"
+                aria-labelledby="create-project-modal"
+                aria-describedby="modal-for-creating-projects-in-admin-screen"
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <UserCreate handleclose = { handleClose } getNewUsers = { getNewUsers }/>
+                    <AddUserProjects 
+                        handleclose = { handleClose }
+                        getNewProjects = { getNewProjects }
+                        projectsData = { projectsData }
+                        userProjects = { userProjects }
+                        userData = { userData }
+                    />
                 </FormContainer>
             </MaterialModal>
-            <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
+            { projectsData && userProjectsData && (userProjectsData.length !== projectsData.length) &&
+                <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
+            }
         </ColumnContainer>
     )
 }
