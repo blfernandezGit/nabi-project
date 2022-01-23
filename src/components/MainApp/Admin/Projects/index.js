@@ -24,7 +24,7 @@ import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
-    const { currentUser, setIsLoading} = useContext( AppContext )
+    const { currentUser, setIsLoading, title, setTitle } = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
     const [ open, setOpen ] = useState(false)
@@ -35,6 +35,7 @@ const Index = () => {
 
     useEffect(() => {
         setIsLoading( isLoadingProjects )
+        setTitle('All Projects')
         // eslint-disable-next-line
     }, [ isLoadingProjects ])
     

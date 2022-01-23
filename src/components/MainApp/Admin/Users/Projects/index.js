@@ -26,7 +26,7 @@ import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
     const { user_username } = useParams()
-    const { currentUser, setIsLoading} = useContext( AppContext )
+    const { currentUser, setIsLoading, title, setTitle } = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
     const [ open, setOpen ] = useState(false)
@@ -39,6 +39,7 @@ const Index = () => {
     
     useEffect(() => {
         setIsLoading( isLoadingUser || isLoadingProjects )
+        setTitle(`${user_username}'s Projects`)
         // eslint-disable-next-line
     }, [ isLoadingUser, isLoadingProjects ])
 

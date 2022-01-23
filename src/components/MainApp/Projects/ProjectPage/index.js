@@ -27,7 +27,7 @@ import MaterialGrid from '@mui/material/Grid'
 // TODO: how to search like google - not exact
 const Index = () => {
     const { code } = useParams()
-    const { currentUser } = useContext( AppContext )
+    const { currentUser, title, setTitle } = useContext( AppContext )
     const [ isLoading, setIsLoading ] = useState()
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
@@ -42,6 +42,7 @@ const Index = () => {
 
     useEffect(() => {
         setIsLoading( isLoadingTicket || isLoadingProject )
+        setTitle(projectDetails?.name)
         // eslint-disable-next-line
     }, [ isLoadingTicket, isLoadingProject ])
 
@@ -58,7 +59,7 @@ const Index = () => {
                             <MaterialTypography
                                 variant = "h4"
                                 sx ={{my: 2}}>
-                                {projectDetails?.name}
+                                { title }
                             </MaterialTypography>
                         </TitleContainer>
                     </MaterialGrid>

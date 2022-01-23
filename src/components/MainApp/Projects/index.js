@@ -17,7 +17,7 @@ import MaterialContainer from '@mui/material/Container'
 import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
-    const { currentUser } = useContext( AppContext )
+    const { currentUser, title, setTitle } = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const [ isLoading, setIsLoading ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
@@ -27,6 +27,7 @@ const Index = () => {
 
     useEffect(() => {
         setIsLoading( isLoadingUser || isLoadingProjects )
+        setTitle('My Projects')
         // eslint-disable-next-line
     }, [ isLoadingUser, isLoadingProjects ])
 
@@ -46,7 +47,7 @@ const Index = () => {
                             <MaterialTypography
                                 variant = "h4"
                                 sx ={{my: 2}}>
-                                My Projects
+                                {title}
                             </MaterialTypography>
                         </TitleContainer>
                     </MaterialGrid>

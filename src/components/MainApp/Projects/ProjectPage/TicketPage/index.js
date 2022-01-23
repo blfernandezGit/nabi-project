@@ -23,7 +23,7 @@ import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
 
 const Index = () => {
-    const { currentUser } = useContext( AppContext )
+    const { currentUser, title, setTitle } = useContext( AppContext )
     const { code, ticket_no } = useParams()
     const [ color, setColor ] = useState('default')
     const {  stringAvatar } = useHooks()
@@ -36,13 +36,13 @@ const Index = () => {
     const handleOpenComment = () => setOpenComment(true)
     const handleCloseComment = () => setOpenComment(false)
 
-    const { isLoading: isLoadingTicket, data: ticketData, refetch: getUpdatedTicket } = useQuery( `${ code }_${ticket_no}`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, currentUser.headers, null, 'GET' ), {retry: false})
+    const { isLoading: isLoadingTicket, data: ticketData, refetch: getUpdatedTicket } = useQuery( `${ code }_${ ticket_no }`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, currentUser.headers, null, 'GET' ), {retry: false})
     const ticketDetails = ticketData?.attributes
     const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false})
     // const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
     const author = usersData && usersData.filter(author => author?.id === ticketDetails?.author_id )[0]?.attributes
 
-    const { isLoading: isLoadingComments, data: ticketCommentsData, refetch: getNewComments } = useQuery( `${ code }_${ticket_no}_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false, enabled: false})
+    const { isLoading: isLoadingComments, refetch: getNewComments } = useQuery( `${ code }_${ ticket_no }_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false, enabled: false})
 
     useEffect(() => {
         if( author?.username === currentUser?.details?.username ) {
@@ -53,6 +53,7 @@ const Index = () => {
     
     useEffect(() => {
         setIsLoading( isLoadingTicket || isLoadingUsers || isLoadingComments)
+        setTitle(code)
         // eslint-disable-next-line
     }, [ isLoadingTicket, isLoadingUsers, isLoadingComments ])
 

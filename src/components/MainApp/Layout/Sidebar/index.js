@@ -1,5 +1,7 @@
-import { useState } from 'react'
-import { styled, useTheme } from '@mui/material/styles'
+import { useContext, useState } from 'react'
+import { AppContext } from '../../../Context/AppContext'
+import { Link, useParams } from 'react-router-dom'
+import { styled, useTheme, alpha } from '@mui/material/styles'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
@@ -15,8 +17,12 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight'
 import ListItem from '@mui/material/ListItem'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
-import MailIcon from '@mui/icons-material/Mail'
+import ArchitectureIcon from '@mui/icons-material/Architecture'
+import HomeIcon from '@mui/icons-material/Home'
+import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
+import BugReportIcon from '@mui/icons-material/BugReport'
+import SearchIcon from '@mui/icons-material/Search'
+import InputBase from '@mui/material/InputBase'
 
 const drawerWidth = 240
 
@@ -68,6 +74,7 @@ const AppBar = styled(MuiAppBar, {
     }),
 }))
 
+
 const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' })(
     ({ theme, open }) => ({
     width: drawerWidth,
@@ -85,6 +92,48 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 )
 
+const Search = styled('div')(({ theme }) => ({
+    position: 'relative',
+    borderRadius: theme.shape.borderRadius,
+    backgroundColor: alpha(theme.palette.common.white, 0.15),
+    '&:hover': {
+    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    },
+    marginLeft: 0,
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+    marginLeft: theme.spacing(1),
+    width: 'auto',
+    },
+}));
+
+const SearchIconWrapper = styled('div')(({ theme }) => ({
+    padding: theme.spacing(0, 2),
+    height: '100%',
+    position: 'absolute',
+    pointerEvents: 'none',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+}));
+
+const StyledInputBase = styled(InputBase)(({ theme }) => ({
+    color: 'inherit',
+    '& .MuiInputBase-input': {
+    padding: theme.spacing(1, 1, 1, 0),
+    // vertical padding + font size from searchIcon
+    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+    transition: theme.transitions.create('width'),
+    width: '100%',
+    [theme.breakpoints.up('sm')]: {
+        width: '12ch',
+        '&:focus': {
+        width: '20ch',
+        },
+    },
+    },
+}));
+
 export const Toolbar = styled( MaterialToolbar ) `
     background: #6667ab !important;
 `
@@ -101,9 +150,13 @@ export default function MiniDrawer(props) {
     setOpen(false)
     }
 
+    const { username } = useParams()
+
+    const { title, setFilter, label, showSearch } = useContext( AppContext )
+
     return (
         <>
-        <Box sx={{ display: 'flex' }}>
+        <Box sx={{ display: 'flex', flexGrow: 1 }}>
             <CssBaseline />
             <AppBar position="fixed" open={open}>
             <Toolbar>
@@ -120,8 +173,20 @@ export default function MiniDrawer(props) {
                 <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" noWrap component="div">
-                Nabi
+                    { title }
                 </Typography>
+                { showSearch &&
+                    <Search>
+                        <SearchIconWrapper>
+                            <SearchIcon />
+                            </SearchIconWrapper>
+                            <StyledInputBase
+                            onChange={(e) => setFilter(e.target.value)}
+                            placeholder={label}
+                            inputProps={{ 'aria-label': 'search' }}
+                            />
+                    </Search>
+                }
             </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -132,25 +197,33 @@ export default function MiniDrawer(props) {
             </DrawerHeader>
             <Divider />
             <List>
-                {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                <ListItem button key={text}>
+                <ListItem button key='Home' component={Link} to={`/app/${username}`} replace>
                     <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        <HomeIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText primary='Home' />
                 </ListItem>
-                ))}
+                <ListItem button key='My Projects' component={Link} to={`/app/${username}/projects`} replace>
+                    <ListItemIcon>
+                            <ArchitectureIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary='My Projects' />
+                </ListItem>
             </List>
             <Divider />
             <List>
-                {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                <ListItem button key={text}>
+                <ListItem button key='My Tickets'>
                     <ListItemIcon>
-                    {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                        <ConfirmationNumberIcon/>
                     </ListItemIcon>
-                    <ListItemText primary={text} />
+                    <ListItemText primary='My Tickets' />
                 </ListItem>
-                ))}
+                <ListItem button key='Assigned Tickets'>
+                    <ListItemIcon>
+                        <BugReportIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary='Assigned Tickets' />
+                </ListItem>
             </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>

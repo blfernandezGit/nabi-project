@@ -7,8 +7,12 @@ const AppContextProvider = ( props ) => {
     const [ isSignedIn, setIsSignedIn ] = useSessionStorage( 'isSignedIn', '' )
     const [ currentUser, setCurrentUser ] = useLocalStorage( 'currentUser', '' )
     const [ isLoading, setIsLoading ] = useState( false )
-    const state = { isSignedIn, currentUser, isLoading }
-    const setState = { setIsSignedIn, setCurrentUser, setIsLoading }
+    const [ filter, setFilter ] = useState()
+    const [ label, setLabel ] = useState('Search')
+    const [ showSearch, setShowSearch ] = useState(true)
+    const [ title, setTitle ] = useState('Nabi Project')
+    const state = { isSignedIn, currentUser, isLoading, title, filter, label, showSearch }
+    const setState = { setIsSignedIn, setCurrentUser, setIsLoading, setTitle, setFilter, setLabel, setShowSearch }
 
     return (
         <AppContext.Provider value={{ ...state, ...setState }}>

@@ -1,12 +1,12 @@
-import MaterialTextField from '@mui/material/TextField'
+import {TextField} from './customComponents'
 import SavedSearchIcon from '@mui/icons-material/SavedSearch'
 import InputAdornment from '@mui/material/InputAdornment'
 
 const Index = ({ setFilter, label }) => {
     return (
-            <MaterialTextField 
-                sx = {{ width: '100%'}}
+            <TextField
                 label = { label }
+                color = 'secondary'
                 onChange={(e) => setFilter(e.target.value)}
                 InputProps={{
                     endAdornment: (
