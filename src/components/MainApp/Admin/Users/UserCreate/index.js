@@ -5,9 +5,11 @@ import useHooks from './hooks'
 import { Button, Container, Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
+import MaterialFormControlLabel from '@mui/material/FormControlLabel'
+import MaterialCheckbox from '@mui/material/Checkbox'
 
 const Index = ({ handleclose, getNewUsers }) => {
-    const { firstName, lastName, username, email, password, passwordConfirmation, handleCreateUser} = useHooks()
+    const { firstName, lastName, username, email, is_admin, password, passwordConfirmation, handleCreateUser} = useHooks()
 
     return (
         <>
@@ -19,13 +21,15 @@ const Index = ({ handleclose, getNewUsers }) => {
                 Create New User
             </MaterialTypography>
             <Formik
-                initialValues={{ firstName: '', lastName: '', username: '', email: '', password: '', passwordConfirmation: ''}}
+                initialValues={{ firstName: '', lastName: '', username: '', email: '', is_admin: false, password: '', passwordConfirmation: ''}}
                 validationSchema={Yup.object().shape({
                     firstName: Yup.string().max(255).required('First Name is required'),
                     lastName: Yup.string().max(255).required('Last Name is required'),
                     username: Yup.string().max(255).required('Username is required'),
                     email: Yup.string().email('Invalid email').max(255).required('Email is required'),
-                    password: Yup.string().max(255).required('Password is required')
+                    is_admin: Yup.string().required('Admin indicator is required'),
+                    password: Yup.string().max(255).required('Password is required'),
+                    passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match').required('Password confirmation is required')
                 })}
             >
             {({
@@ -35,7 +39,9 @@ const Index = ({ handleclose, getNewUsers }) => {
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isSubmitting,
+                isValid,
+                dirty
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -114,9 +120,18 @@ const Index = ({ handleclose, getNewUsers }) => {
                         fullWidth
                         sx = {{ mb: 3 }}
                     />
+                    <MaterialFormControlLabel control={
+                        <MaterialCheckbox 
+                            name="is_admin"
+                            onChange = { handleChange }
+                            onBlur = { handleBlur }
+                            value = { values.is_admin }
+                            inputRef = { is_admin }
+                        />
+                    } label="Set User as Administrator" />
                     <Button 
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled={ !(isValid && dirty) }
                         onClick = {( e ) => handleCreateUser( e, handleclose, getNewUsers )}
                         variant = "contained"
                         size = "large"

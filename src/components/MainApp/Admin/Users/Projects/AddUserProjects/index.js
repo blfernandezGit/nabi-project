@@ -44,9 +44,6 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
             </MaterialTypography>
             <Formik
                 initialValues={{ name: '', description: '' }}
-                validationSchema={Yup.object().shape({
-                    name: Yup.string().ensure().required('Project Name is required')
-                })}
             >
             {({
                 values,
@@ -55,7 +52,8 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
                 handleSubmit,
                 isSubmitting,
                 setFieldValue,
-                setFieldTouched
+                setFieldTouched,
+                dirty
             }) => (
                 <form onSubmit = { handleSubmit } style = {{ width: '80%' }}>
                     <Select
@@ -67,7 +65,7 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
                     />
                     <Button
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled = { !dirty }
                         onClick = {( e ) => handleAddUserProjects( e, handleclose, getNewProjects, selectedProjects )}
                         variant = "contained"
                         size = "large"

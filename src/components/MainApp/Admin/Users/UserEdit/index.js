@@ -1,14 +1,17 @@
-import { Link as RouteLink } from 'react-router-dom'
+import { useState } from 'react'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
 import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
-import MaterialMenuItem from '@mui/material/MenuItem'
+import MaterialFormControlLabel from '@mui/material/FormControlLabel'
+import MaterialCheckbox from '@mui/material/Checkbox'
 
-const Index = ({ username, origFirstName, origLastName, handleclose, getNewUsers }) => {
-    const { first_name, last_name, handleEditUser } = useHooks( username );
+const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose, getNewUsers }) => {
+    const { first_name, last_name, is_admin, handleEditUser } = useHooks( username )
+
+    const [ checked, setChecked ] = useState(origIsAdmin)
 
     return (
         <>
@@ -20,7 +23,7 @@ const Index = ({ username, origFirstName, origLastName, handleclose, getNewUsers
                 Edit User
             </MaterialTypography>
             <Formik
-                initialValues={{ first_name: origFirstName, last_name: origLastName }}
+                initialValues={{ first_name: origFirstName, last_name: origLastName, is_admin: origIsAdmin  }}
                 validationSchema={Yup.object().shape({
                     first_name: Yup.string().max(255).required('First Name is required'),
                     last_name: Yup.string().max(255).required('Last Name is required'),
@@ -33,7 +36,7 @@ const Index = ({ username, origFirstName, origLastName, handleclose, getNewUsers
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isValid
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -62,9 +65,19 @@ const Index = ({ username, origFirstName, origLastName, handleclose, getNewUsers
                         fullWidth
                         sx = {{ my: 3 }}
                     />
+                    <MaterialFormControlLabel control={
+                        <MaterialCheckbox 
+                            name="is_admin"
+                            onChange = { () => setChecked(!checked) }
+                            onBlur = { handleBlur }
+                            value = { checked }
+                            inputRef = { is_admin }
+                            checked = { checked }
+                        />
+                    } label="Set User as Administrator" />
                     <Button 
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled={ !isValid }
                         onClick = {( e ) => handleEditUser( e, handleclose, getNewUsers )}
                         variant = "contained"
                         size = "large"

@@ -31,7 +31,8 @@ const Index = ({ commentId, origCommentText, code, ticket_no, handleclose, getNe
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isSubmitting,
+                isValid
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -51,7 +52,7 @@ const Index = ({ commentId, origCommentText, code, ticket_no, handleclose, getNe
                     />
                     <Button 
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled = { !isValid }
                         onClick = {( e ) => handleEditComment( e, handleclose, getNewComments )}
                         variant = "contained"
                         size = "large"

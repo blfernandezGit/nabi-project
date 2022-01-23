@@ -33,7 +33,8 @@ const Index = ({ code, origName, origDescription, handleclose, getNewProjects })
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isSubmitting,
+                isValid
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -66,7 +67,7 @@ const Index = ({ code, origName, origDescription, handleclose, getNewProjects })
                     />
                     <Button 
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled = { !isValid }
                         onClick = {( e ) => handleEditProject( e, handleclose, getNewProjects )}
                         variant = "contained"
                         size = "large"

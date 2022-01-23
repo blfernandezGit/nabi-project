@@ -10,6 +10,7 @@ const useHooks = () => {
     const lastName = useRef()
     const username = useRef()
     const email = useRef()
+    const is_admin = useRef()
     const password = useRef()
     const passwordConfirmation = useRef()
 
@@ -20,6 +21,7 @@ const useHooks = () => {
             first_name: firstName.current.value,
             last_name: lastName.current.value,
             email: email.current.value,
+            is_admin: is_admin.current.value,
             password: password.current.value,
             password_confirmation: passwordConfirmation.current.value,
         }
@@ -39,7 +41,8 @@ const useHooks = () => {
         username,
         firstName, 
         lastName, 
-        email, 
+        email,
+        is_admin,
         password, 
         passwordConfirmation
     }

@@ -43,7 +43,8 @@ const Index = () => {
                             lastName: Yup.string().max(255).required('Last Name is required'),
                             username: Yup.string().max(255).required('Username is required'),
                             email: Yup.string().email('Invalid email').max(255).required('Email is required'),
-                            password: Yup.string().max(255).required('Password is required')
+                            password: Yup.string().max(255).required('Password is required'),
+                            passwordConfirmation: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match')
                         })}
                     >
                     {({
@@ -53,7 +54,9 @@ const Index = () => {
                         handleChange,
                         handleBlur,
                         handleSubmit,
-                        isSubmitting
+                        isSubmitting,
+                        isValid,
+                        dirty
                     }) => (
                         <form onSubmit = { handleSubmit }>
                             <MaterialTextField
@@ -134,7 +137,7 @@ const Index = () => {
                             />
                             <Button 
                                 type = "submit"
-                                disabled = { isSubmitting }
+                                disabled = { !(isValid && dirty) }
                                 onClick = {( e ) => handleSignUp( e )}
                                 variant = "contained"
                                 size = "large"

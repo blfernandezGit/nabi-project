@@ -82,10 +82,13 @@ const Index = () => {
                                         Email Address
                                     </HideTableCell>
                                     <HideTableCell>
-                                        # Tickets
+                                        Tickets
+                                    </HideTableCell>
+                                    <HideTableCell>
+                                        Projects
                                     </HideTableCell>
                                     <MaterialTableCell>
-                                        # Projects
+                                        Admin
                                     </MaterialTableCell>
                                     <HideTableCell>
                                         Created At

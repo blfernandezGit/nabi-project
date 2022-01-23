@@ -40,7 +40,8 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isSubmitting,
+                isValid
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -121,7 +122,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                     />
                     <Button 
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled = { !isValid }
                         onClick = {( e ) => handleEditTicket( e, handleclose, getUpdatedTicket )}
                         variant = "contained"
                         size = "large"

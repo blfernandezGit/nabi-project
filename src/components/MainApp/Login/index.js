@@ -45,7 +45,9 @@ const Index = () => {
                         handleChange,
                         handleBlur,
                         handleSubmit,
-                        isSubmitting
+                        isSubmitting,
+                        isValid,
+                        dirty
                     }) => (
                         <form onSubmit = { handleSubmit }>
                             <MaterialTextField
@@ -76,7 +78,7 @@ const Index = () => {
                             />
                             <Button 
                                 type = "submit"
-                                disabled = { isSubmitting }
+                                disabled = { !(isValid && dirty) }
                                 onClick = {( e ) => handleLogin( e )}
                                 variant = "contained"
                                 size = "large"

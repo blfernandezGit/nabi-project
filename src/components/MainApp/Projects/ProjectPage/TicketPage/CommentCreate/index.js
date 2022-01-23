@@ -31,7 +31,9 @@ const Index = ({ code, ticket_no, handleclose, getNewComments }) => {
                 handleChange,
                 handleBlur,
                 handleSubmit,
-                isSubmitting
+                isSubmitting,
+                isValid,
+                dirty
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -51,7 +53,7 @@ const Index = ({ code, ticket_no, handleclose, getNewComments }) => {
                     />
                     <Button 
                         type = "submit"
-                        disabled = { isSubmitting }
+                        disabled = { !(isValid && dirty) }
                         onClick = {( e ) => handleCreateComment( e, handleclose, getNewComments )}
                         variant = "contained"
                         size = "large"

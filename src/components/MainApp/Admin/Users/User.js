@@ -7,6 +7,8 @@ import MaterialDeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
+import MaterialCancelIcon from '@mui/icons-material/Cancel'
+import MaterialCheckCircleIcon from '@mui/icons-material/CheckCircle'
 
 const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTableRow, MaterialTypography, FormContainer }) => {
     const userDetails = user.attributes
@@ -17,12 +19,15 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
     const handleOpenDelete = () => setOpenDelete(true)
     const handleCloseDelete = () => setOpenDelete(false)
 
+    console.log(userDetails)
     return (
         <>
             <MaterialTableRow>
                 <MaterialTableCell>
                     <MaterialTypography>
-                        { userDetails?.username }
+                        <Link to={`${userDetails?.username}`} style = {{textDecoration: 'none', color: 'black'}}>
+                            { userDetails?.username }
+                        </Link>
                     </MaterialTypography>
                 </MaterialTableCell>
                 <HideTableCell>
@@ -45,10 +50,17 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
                         { user.relationships?.author_tickets?.data?.length || 0 }
                     </MaterialTypography>
                 </HideTableCell>
-                <MaterialTableCell>
+                <HideTableCell>
                     <Link to={`${userDetails?.username}`} style = {{textDecoration: 'none', color: 'black'}}>
                         { user.relationships?.projects?.data?.length || 0 }
                     </Link>
+                </HideTableCell>
+                <MaterialTableCell>
+                    {userDetails?.is_admin ?
+                        <MaterialCheckCircleIcon color = 'success'/>
+                        :
+                        <MaterialCancelIcon/>
+                    }
                 </MaterialTableCell>
                 <HideTableCell>
                     <MaterialTypography>
@@ -86,6 +98,7 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
                         getNewUsers = { getNewUsers }
                         origFirstName = { userDetails?.first_name }
                         origLastName = { userDetails?.last_name }
+                        origIsAdmin = { userDetails?.is_admin }
                     />
                 </FormContainer>
             </MaterialModal>

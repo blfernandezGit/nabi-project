@@ -82,6 +82,7 @@ export const FormContainer = styled( MaterialContainer ) `
     text-align: center;
     justify-content: center;
     background: #FFFFFF !important;
+    overflow: auto !important;
     @media (min-width: 600px) {
         height: 80vh !important;
     }
