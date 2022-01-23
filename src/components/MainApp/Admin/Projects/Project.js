@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { dateFormatter } from '../../../Helpers/constants'
 import ProjectEdit from './ProjectEdit'
 import ProjectDelete from './ProjectDelete'
@@ -35,7 +36,9 @@ const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, Ma
                     </MaterialTypography>
                 </HideTableCell>
                 <MaterialTableCell>
-                    { project.relationships?.users?.data?.length || 0 }
+                    <Link to={`${projectDetails?.code}`} style = {{textDecoration: 'none', color: 'black'}}>
+                        { project.relationships?.users?.data?.length || 0 }
+                    </Link>
                 </MaterialTableCell>
                 <HideTableCell>
                     <MaterialTypography>

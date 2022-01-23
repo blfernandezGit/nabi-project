@@ -4,30 +4,28 @@ import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
 import { Button, Container, Link, Logo } from '../../../../Layout/Elements'
-import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
-import MaterialMenuItem from '@mui/material/MenuItem'
-import MaterialTable from '@mui/material/Table'
-import MaterialTableRow from '@mui/material/TableRow'
-import MaterialTableBody from '@mui/material/TableBody'
 import Select from 'react-select'
 
-const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjects }) => {
-    const { handleAddUserProjects } = useHooks( userData )
-    const [ projectsList, setProjectList ] = useState([])
-    const [ selectedProjects, setSelectedProjects ] = useState([])
+const Index = ({ projectUsers, projectData, usersData, handleclose, getNewUsers }) => {
+    const { handleAddProjectUsers } = useHooks( projectData )
+    const [ usersList, setUsersList ] = useState([])
+    const [ selectedUsers, setSelectedUsers ] = useState([])
 
     const handleChange = (e, setFieldValue) => {
-        setSelectedProjects(Array.isArray(e) ? e.map(select => select.value) : [])
+        setSelectedUsers(Array.isArray(e) ? e.map(select => select.value) : [])
         setFieldValue('name', Array.isArray(e) ? e.map(select => select.value) : [])
     }
+
+    console.log(projectUsers)
+    console.log(usersData)
     
     useEffect(() => {
-        setProjectList(
-            projectsData
-            .filter(project => !userProjects?.map(userProject => { return userProject.id }).includes(project.id))
-            .map( project => {
-                return ({ value: project?.id, label: project?.attributes?.name })
+        setUsersList(
+            usersData
+            .filter(user => !projectUsers?.map(projectUser => { return projectUser.id }).includes(user.id))
+            .map( user => {
+                return ({ value: user?.id, label: user?.attributes?.username })
             })
         )
     //eslint-disable-next-line
@@ -40,7 +38,7 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
                 variant="body2"
                 sx = {{ my: 2 }}
             >
-                Add user to projects
+                Add users to project
             </MaterialTypography>
             <Formik
                 initialValues={{ name: '', description: '' }}
@@ -59,7 +57,7 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
             }) => (
                 <form onSubmit = { handleSubmit } style = {{ width: '80%' }}>
                     <Select
-                        options = { projectsList }
+                        options = { usersList }
                         isMulti
                         onChange = { (e) => handleChange(e, setFieldValue) }
                         onBlur = { setFieldTouched }
@@ -68,12 +66,12 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
                     <Button
                         type = "submit"
                         disabled = { isSubmitting }
-                        onClick = {( e ) => handleAddUserProjects( e, handleclose, getNewProjects, selectedProjects )}
+                        onClick = {( e ) => handleAddProjectUsers( e, handleclose, getNewUsers, selectedUsers )}
                         variant = "contained"
                         size = "large"
                         sx = {{ my: 3}}
                     >
-                        Add Projects
+                        Add Users
                     </Button>
                 </form>
             )}

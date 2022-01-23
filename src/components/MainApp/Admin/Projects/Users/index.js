@@ -2,8 +2,8 @@ import { projectListUrl, userListUrl } from '../../../../Helpers/constants'
 import { useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { AppContext } from '../../../../Context/AppContext'
-import Project from './Project'
-import AddUserProjects from './AddUserProjects'
+import User from './User'
+import AddProjectUsers from './AddProjectUsers'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../../../Helpers/apiClient'
 import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../../Layout/Elements'
@@ -25,7 +25,7 @@ import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
-    const { user_username } = useParams()
+    const { project_code } = useParams()
     const { currentUser, setIsLoading} = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
@@ -33,21 +33,21 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingUser, data: userData, refetch: getNewProjects  } = useQuery(`${user_username}`, apiClient(`${userListUrl}/${user_username}`, currentUser.headers, null, 'GET'), { retry: false })
-    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingProject, data: projectData, refetch: getNewUsers  } = useQuery(`${project_code}`, apiClient(`${projectListUrl}/${project_code}`, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingUsers, data: usersData } = useQuery('userList', apiClient(userListUrl, currentUser.headers, null, 'GET'), { retry: false })
 
     
     useEffect(() => {
-        setIsLoading( isLoadingUser || isLoadingProjects )
+        setIsLoading( isLoadingProject || isLoadingUsers )
         // eslint-disable-next-line
-    }, [ isLoadingUser, isLoadingProjects ])
+    }, [ isLoadingProject, isLoadingUsers ])
 
-    const userProjectsData = userData?.relationships?.projects?.data
-    const userProjects = projectsData?.filter(project => userProjectsData?.map(userProject => { return userProject.id }).includes(project.id))
+    const projectUsersData = projectData?.relationships?.users?.data
+    const projectUsers = usersData?.filter(user => projectUsersData?.map(projectUser => { return projectUser.id }).includes(user.id))
     
     return (
         <ColumnContainer maxWidth = 'xl'>
-            <MainLoading isLoading = { isLoadingProjects } />
+            <MainLoading isLoading = { isLoadingUsers } />
             <TitleContainer maxWidth = 'l'>
                 <MaterialGrid container>
                     <MaterialGrid item xs={12} sm={12} md={6}>
@@ -58,13 +58,13 @@ const Index = () => {
                             <MaterialTypography
                                 variant = "h4"
                                 sx ={{my: 2}}>
-                                Projects of { user_username }
+                                Users in { project_code }
                             </MaterialTypography>
                         </TitleContainer>
                     </MaterialGrid>
                     <MaterialGrid item xs={12} sm={12} md={6}>
                         <TitleContainer sx = {{ height: '100%' }}>
-                            <Search setFilter = { setFilter } label = 'Search Projects' />
+                            <Search setFilter = { setFilter } label = 'Search Users' />
                         </TitleContainer>
                     </MaterialGrid>
                 </MaterialGrid>
@@ -75,16 +75,22 @@ const Index = () => {
                             <MaterialTableHeader>
                                 <MaterialTableRow>
                                     <MaterialTableCell>
-                                        Name
+                                        Username
                                     </MaterialTableCell>
                                     <HideTableCell>
-                                        Description
+                                        First Name
+                                    </HideTableCell>
+                                    <HideTableCell>
+                                        Last Name
+                                    </HideTableCell>
+                                    <HideTableCell>
+                                        Email Address
                                     </HideTableCell>
                                     <HideTableCell>
                                         # Tickets
                                     </HideTableCell>
                                     <MaterialTableCell>
-                                        # Members
+                                        # Projects
                                     </MaterialTableCell>
                                     <HideTableCell>
                                         Created At
@@ -95,14 +101,14 @@ const Index = () => {
                                 </MaterialTableRow>
                             </MaterialTableHeader>
                             <MaterialTableBody>
-                            { userProjects && 
-                                userProjects
-                                .filter( project => debouncedFilter === '' || project?.attributes?.name?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
-                                .map( project => {
-                                    return <Project
-                                                key = { project.id } 
-                                                project = { project }
-                                                userProjects = { userProjects }
+                            { projectUsers && 
+                                projectUsers
+                                .filter( user => debouncedFilter === '' || user?.attributes?.username?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
+                                .map( user => {
+                                    return <User
+                                                key = { user.id } 
+                                                user = { user }
+                                                projectUsers = { projectUsers }
                                                 HideTableCell = { HideTableCell }
                                                 MaterialTableCell = { MaterialTableCell }
                                                 MaterialTableRow = { MaterialTableRow }
@@ -122,16 +128,16 @@ const Index = () => {
                 aria-describedby="modal-for-creating-projects-in-admin-screen"
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <AddUserProjects 
+                    <AddProjectUsers 
                         handleclose = { handleClose }
-                        getNewProjects = { getNewProjects }
-                        projectsData = { projectsData }
-                        userProjects = { userProjects }
-                        userData = { userData }
+                        getNewProjects = { getNewUsers }
+                        usersData = { usersData }
+                        projectUsers = { projectUsers }
+                        projectData = { projectData }
                     />
                 </FormContainer>
             </MaterialModal>
-            { projectsData && userProjectsData && (userProjectsData.length !== projectsData.length) &&
+            { usersData && projectUsersData && (projectUsersData.length !== usersData.length) &&
                 <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
             }
         </ColumnContainer>
