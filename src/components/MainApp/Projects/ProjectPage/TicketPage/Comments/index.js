@@ -12,7 +12,6 @@ const Index = ({ code, ticket_no, currentUser }) => {
 
     const { isLoading: isLoadingComments, data: ticketCommentsData, refetch: getNewComments } = useQuery( `${ code }_${ticket_no}_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
 
-    console.log( ticketCommentsData )
     return (
         <>
         <MaterialContainer maxWidth = 'md'>

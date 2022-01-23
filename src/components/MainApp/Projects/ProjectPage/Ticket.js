@@ -64,6 +64,16 @@ const Ticket = ({ ticket, ticketData, useEffect, apiClient, useQuery, userListUr
                     </MaterialTypography>
                 }
             </HideTableCell> */}
+            <HideTableCell>
+                <MaterialTypography>
+                    { dateFormatter.format(Date.parse(ticketDetails?.created_at)) }
+                </MaterialTypography>
+            </HideTableCell>
+            <HideTableCell>
+                <MaterialTypography>
+                    { dateFormatter.format(Date.parse(ticketDetails?.updated_at)) }
+                </MaterialTypography>
+            </HideTableCell>
         </MaterialTableRow>
     );
 };

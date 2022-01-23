@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { dateFormatter, userListUrl } from '../../../../../Helpers/constants'
+import { detailedDateFormatter, userListUrl } from '../../../../../Helpers/constants'
 import { Paper, Avatar } from './customComponents'
 import { TitleContainer } from '../../../../Layout/Elements'
 import useHooks from '../hooks'
@@ -39,7 +39,7 @@ const Comment = ({ code,ticket_no, getNewComments, comment, apiClient, useQuery,
                         <MaterialTypography
                             variant = "h7"
                             sx = {{ m: 1 }}>
-                            {author?.username}
+                            {author?.username} on { detailedDateFormatter.format(Date.parse(commentDetails?.created_at)) }
                             { isAuthor &&
                                 <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpen}>
                                     <MaterialEditIcon />
