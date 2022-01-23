@@ -17,6 +17,9 @@ export const createCommentAuditText = 'Create New Comment in Current Ticket'
 export const createProjectAuditText = 'Create New Project'
 export const updateProjectAuditText = 'Update Current Project'
 export const deleteProjectAuditText = 'Delete Current Project'
+export const createUserAuditText = 'Create New User'
+export const updateUserAuditText = 'Update User'
+export const deleteUserAuditText = 'Delete User'
 
 export const dateFormatter = new Intl.DateTimeFormat("en-GB", {
     year: "numeric",

@@ -31,14 +31,12 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingProjects, data: projectData, refetch: getNewProjects } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'))
+    const {isLoading: isLoadingProjects, data: projectData, refetch: getNewProjects } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
 
     useEffect(() => {
         setIsLoading( isLoadingProjects )
         // eslint-disable-next-line
     }, [ isLoadingProjects ])
-
-    console.log(projectData)
     
     return (
         <ColumnContainer maxWidth = 'xl'>

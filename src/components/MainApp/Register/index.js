@@ -11,7 +11,7 @@ import nabi_logo from '../../../assets/nabi_logo.png'
 // TODO: make this prettier
 // TODO: add more validations from backend
 const Index = () => {
-    const { firstName, lastName, username, email, password, passwordConfirmation, handleSignUp} = useHooks();
+    const { firstName, lastName, username, email, password, passwordConfirmation, handleSignUp} = useHooks()
 
     return (
         <>
