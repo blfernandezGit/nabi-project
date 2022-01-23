@@ -53,7 +53,7 @@ const Index = ({ code, ticket_no, handleclose, getNewComments }) => {
                     />
                     <Button 
                         type = "submit"
-                        disabled = { !(isValid && dirty) }
+                        disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
                         onClick = {( e ) => handleCreateComment( e, handleclose, getNewComments )}
                         variant = "contained"
                         size = "large"

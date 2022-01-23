@@ -65,7 +65,7 @@ const Index = ({ userProjects, userData, projectsData, handleclose, getNewProjec
                     />
                     <Button
                         type = "submit"
-                        disabled = { !dirty }
+                        disabled = { isSubmitting ? isSubmitting : !dirty }
                         onClick = {( e ) => handleAddUserProjects( e, handleclose, getNewProjects, selectedProjects )}
                         variant = "contained"
                         size = "large"

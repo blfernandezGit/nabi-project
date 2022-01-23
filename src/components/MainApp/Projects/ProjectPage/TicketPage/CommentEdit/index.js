@@ -52,7 +52,7 @@ const Index = ({ commentId, origCommentText, code, ticket_no, handleclose, getNe
                     />
                     <Button 
                         type = "submit"
-                        disabled = { !isValid }
+                        disabled = { isSubmitting ? isSubmitting : !isValid }
                         onClick = {( e ) => handleEditComment( e, handleclose, getNewComments )}
                         variant = "contained"
                         size = "large"

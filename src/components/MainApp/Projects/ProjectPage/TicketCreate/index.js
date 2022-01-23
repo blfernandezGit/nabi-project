@@ -107,7 +107,7 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                     />
                     <Button 
                         type = "submit"
-                        disabled = { !(isValid && dirty) }
+                        disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
                         onClick = {( e ) => handleCreateTicket( e, handleclose, getNewTickets )}
                         variant = "contained"
                         size = "large"

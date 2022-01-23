@@ -67,7 +67,7 @@ const Index = ({ handleclose, getNewProjects }) => {
                     />
                     <Button 
                         type = "submit"
-                        disabled = { !(isValid && dirty) }
+                        disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
                         onClick = {( e ) => handleCreateProject( e, handleclose, getNewProjects )}
                         variant = "contained"
                         size = "large"

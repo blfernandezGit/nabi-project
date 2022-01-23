@@ -122,7 +122,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                     />
                     <Button 
                         type = "submit"
-                        disabled = { !isValid }
+                        disabled = { isSubmitting ? isSubmitting : !isValid }
                         onClick = {( e ) => handleEditTicket( e, handleclose, getUpdatedTicket )}
                         variant = "contained"
                         size = "large"

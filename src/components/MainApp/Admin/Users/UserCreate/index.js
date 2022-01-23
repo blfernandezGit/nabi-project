@@ -131,7 +131,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                     } label="Set User as Administrator" />
                     <Button 
                         type = "submit"
-                        disabled={ !(isValid && dirty) }
+                        disabled={ isSubmitting ? isSubmitting : !(isValid && dirty) }
                         onClick = {( e ) => handleCreateUser( e, handleclose, getNewUsers )}
                         variant = "contained"
                         size = "large"

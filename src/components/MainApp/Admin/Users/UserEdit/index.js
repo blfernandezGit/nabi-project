@@ -36,6 +36,7 @@ const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose
                 handleChange,
                 handleBlur,
                 handleSubmit,
+                isSubmitting,
                 isValid
             }) => (
                 <form onSubmit = { handleSubmit }>
@@ -77,7 +78,7 @@ const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose
                     } label="Set User as Administrator" />
                     <Button 
                         type = "submit"
-                        disabled={ !isValid }
+                        disabled={ isSubmitting ? isSubmitting : !isValid }
                         onClick = {( e ) => handleEditUser( e, handleclose, getNewUsers )}
                         variant = "contained"
                         size = "large"
