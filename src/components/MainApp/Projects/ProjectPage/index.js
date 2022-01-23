@@ -58,7 +58,7 @@ const Index = () => {
                             <MaterialTypography
                                 variant = "h4"
                                 sx ={{my: 2}}>
-                                My Projects
+                                {projectDetails?.name}
                             </MaterialTypography>
                         </TitleContainer>
                     </MaterialGrid>
