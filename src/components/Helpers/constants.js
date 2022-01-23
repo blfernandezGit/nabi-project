@@ -14,9 +14,19 @@ export const userListAuditText = 'Retrieve all users'
 export const createTicketAuditText = 'Create New Ticket in Current Project'
 export const updateTicketAuditText = 'Update Current Ticket'
 export const createCommentAuditText = 'Create New Comment in Current Ticket'
+export const createProjectAuditText = 'Create New Project'
 
 export const dateFormatter = new Intl.DateTimeFormat("en-GB", {
     year: "numeric",
-    month: "long",
+    month: "short",
     day: "2-digit"
   });
+
+export const detailedDateFormatter = new Intl.DateTimeFormat("en-GB", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+    hour: 'numeric', 
+    minute: 'numeric',
+    hour12: true
+});

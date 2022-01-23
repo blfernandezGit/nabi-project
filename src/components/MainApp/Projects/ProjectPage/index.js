@@ -4,7 +4,7 @@ import { useParams } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { userListUrl, projectListUrl, ticketListUrl } from '../../../Helpers/constants'
 import { apiClient } from '../../../Helpers/apiClient'
-import { ColumnContainer, TitleContainer, LogoImg } from '../../Layout/Elements'
+import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../Layout/Elements'
 import useDebounce from '../../../Helpers/useDebounce'
 import MainLoading from '../../LoadingScreen/MainLoading'
 import Search from '../../Search'
@@ -12,7 +12,6 @@ import Ticket from './Ticket'
 import TicketCreate from './TicketCreate'
 import FloatingButton from '../../FloatingButton'
 import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
-import { HideTableCell, FormContainer } from './customComponents'
 import MaterialTableContainer from '@mui/material/TableContainer'
 import MaterialTable from '@mui/material/Table'
 import MaterialTableBody from '@mui/material/TableBody'
@@ -23,6 +22,7 @@ import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
 import MaterialAddIcon from '@mui/icons-material/Add'
 import MaterialModal from '@mui/material/Modal'
+import MaterialGrid from '@mui/material/Grid'
 
 // TODO: how to search like google - not exact
 const Index = () => {
@@ -48,17 +48,27 @@ const Index = () => {
     return (
         <ColumnContainer maxWidth='xl'>
             <MainLoading isLoading = { isLoading } />
-            <TitleContainer maxWidth='md'>
-                <LogoImg
-                    src={nabi_logo_img}
-                />
-                <MaterialTypography
-                    variant = "h4"
-                    sx ={{my: 2}}>
-                    {projectDetails?.name}
-                </MaterialTypography>
+            <TitleContainer maxWidth = 'md'>
+                <MaterialGrid container>
+                    <MaterialGrid item xs={12} sm={12} md={6}>
+                        <TitleContainer>
+                            <LogoImg
+                                src={nabi_logo_img}
+                            />
+                            <MaterialTypography
+                                variant = "h4"
+                                sx ={{my: 2}}>
+                                My Projects
+                            </MaterialTypography>
+                        </TitleContainer>
+                    </MaterialGrid>
+                    <MaterialGrid item xs={12} sm={12} md={6}>
+                        <TitleContainer sx = {{ height: '100%' }}>
+                            <Search setFilter = { setFilter } label = 'Search Tickets' />
+                        </TitleContainer>
+                    </MaterialGrid>
+                </MaterialGrid>
             </TitleContainer>
-            <Search setFilter = { setFilter } label = 'Search Tickets' />
             <MaterialContainer maxWidth = 'md'>
                     <MaterialTableContainer>
                         <MaterialTable>
@@ -76,6 +86,12 @@ const Index = () => {
                                     {/* <HideTableCell>
                                         Assignee
                                     </HideTableCell> */}
+                                    <HideTableCell>
+                                        Created At
+                                    </HideTableCell>
+                                    <HideTableCell>
+                                        Updated At
+                                    </HideTableCell>
                                 </MaterialTableRow>
                             </MaterialTableHeader>
                             <MaterialTableBody>

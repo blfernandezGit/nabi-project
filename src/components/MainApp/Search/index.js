@@ -1,12 +1,11 @@
 import MaterialTextField from '@mui/material/TextField'
 import SavedSearchIcon from '@mui/icons-material/SavedSearch'
 import InputAdornment from '@mui/material/InputAdornment'
-import MaterialContainer from '@mui/material/Container'
 
 const Index = ({ setFilter, label }) => {
     return (
-        <MaterialContainer maxWidth = 'md' sx = {{ my: 2 }}>
             <MaterialTextField 
+                sx = {{ width: '100%'}}
                 label = { label }
                 onChange={(e) => setFilter(e.target.value)}
                 InputProps={{
@@ -16,7 +15,6 @@ const Index = ({ setFilter, label }) => {
                     </InputAdornment>
                 )}}
             />
-        </MaterialContainer>
     );
 };
 

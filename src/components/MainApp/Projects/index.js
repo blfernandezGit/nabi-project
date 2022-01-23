@@ -14,6 +14,7 @@ import MaterialTable from '@mui/material/Table'
 import MaterialTableBody from '@mui/material/TableBody'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
+import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
     const { currentUser } = useContext( AppContext )
@@ -35,17 +36,27 @@ const Index = () => {
     return (
         <ColumnContainer maxWidth='xl'>
             <MainLoading isLoading = { isLoading } />
-            <TitleContainer maxWidth='md'>
-                <LogoImg
-                    src={nabi_logo_img}
-                />
-                <MaterialTypography
-                    variant = "h4"
-                    sx ={{my: 2}}>
-                    My Projects
-                </MaterialTypography>
+            <TitleContainer maxWidth = 'md'>
+                <MaterialGrid container>
+                    <MaterialGrid item xs={12} sm={12} md={6}>
+                        <TitleContainer>
+                            <LogoImg
+                                src={nabi_logo_img}
+                            />
+                            <MaterialTypography
+                                variant = "h4"
+                                sx ={{my: 2}}>
+                                My Projects
+                            </MaterialTypography>
+                        </TitleContainer>
+                    </MaterialGrid>
+                    <MaterialGrid item xs={12} sm={12} md={6}>
+                        <TitleContainer sx = {{ height: '100%' }}>
+                            <Search setFilter = { setFilter } label = 'Search Projects' />
+                        </TitleContainer>
+                    </MaterialGrid>
+                </MaterialGrid>
             </TitleContainer>
-            <Search setFilter = { setFilter } label = 'Search Projects' />
             <MaterialContainer maxWidth = 'md'>
                     <MaterialTableContainer>
                         <MaterialTable>
