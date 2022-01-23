@@ -4,7 +4,7 @@ import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { apiClient } from '../../../../Helpers/apiClient'
 import useHooks from './hooks'
-import { userListUrl, projectListUrl, ticketListUrl, commentsListUrl } from '../../../../Helpers/constants'
+import { userListUrl, projectListUrl, ticketListUrl, commentsListUrl, detailedDateFormatter } from '../../../../Helpers/constants'
 import { ColumnContainer, TitleContainer } from '../../../Layout/Elements'
 import FloatingButton from '../../../FloatingButton'
 import TicketEdit from '../TicketEdit'
@@ -106,7 +106,7 @@ const Index = () => {
                         <MaterialTypography
                             variant = "h7"
                             sx = {{ m: 1 }}>
-                            {author?.username}
+                            {author?.username} on { detailedDateFormatter.format(Date.parse(ticketDetails?.created_at)) }
                         </MaterialTypography>
                     </>
                 }
@@ -115,7 +115,7 @@ const Index = () => {
             <MaterialContainer maxWidth = 'md'>
                 <MaterialTypography
                     variant = "body1"
-                    sx ={{mb: 2}}>
+                    sx ={{mb: 2, whiteSpace: 'pre-line'}}>
                     {ticketDetails?.description}
                 </MaterialTypography>
             </MaterialContainer>
