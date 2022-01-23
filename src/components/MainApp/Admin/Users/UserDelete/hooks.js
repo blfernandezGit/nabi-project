@@ -10,7 +10,6 @@ const useHooks = ( username  ) => {
     const handleDeleteUser = ( e, handleclose, getNewUsers ) => {
         e.preventDefault()
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
-        console.log( username )
         if ( inputUsername.current.value === username ) {
         postAPI(`${userListUrl}/${username}`, null, currentUser.headers, deleteUserAuditText, 'DELETE')
             .then( data => {

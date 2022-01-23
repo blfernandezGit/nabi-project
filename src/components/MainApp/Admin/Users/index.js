@@ -70,7 +70,7 @@ const Index = () => {
                             <MaterialTableHeader>
                                 <MaterialTableRow>
                                     <MaterialTableCell>
-                                        username
+                                        Username
                                     </MaterialTableCell>
                                     <HideTableCell>
                                         First Name

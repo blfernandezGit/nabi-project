@@ -22,7 +22,7 @@ const Index = () => {
     const [ isLoading, setIsLoading ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
 
-    const {isLoading: isLoadingUser, data: userData } = useQuery('currentUserData', apiClient(`${userListUrl}/${currentUser.details.username}`, currentUser.headers, null, 'GET'), {retry: false})
+    const {isLoading: isLoadingUser, data: userData } = useQuery(`${currentUser.details.username}`, apiClient(`${userListUrl}/${currentUser.details.username}`, currentUser.headers, null, 'GET'), {retry: false})
     const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), {retry: false})
 
     useEffect(() => {

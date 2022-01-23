@@ -10,7 +10,6 @@ const useHooks = ( code, projectName  ) => {
     const handleDeleteProject = ( e, handleclose, getNewProjects ) => {
         e.preventDefault()
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
-        console.log( name.current.value)
         if ( name.current.value === projectName ) {
         postAPI(`${projectListUrl}/${code}`, null, currentUser.headers, deleteProjectAuditText, 'DELETE')
             .then( data => {

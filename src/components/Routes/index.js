@@ -6,6 +6,8 @@ import ReverseAuthRoute from './ReverseAuthRoute'
 import AdminAuthRoute from './AdminAuthRoute'
 import AdminProjects from '../MainApp/Admin/Projects'
 import AdminUsers from '../MainApp/Admin/Users'
+// import AdminProjectUsers from '../MainApp/Admin/Projects/Users'
+import AdminUserProjects from '../MainApp/Admin/Users/Projects'
 import Projects from '../MainApp/Projects'
 import Project from '../MainApp/Projects/ProjectPage'
 import Ticket from '../MainApp/Projects/ProjectPage/TicketPage'
@@ -22,7 +24,9 @@ const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
           <Route exact path = "app/:username/admin" element = { <AdminAuthRoute currentUser = { currentUser }/> }>
             <Route exact path = "" element = { <Home/> }/>
             <Route exact path = "users" element = { <AdminUsers/> }/>
+            <Route exact path = "users/:user_username" element = { <AdminUserProjects/> }/>
             <Route exact path = "projects" element = { <AdminProjects/> }/>
+            {/* <Route exact path = "projects/:project_code" element = { <AdminProjectUsers/> }/> */}
           </Route>
         </Route>
         <Route exact path = "/register" element = { <ReverseAuthRoute isSignedIn = { isSignedIn } currentUser = { currentUser }/> }>

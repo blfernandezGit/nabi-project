@@ -1,16 +1,17 @@
-import { projectListUrl } from '../../../Helpers/constants'
+import { projectListUrl, userListUrl } from '../../../../Helpers/constants'
 import { useContext, useEffect, useState } from 'react'
-import { AppContext } from '../../../Context/AppContext'
+import { useParams } from 'react-router-dom'
+import { AppContext } from '../../../../Context/AppContext'
 import Project from './Project'
+import AddUserProjects from './AddUserProjects'
 import { useQuery } from 'react-query'
-import { apiClient } from '../../../Helpers/apiClient'
-import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../Layout/Elements'
-import useDebounce from '../../../Helpers/useDebounce'
-import MainLoading from '../../LoadingScreen/MainLoading'
-import Search from '../../Search'
-import ProjectCreate from './ProjectCreate'
-import FloatingButton from '../../FloatingButton'
-import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
+import { apiClient } from '../../../../Helpers/apiClient'
+import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../../Layout/Elements'
+import useDebounce from '../../../../Helpers/useDebounce'
+import MainLoading from '../../../LoadingScreen/MainLoading'
+import Search from '../../../Search'
+import FloatingButton from '../../../FloatingButton'
+import nabi_logo_img from '../../../../../assets/nabi_logo_img.png'
 import MaterialTableContainer from '@mui/material/TableContainer'
 import MaterialTable from '@mui/material/Table'
 import MaterialTableBody from '@mui/material/TableBody'
@@ -24,6 +25,7 @@ import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
+    const { user_username } = useParams()
     const { currentUser, setIsLoading} = useContext( AppContext )
     const [ filter, setFilter ] = useState('')
     const debouncedFilter = useDebounce(filter, 500)
@@ -31,12 +33,17 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingProjects, data: projectData, refetch: getNewProjects } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingUser, data: userData, refetch: getNewProjects  } = useQuery(`${user_username}`, apiClient(`${userListUrl}/${user_username}`, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
 
+    
     useEffect(() => {
-        setIsLoading( isLoadingProjects )
+        setIsLoading( isLoadingUser || isLoadingProjects )
         // eslint-disable-next-line
-    }, [ isLoadingProjects ])
+    }, [ isLoadingUser, isLoadingProjects ])
+
+    const userProjectsData = userData?.relationships?.projects?.data
+    const userProjects = projectsData?.filter(project => userProjectsData?.map(userProject => { return userProject.id }).includes(project.id))
     
     return (
         <ColumnContainer maxWidth = 'xl'>
@@ -51,7 +58,7 @@ const Index = () => {
                             <MaterialTypography
                                 variant = "h4"
                                 sx ={{my: 2}}>
-                                All Projects
+                                Projects of { user_username }
                             </MaterialTypography>
                         </TitleContainer>
                     </MaterialGrid>
@@ -90,19 +97,19 @@ const Index = () => {
                                 </MaterialTableRow>
                             </MaterialTableHeader>
                             <MaterialTableBody>
-                            { projectData && 
-                                projectData
+                            { userProjects && 
+                                userProjects
                                 .filter( project => debouncedFilter === '' || project?.attributes?.name?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
                                 .map( project => {
                                     return <Project
                                                 key = { project.id } 
                                                 project = { project }
+                                                userProjects = { userProjects }
                                                 HideTableCell = { HideTableCell }
                                                 MaterialTableCell = { MaterialTableCell }
                                                 MaterialTableRow = { MaterialTableRow }
                                                 MaterialTypography = { MaterialTypography }
                                                 FormContainer = { FormContainer }
-                                                getNewProjects = { getNewProjects }
                                             />
                                 }) 
                             }
@@ -117,10 +124,18 @@ const Index = () => {
                 aria-describedby="modal-for-creating-projects-in-admin-screen"
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <ProjectCreate handleclose = { handleClose } getNewProjects = { getNewProjects }/>
+                    <AddUserProjects 
+                        handleclose = { handleClose }
+                        getNewProjects = { getNewProjects }
+                        projectsData = { projectsData }
+                        userProjects = { userProjects }
+                        userData = { userData }
+                    />
                 </FormContainer>
             </MaterialModal>
-            <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
+            { projectsData &&
+                <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
+            }
         </ColumnContainer>
     )
 }

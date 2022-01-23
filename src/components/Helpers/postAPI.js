@@ -15,6 +15,7 @@ export const postAPI = (url, requestData, headers, auditTrail, method) => {
         // create array that includes both response data and headers
         const data = [ response.data?.data, response.headers ]
         // Display action done via API in console
+        console.log(response)
         console.log( auditTrail )
         console.log( response.data?.messages) //TODO: handle messages
         // Passes data value to js that called it

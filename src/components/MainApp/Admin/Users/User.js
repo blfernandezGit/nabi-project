@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { Link } from "react-router-dom"
 import { dateFormatter } from '../../../Helpers/constants'
 import UserEdit from './UserEdit'
 import UserDelete from './UserDelete'
@@ -45,7 +46,9 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
                     </MaterialTypography>
                 </HideTableCell>
                 <MaterialTableCell>
-                    { user.relationships?.projects?.data?.length || 0 }
+                    <Link to={`${userDetails?.username}`} style = {{textDecoration: 'none', color: 'black'}}>
+                        { user.relationships?.projects?.data?.length || 0 }
+                    </Link>
                 </MaterialTableCell>
                 <HideTableCell>
                     <MaterialTypography>

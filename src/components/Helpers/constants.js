@@ -6,6 +6,7 @@ export const userListUrl = 'users'
 export const projectListUrl = 'projects'
 export const ticketListUrl = 'tickets'
 export const commentsListUrl = 'comments'
+export const updateUserProjectsUrl = 'update_user_projects'
 
 // Audit Trail
 export const loginAuditText = 'Create User Session'

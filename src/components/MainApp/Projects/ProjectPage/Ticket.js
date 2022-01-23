@@ -45,9 +45,9 @@ const Ticket = ({ ticket, ticketData, useEffect, apiClient, useQuery, userListUr
             </HideTableCell>
             <MaterialTableCell>
                 <Link to={`${ticketDetails?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
-                <MaterialTypography>
-                    { ticketDetails?.title }
-                </MaterialTypography>
+                    <MaterialTypography>
+                        { ticketDetails?.title }
+                    </MaterialTypography>
                 </Link>
             </MaterialTableCell>
             <MaterialTableCell>
