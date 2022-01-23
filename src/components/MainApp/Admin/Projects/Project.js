@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { dateFormatter } from '../../../Helpers/constants'
 import ProjectEdit from './ProjectEdit'
+import ProjectDelete from './ProjectDelete'
 import MaterialDeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
@@ -64,17 +65,34 @@ const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, Ma
                 aria-describedby="modal-for-editing-projects"
                 sx = {{overflow: 'scroll'}}
             >
-            <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                <ProjectEdit 
-                    code = { projectDetails?.code } 
-                    handleOpen = { handleOpenEdit }
-                    handleclose = { handleCloseEdit } 
-                    getNewProjects = { getNewProjects }
-                    origName = { projectDetails?.name }
-                    origDescription = { projectDetails?.description }
-                />
-            </FormContainer>
-        </MaterialModal>
+                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
+                    <ProjectEdit 
+                        code = { projectDetails?.code } 
+                        handleOpen = { handleOpenEdit }
+                        handleclose = { handleCloseEdit } 
+                        getNewProjects = { getNewProjects }
+                        origName = { projectDetails?.name }
+                        origDescription = { projectDetails?.description }
+                    />
+                </FormContainer>
+            </MaterialModal>
+            <MaterialModal
+                open={openDelete}
+                onClose={handleCloseDelete}
+                aria-labelledby="delete-project-modal"
+                aria-describedby="modal-for-deleting-projects"
+                sx = {{overflow: 'scroll'}}
+            >
+                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
+                    <ProjectDelete 
+                        code = { projectDetails?.code } 
+                        projectName = { projectDetails?.name } 
+                        handleOpen = { handleOpenDelete }
+                        handleclose = { handleCloseDelete } 
+                        getNewProjects = { getNewProjects }
+                    />
+                </FormContainer>
+            </MaterialModal>
         </>
     )
 }

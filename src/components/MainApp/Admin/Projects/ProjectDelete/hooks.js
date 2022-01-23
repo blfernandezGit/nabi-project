@@ -1,21 +1,18 @@
 import { useContext, useRef } from 'react'
 import { AppContext } from '../../../../Context/AppContext'
 import { postAPI } from '../../../../Helpers/postAPI'
-import { projectListUrl, updateProjectAuditText } from '../../../../Helpers/constants'
+import { projectListUrl, deleteProjectAuditText } from '../../../../Helpers/constants'
 
-const useHooks = ( code  ) => {
+const useHooks = ( code, projectName  ) => {
     const { currentUser } = useContext( AppContext )
     const name = useRef()
-    const description = useRef()
 
-    const handleEditProject = ( e, handleclose, getNewProjects ) => {
+    const handleDeleteProject = ( e, handleclose, getNewProjects ) => {
         e.preventDefault()
-        const requestData = {
-            name: name.current.value,
-            description: description.current.value
-        }
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
-        postAPI(`${projectListUrl}/${code}`, requestData, currentUser.headers, updateProjectAuditText, 'PATCH')
+        console.log( name.current.value)
+        if ( name.current.value === projectName ) {
+        postAPI(`${projectListUrl}/${code}`, null, currentUser.headers, deleteProjectAuditText, 'DELETE')
             .then( data => {
                 handleclose()
                 getNewProjects()
@@ -23,12 +20,15 @@ const useHooks = ( code  ) => {
             .catch(error => {
                 //TODO: add error message handling
             })
+        }
+        else {
+            console.log('Wrong Project Name')
+        }
     }
 
     return {
-        handleEditProject,
-        name,
-        description
+        handleDeleteProject,
+        name
     }
 }
 
