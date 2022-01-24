@@ -23,7 +23,7 @@ import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
 
 const Index = () => {
-    const { currentUser, title, setTitle } = useContext( AppContext )
+    const { currentUser, setTitle } = useContext( AppContext )
     const { code, ticket_no } = useParams()
     const [ color, setColor ] = useState('default')
     const {  stringAvatar } = useHooks()

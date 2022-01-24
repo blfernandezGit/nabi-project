@@ -104,7 +104,7 @@ const Index = () => {
                             <MaterialTableBody>
                             { userData && 
                                 userData
-                                .filter( user => debouncedFilter === '' || user?.attributes?.username?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
+                                .filter( user => {return ['username', 'first_name', 'last_name', 'email'].some(key => user?.attributes[key].toLowerCase().includes(debouncedFilter.toLowerCase()))})
                                 .map( user => {
                                     return <User
                                                 key = { user.id } 

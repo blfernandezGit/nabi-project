@@ -7,6 +7,7 @@ import MaterialDeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
+import MaterialLink from '@mui/material/Link'
 
 const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, MaterialTableRow, MaterialTypography, FormContainer }) => {
     const projectDetails = project.attributes
@@ -22,7 +23,13 @@ const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, Ma
             <MaterialTableRow>
                 <MaterialTableCell>
                     <MaterialTypography>
-                        { projectDetails?.name }
+                        <MaterialLink
+                            component={Link}
+                            to={`${projectDetails?.code}`}
+                            sx={{color: 'black'}}
+                        >
+                            { projectDetails?.name }
+                        </MaterialLink>
                     </MaterialTypography>
                 </MaterialTableCell>
                 <HideTableCell>

@@ -64,7 +64,7 @@ const Index = () => {
                             <MaterialTableBody>
                             { myProjects && 
                                 myProjects
-                                .filter( project => debouncedFilter === '' || project?.attributes?.name?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
+                                .filter( project => {return ['name', 'description'].some(key => project?.attributes[key].toLowerCase().includes(debouncedFilter.toLowerCase()))})
                                 .map( project => {
                                     return <Project
                                                 key = { project.id } 
