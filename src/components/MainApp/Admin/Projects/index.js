@@ -11,17 +11,12 @@ import Search from '../../Layout/Search'
 import ProjectCreate from './ProjectCreate'
 import FloatingButton from '../../Layout/FloatingButton'
 import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
-import MaterialTableContainer from '@mui/material/TableContainer'
-import MaterialTable from '@mui/material/Table'
-import MaterialTableBody from '@mui/material/TableBody'
-import MaterialTableHeader from '@mui/material/TableHead'
-import MaterialTableRow from '@mui/material/TableRow'
-import MaterialTableCell from '@mui/material/TableCell'
 import MaterialTypography from '@mui/material/Typography'
-import MaterialContainer from '@mui/material/Container'
 import MaterialAddIcon from '@mui/icons-material/Add'
 import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
+import { DataGrid } from '@mui/x-data-grid'
+import { dateFormatter } from '../../../Helpers/constants'
 
 const Index = () => {
     const { currentUser, setIsLoading, title, setTitle } = useContext( AppContext )
@@ -30,86 +25,58 @@ const Index = () => {
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
-
+    const [sortModel, setSortModel] = useState([
+        {
+            field: 'Name',
+            sort: 'asc',
+        },
+      ])
     const {isLoading: isLoadingProjects, data: projectData, refetch: getNewProjects } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
+
+    const columns = [
+        { field: 'Name', flex: 1, minWidth: 150, },
+        { field: 'Description', flex: 2, minWidth: 350 },
+        { field: 'Tickets', type: 'number', flex: 0.2, minWidth: 80  },
+        { field: 'Users', type: 'number', flex: 0.2, minWidth: 80 },
+        { field: 'Created At', type: 'date', flex: 0.5, minWidth: 100  },
+        { field: 'Updated At', type: 'date', flex: 0.5, minWidth: 100  },
+    ]
+
+    const rows = projectData?.map( project => {
+            return {
+                id: project.id,
+                'Name': project.attributes.name,
+                'Description': project.attributes.description,
+                'Tickets': project.relationships?.tickets?.data?.length || 0,
+                'Users': project.relationships?.users?.data?.length || 0,
+                'Created At': dateFormatter.format(Date.parse(project.attributes?.created_at)),
+                'Updated At': dateFormatter.format(Date.parse(project.attributes?.created_at))
+            }
+        })
 
     useEffect(() => {
         setIsLoading( isLoadingProjects )
         setTitle('All Projects')
         // eslint-disable-next-line
     }, [ isLoadingProjects ])
+
     
     return (
         <ColumnContainer maxWidth = 'xl'>
             <MainLoading isLoading = { isLoadingProjects } />
-            <TitleContainer maxWidth = 'l'>
-                <MaterialGrid container>
-                    <MaterialGrid item xs={12} sm={12} md={6}>
-                        <TitleContainer>
-                            <LogoImg
-                                src={nabi_logo_img}
-                            />
-                            <MaterialTypography
-                                variant = "h4"
-                                sx ={{my: 2}}>
-                                All Projects
-                            </MaterialTypography>
-                        </TitleContainer>
-                    </MaterialGrid>
-                    <MaterialGrid item xs={12} sm={12} md={6}>
-                        <TitleContainer sx = {{ height: '100%' }}>
-                            <Search setFilter = { setFilter } label = 'Search Projects' />
-                        </TitleContainer>
-                    </MaterialGrid>
-                </MaterialGrid>
-            </TitleContainer>
             <ColumnContainer>
-                    <MaterialTableContainer>
-                        <MaterialTable>
-                            <MaterialTableHeader>
-                                <MaterialTableRow>
-                                    <MaterialTableCell>
-                                        Name
-                                    </MaterialTableCell>
-                                    <HideTableCell>
-                                        Description
-                                    </HideTableCell>
-                                    <HideTableCell>
-                                        # Tickets
-                                    </HideTableCell>
-                                    <MaterialTableCell>
-                                        # Members
-                                    </MaterialTableCell>
-                                    <HideTableCell>
-                                        Created At
-                                    </HideTableCell>
-                                    <HideTableCell>
-                                        Updated At
-                                    </HideTableCell>
-                                    <MaterialTableCell/>
-                                    <MaterialTableCell/>
-                                </MaterialTableRow>
-                            </MaterialTableHeader>
-                            <MaterialTableBody>
-                            { projectData && 
-                                projectData
-                                .filter( project => {return ['name', 'description'].some(key => project?.attributes[key].toLowerCase().includes(debouncedFilter.toLowerCase()))})
-                                .map( project => {
-                                    return <Project
-                                                key = { project.id } 
-                                                project = { project }
-                                                HideTableCell = { HideTableCell }
-                                                MaterialTableCell = { MaterialTableCell }
-                                                MaterialTableRow = { MaterialTableRow }
-                                                MaterialTypography = { MaterialTypography }
-                                                FormContainer = { FormContainer }
-                                                getNewProjects = { getNewProjects }
-                                            />
-                                }) 
-                            }
-                            </MaterialTableBody> 
-                        </MaterialTable>
-                    </MaterialTableContainer>
+            <div style={{ width: '100%' }}>
+            {projectData && rows &&
+                <DataGrid
+                    rows = { rows }
+                    columns = { columns }
+                    sortModel={sortModel}
+                    onSortModelChange={(model) => setSortModel(model)}
+                    autoHeight
+                    density = "comfortable"
+                />
+            }
+            </div>
             </ColumnContainer>
             <MaterialModal
                 open={open}
