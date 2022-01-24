@@ -75,10 +75,10 @@ const Index = () => {
                                         Description
                                     </HideTableCell>
                                     <HideTableCell>
-                                        # Tickets
+                                        Tickets
                                     </HideTableCell>
                                     <MaterialTableCell>
-                                        # Members
+                                        Members
                                     </MaterialTableCell>
                                     <HideTableCell>
                                         Created At
