@@ -9,6 +9,7 @@ import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
 import MaterialCancelIcon from '@mui/icons-material/Cancel'
 import MaterialCheckCircleIcon from '@mui/icons-material/CheckCircle'
+import MaterialLink from '@mui/material/Link'
 
 const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTableRow, MaterialTypography, FormContainer }) => {
     const userDetails = user.attributes
@@ -25,9 +26,13 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
             <MaterialTableRow>
                 <MaterialTableCell>
                     <MaterialTypography>
-                        <Link to={`${userDetails?.username}`} style = {{textDecoration: 'none', color: 'black'}}>
+                        <MaterialLink
+                            component={Link}
+                            to={`${userDetails?.username}`}
+                            sx={{color: 'black'}}
+                        >
                             { userDetails?.username }
-                        </Link>
+                        </MaterialLink>
                     </MaterialTypography>
                 </MaterialTableCell>
                 <HideTableCell>

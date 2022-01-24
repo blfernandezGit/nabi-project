@@ -37,18 +37,16 @@ const Ticket = ({ ticket, ticketData, useEffect, apiClient, useQuery, userListUr
     // const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
 
     return (
-        <MaterialTableRow>
+        <MaterialTableRow component={Link} to={`${ticketDetails?.ticket_no}`} style = {{textDecoration: 'none'}}>
             <HideTableCell>
                 <MaterialTypography>
                     #{ ticketDetails?.ticket_no }
                 </MaterialTypography>
             </HideTableCell>
             <MaterialTableCell>
-                <Link to={`${ticketDetails?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
-                    <MaterialTypography>
-                        { ticketDetails?.title }
-                    </MaterialTypography>
-                </Link>
+                <MaterialTypography>
+                    { ticketDetails?.title }
+                </MaterialTypography>
             </MaterialTableCell>
             <MaterialTableCell>
                 <MaterialChip
