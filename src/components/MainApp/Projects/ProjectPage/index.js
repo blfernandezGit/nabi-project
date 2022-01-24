@@ -42,9 +42,13 @@ const Index = () => {
 
     useEffect(() => {
         setIsLoading( isLoadingTicket || isLoadingProject )
-        setTitle(projectDetails?.name)
         // eslint-disable-next-line
     }, [ isLoadingTicket, isLoadingProject ])
+
+    useEffect(() => {
+        setTitle(projectDetails?.name)
+        //eslint-disable-next-line
+    }, [projectDetails])
 
     return (
         <ColumnContainer maxWidth='xl'>

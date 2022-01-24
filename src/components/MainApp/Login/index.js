@@ -20,6 +20,7 @@ const Index = () => {
             >
                 <LoginContainer
                     maxWidth = "sm"
+                    sx = {{ borderRadius: 5 }}
                 >
                     <Logo 
                         src={nabi_logo}

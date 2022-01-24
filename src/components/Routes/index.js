@@ -1,4 +1,3 @@
-import Home from '../MainApp/Home'
 import Login from '../MainApp/Login'
 import Register from "../MainApp/Register"
 import AuthRoute from './AuthRoute';
@@ -18,12 +17,11 @@ const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
     <>
       <Routes>
         <Route exact path = "/" element = { <AuthRoute isSignedIn = { isSignedIn }/> }>
-          <Route exact path = "app/:username" element = { <Sidebar><Home/></Sidebar> }/>
-          <Route exact path = "app/:username/projects" element = { <Sidebar><Projects/></Sidebar> }/>
+          <Route exact path = "app/:username/projects" element = { <Sidebar><Projects/></Sidebar>}/>
           <Route exact path = "app/:username/projects/:code" element = { <Sidebar><Project/></Sidebar> }/>
           <Route exact path = "app/:username/projects/:code/:ticket_no" element = { <Sidebar><Ticket/></Sidebar> }/>
           <Route exact path = "app/:username/admin" element = { <AdminAuthRoute currentUser = { currentUser }/> }>
-            <Route exact path = "" element = { <Sidebar><Home/></Sidebar> }/>
+            <Route exact path = "" element = { <Sidebar><AdminUsers/></Sidebar> }/>
             <Route exact path = "users" element = { <Sidebar><AdminUsers/></Sidebar> }/>
             <Route exact path = "users/:user_username" element = { <Sidebar><AdminUserProjects/></Sidebar> }/>
             <Route exact path = "projects" element = { <Sidebar><AdminProjects/></Sidebar> }/>

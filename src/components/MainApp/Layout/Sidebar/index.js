@@ -1,7 +1,9 @@
 import { useContext, useState } from 'react'
 import { AppContext } from '../../../Context/AppContext'
 import { Link, useParams } from 'react-router-dom'
-import { styled, useTheme, alpha } from '@mui/material/styles'
+import useHooks from './hooks'
+import { styled, useTheme } from '@mui/material/styles'
+import Project from './Project'
 import Box from '@mui/material/Box'
 import MuiDrawer from '@mui/material/Drawer'
 import MuiAppBar from '@mui/material/AppBar'
@@ -19,17 +21,12 @@ import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import ArchitectureIcon from '@mui/icons-material/Architecture'
 import HomeIcon from '@mui/icons-material/Home'
-import ConfirmationNumberIcon from '@mui/icons-material/ConfirmationNumber'
-import BugReportIcon from '@mui/icons-material/BugReport'
-import SearchIcon from '@mui/icons-material/Search'
-import InputBase from '@mui/material/InputBase'
-import Badge from '@mui/material/Badge'
-import MenuItem from '@mui/material/MenuItem'
-import Menu from '@mui/material/Menu'
-import AccountCircle from '@mui/icons-material/AccountCircle'
-import MailIcon from '@mui/icons-material/Mail'
-import NotificationsIcon from '@mui/icons-material/Notifications'
-import MoreIcon from '@mui/icons-material/MoreVert'
+import Collapse from '@mui/material/Collapse'
+import LogoutIcon from '@mui/icons-material/Logout'
+import Container from '@mui/material/Container'
+import GroupIcon from '@mui/icons-material/Group'
+import AutoStoriesIcon from '@mui/icons-material/AutoStories'
+import { Avatar } from './customComponents'
 
 const drawerWidth = 240
 
@@ -99,67 +96,31 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
     }),
 )
 
-// const Search = styled('div')(({ theme }) => ({
-//     position: 'relative',
-//     borderRadius: theme.shape.borderRadius,
-//     backgroundColor: alpha(theme.palette.common.white, 0.15),
-//     '&:hover': {
-//     backgroundColor: alpha(theme.palette.common.white, 0.25),
-//     },
-//     marginLeft: 0,
-//     width: '100%',
-//     [theme.breakpoints.up('sm')]: {
-//     marginLeft: theme.spacing(1),
-//     width: 'auto',
-//     },
-// }));
-
-// const SearchIconWrapper = styled('div')(({ theme }) => ({
-//     padding: theme.spacing(0, 2),
-//     height: '100%',
-//     position: 'absolute',
-//     pointerEvents: 'none',
-//     display: 'flex',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-// }));
-
-// const StyledInputBase = styled(InputBase)(({ theme }) => ({
-//     color: 'inherit',
-//     '& .MuiInputBase-input': {
-//     padding: theme.spacing(1, 1, 1, 0),
-//     // vertical padding + font size from searchIcon
-//     paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-//     transition: theme.transitions.create('width'),
-//     width: '100%',
-//     [theme.breakpoints.up('sm')]: {
-//         width: '12ch',
-//         '&:focus': {
-//         width: '20ch',
-//         },
-//     },
-//     },
-// }));
-
 export const Toolbar = styled( MaterialToolbar ) `
     background: #6667ab !important;
 `
 
 export default function MiniDrawer(props) {
+    const { myProjects, handleLogout, stringAvatar } = useHooks()
     const theme = useTheme()
     const [open, setOpen] = useState(false)
+    const [openCollapse, setOpenCollapse] = useState(false)
 
     const handleDrawerOpen = () => {
-    setOpen(true)
+        setOpen(true)
     }
 
     const handleDrawerClose = () => {
-    setOpen(false)
+        setOpen(false)
+    }
+
+    const handleCollapse = () => {
+        setOpenCollapse(!openCollapse)
     }
 
     const { username } = useParams()
 
-    const { title, setFilter, label, showSearch } = useContext( AppContext )
+    const { title, currentUser } = useContext( AppContext )
 
     return (
         <>
@@ -177,23 +138,26 @@ export default function MiniDrawer(props) {
                     ...(open && { display: 'none' }),
                 }}
                 >
-                <MenuIcon />
+                    <MenuIcon />
                 </IconButton>
+                <Container
+                    sx={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}
+                >
                 <Typography variant="h6" noWrap component="div">
                     { title }
                 </Typography>
-                {/* { showSearch &&
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                            </SearchIconWrapper>
-                            <StyledInputBase
-                            onChange={(e) => setFilter(e.target.value)}
-                            placeholder={label}
-                            inputProps={{ 'aria-label': 'search' }}
-                            />
-                    </Search>
-                } */}
+                    <IconButton
+                    color="inherit"
+                    aria-label="logout"
+                    onClick={handleLogout}
+                    edge="end"
+                    sx={{
+                        ...(open && { display: 'none' }),
+                    }}
+                    >
+                        <LogoutIcon />
+                    </IconButton>
+                </Container>
             </Toolbar>
             </AppBar>
             <Drawer variant="permanent" open={open}>
@@ -204,33 +168,69 @@ export default function MiniDrawer(props) {
             </DrawerHeader>
             <Divider />
             <List>
-                <ListItem button key='Home' component={Link} to={`/app/${username}`} replace>
+                <ListItem>
+                    <ListItemIcon>
+                        <Avatar {...stringAvatar(`${currentUser?.details?.first_name} ${currentUser?.details?.last_name}`)}/>
+                    </ListItemIcon>
+                    <ListItemText primary={`${currentUser?.details?.username}`} />
+                </ListItem>
+            </List>
+            <Divider />
+            <List>
+                <ListItem button key = 'Home' component = {Link} to = {`/app/${ username }/projects`} replace>
                     <ListItemIcon>
                         <HomeIcon/>
                     </ListItemIcon>
                     <ListItemText primary='Home' />
                 </ListItem>
-                <ListItem button key='My Projects' component={Link} to={`/app/${username}/projects`} replace>
+            </List>
+            { currentUser?.details?.is_admin && 
+                <>
+                    <Divider />
+                    <List>
+                        <ListItem button key = 'All Users' component = {Link} to = {`/app/${ username }/admin/users`} replace>
+                            <ListItemIcon>
+                                <GroupIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary='All Users' />
+                        </ListItem>
+                    </List>
+                    <List>
+                        <ListItem button key = 'All Projects' component = {Link} to = {`/app/${ username }/admin/projects`} replace>
+                            <ListItemIcon>
+                                <AutoStoriesIcon/>
+                            </ListItemIcon>
+                            <ListItemText primary='All Projects' />
+                        </ListItem>
+                    </List>
+                    <Divider />
+                </>
+            }
+            <List>
+                <ListItem button key = 'Projects' onClick = { handleCollapse }>
                     <ListItemIcon>
                             <ArchitectureIcon/>
                     </ListItemIcon>
-                    <ListItemText primary='My Projects' />
+                    <ListItemText primary='Projects' />
                 </ListItem>
-            </List>
-            <Divider />
-            <List>
-                <ListItem button key='My Tickets'>
-                    <ListItemIcon>
-                        <ConfirmationNumberIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary='My Tickets' />
-                </ListItem>
-                <ListItem button key='Assigned Tickets'>
-                    <ListItemIcon>
-                        <BugReportIcon/>
-                    </ListItemIcon>
-                    <ListItemText primary='Assigned Tickets' />
-                </ListItem>
+                <Collapse in={ openCollapse } timeout="auto" unmountOnExit>
+                    <List>
+                        { myProjects && 
+                                myProjects
+                                .map( project => {
+                                    return <Project
+                                                key = { project.id } 
+                                                username = { username }
+                                                project = { project }
+                                                Link = { Link }
+                                                ListItem = { ListItem }
+                                                ListItemIcon = { ListItemIcon }
+                                                ListItemText = { ListItemText }
+                                            />
+                                }) 
+                            }
+                    </List>
+                </Collapse>
             </List>
             </Drawer>
             <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
