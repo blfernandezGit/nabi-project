@@ -65,7 +65,7 @@ const Index = () => {
                     </MaterialGrid>
                 </MaterialGrid>
             </TitleContainer>
-            <MaterialContainer maxWidth = 'l'>
+            <ColumnContainer>
                     <MaterialTableContainer>
                         <MaterialTable>
                             <MaterialTableHeader>
@@ -122,7 +122,7 @@ const Index = () => {
                             </MaterialTableBody> 
                         </MaterialTable>
                     </MaterialTableContainer>
-            </MaterialContainer>
+            </ColumnContainer>
             <MaterialModal
                 open={open}
                 onClose={handleClose}

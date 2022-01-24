@@ -28,8 +28,16 @@ export const ColumnContainer = styled( MaterialContainer ) `
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    min-height: 100vh !important;
+    min-height: 100% !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    padding-bottom: 50px !important;
     animation: 1s ${ fadeInAnimation };
+    @media (min-width: 600px) {
+        padding: 16px !important;
+        padding-bottom: 50px !important;
+    }
 `
 
 export const TitleContainer = styled( MaterialContainer ) `
@@ -59,7 +67,7 @@ export const LoadingContainer = styled( MaterialContainer ) `
   position: absolute !important;
   display: from !important;
   align-items: center !important;
-  height: 100vh !important;
+  height: 100% !important;
   text-align: center;
   justify-content: center;
 `
@@ -78,12 +86,12 @@ export const FormContainer = styled( MaterialContainer ) `
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    height: 100vh !important;
+    height: 100% !important;
     text-align: center;
     justify-content: center;
     background: #FFFFFF !important;
     overflow: auto !important;
     @media (min-width: 600px) {
-        height: 80vh !important;
+        height: 80% !important;
     }
 `

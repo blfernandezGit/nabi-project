@@ -9,11 +9,11 @@ export const CommentContainer = styled( MaterialContainer ) `
     display: flex !important;
     flex-direction: column !important;
     align-items: center !important;
-    height: 100vh !important;
+    height: 100% !important;
     text-align: center;
     justify-content: center;
     background: #FFFFFF !important;
     @media (min-width: 600px) {
-        height: 60vh !important;
+        height: 60% !important;
     }
 `
