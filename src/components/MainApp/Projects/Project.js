@@ -6,32 +6,17 @@ import MaterialTableRow from '@mui/material/TableRow'
 import MaterialBugReportIcon from '@mui/icons-material/BugReport'
 import MaterialGrid from '@mui/material/Grid'
 
-const Project = ({ project, projectListUrl, useQuery, apiClient, currentUser, ticketListUrl, userListUrl, MaterialTypography }) => {
+const Project = ({ project, MaterialTypography }) => {
     const projectDetails = project?.attributes
-    let projectOpenTicketCount
-    let projectForFixingTicketCount
-    let projectForTestingTicketCount
-    let latestTicket
-    let latestTicketSubmitDate
-    let latestTicketAuthor
-    let percentTicketsClosed
-    let totalActionTickets
-
-    const { isLoading: isLoadingTicket, data: ticketData } = useQuery( `${ projectDetails.code }_ticketsData`, apiClient(`${projectListUrl}/${projectDetails.code}/${ticketListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
-    const { data: usersData } = useQuery( 'userList', apiClient( userListUrl, currentUser.headers, null, 'GET' ))
     
-    const projectTicketCount = !isLoadingTicket ? ( ticketData ? ticketData?.length : 0 ) : <span style = {{ color: 'gray' }}>...</span>
+    const projectTickets = projectDetails.tickets
+    const projectTicketCount = projectTickets.length
+    const totalActionTickets = projectDetails.tickets.filter( ticket => ticket.status === 'Open' || ticket.status === 'ForFixing' || ticket.status === 'ForTesting').length
+    const percentTicketsClosed = projectTicketCount > 0 ? ( projectTicketCount - ( totalActionTickets )) * 100 / projectTicketCount : 0
+    const latestTicket = projectTickets[projectTicketCount - 1]
 
-    if( projectTicketCount > 0 ) {
-        projectOpenTicketCount = ticketData?.filter(ticket => ticket?.attributes?.status === 'Open').length
-        projectForFixingTicketCount = ticketData?.filter(ticket => ticket?.attributes?.status === 'ForFixing').length
-        projectForTestingTicketCount = ticketData?.filter(ticket => ticket?.attributes?.status === 'ForTesting').length
-        totalActionTickets = projectOpenTicketCount + projectForTestingTicketCount + projectForFixingTicketCount
-        latestTicket = ticketData[ticketData?.length-1]?.attributes
-        latestTicketSubmitDate = dateFormatter.format(Date.parse(latestTicket?.created_at))
-        latestTicketAuthor = usersData?.filter(user => user?.id === ticketData[ticketData?.length-1]?.attributes?.author_id)[0].attributes?.username
-        percentTicketsClosed = projectTicketCount > 0 ? ( projectTicketCount - ( totalActionTickets )) * 100 / projectTicketCount : 0
-    }
+    const latestTicketSubmitDate = latestTicket && dateFormatter.format(Date.parse(latestTicket?.created_at))
+    const latestTicketAuthor = latestTicket && latestTicket?.author
 
     return (
         <MaterialTableRow>

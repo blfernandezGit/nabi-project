@@ -39,12 +39,12 @@ const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, Ma
                 </HideTableCell>
                 <HideTableCell>
                     <MaterialTypography>
-                        { project.relationships?.tickets?.data?.length || 0 }
+                        { projectDetails?.tickets?.length || 0 }
                     </MaterialTypography>
                 </HideTableCell>
                 <MaterialTableCell>
                     <Link to={`${projectDetails?.code}`} style = {{textDecoration: 'none', color: 'black'}}>
-                        { project.relationships?.users?.data?.length || 0 }
+                        { projectDetails?.users?.length || 0 }
                     </Link>
                 </MaterialTableCell>
                 <HideTableCell>

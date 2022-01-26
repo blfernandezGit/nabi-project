@@ -16,9 +16,6 @@ const Index = ({ projectUsers, projectData, usersData, handleclose, getNewUsers 
         setSelectedUsers(Array.isArray(e) ? e.map(select => select.value) : [])
         setFieldValue('name', Array.isArray(e) ? e.map(select => select.value) : [])
     }
-
-    console.log(projectUsers)
-    console.log(usersData)
     
     useEffect(() => {
         setUsersList(

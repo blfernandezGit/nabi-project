@@ -1,13 +1,12 @@
-import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
+import { Button } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialMenuItem from '@mui/material/MenuItem'
 
-const Index = ({ code, handleclose, getNewTickets }) => {
+const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
     const { title, description, status, handleCreateTicket,
         // assignee
      } = useHooks(code);
@@ -108,7 +107,7 @@ const Index = ({ code, handleclose, getNewTickets }) => {
                     <Button 
                         type = "submit"
                         disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
-                        onClick = {( e ) => handleCreateTicket( e, handleclose, getNewTickets )}
+                        onClick = {( e ) => handleCreateTicket( e, handleclose, getUpdatedProjectTickets )}
                         variant = "contained"
                         size = "large"
                     >

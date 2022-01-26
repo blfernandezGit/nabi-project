@@ -38,24 +38,22 @@ const Index = () => {
 
     const { isLoading: isLoadingTicket, data: ticketData, refetch: getUpdatedTicket } = useQuery( `${ code }_${ ticket_no }`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, currentUser.headers, null, 'GET' ), {retry: false})
     const ticketDetails = ticketData?.attributes
-    const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false})
-    // const assignee = usersData && ticketDetails?.assignee_id && usersData.filter(assignee => assignee?.id === ticketDetails?.assignee_id )[0]?.attributes
-    const author = usersData && usersData.filter(author => author?.id === ticketDetails?.author_id )[0]?.attributes
-
-    const { isLoading: isLoadingComments, refetch: getNewComments } = useQuery( `${ code }_${ ticket_no }_comments`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}/${commentsListUrl}`, currentUser.headers, null, 'GET' ), {retry: false, enabled: false})
+   
+    const assignee = ticketData?.assignee?.username
+    const author = ticketData?.author?.username
 
     useEffect(() => {
         if( author?.username === currentUser?.details?.username ) {
             setIsAuthor( true )
         }
         // eslint-disable-next-line
-    }, [ isLoadingUsers, author ])
+    }, [ author ])
     
     useEffect(() => {
-        setIsLoading( isLoadingTicket || isLoadingUsers || isLoadingComments)
+        setIsLoading( isLoadingTicket )
         setTitle(code)
         // eslint-disable-next-line
-    }, [ isLoadingTicket, isLoadingUsers, isLoadingComments ])
+    }, [ isLoadingTicket ])
 
     useEffect(() => {
         switch(ticketDetails?.status){
@@ -134,7 +132,7 @@ const Index = () => {
                     </MaterialTypography>
                 </MaterialContainer>
             }
-            <Comments code = { code } ticket_no = { ticket_no } currentUser = { currentUser }/>
+            <Comments comments = { ticketDetails?.comments } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
             <MaterialModal
                 open={open}
                 onClose={handleClose}
@@ -169,7 +167,7 @@ const Index = () => {
                         code = { code } 
                         ticket_no = { ticketDetails?.ticket_no }
                         handleclose = { handleCloseComment } 
-                        getNewComments = { getNewComments }
+                        getNewComments = { getUpdatedTicket }
                     />
                 </CommentContainer>
             </MaterialModal>

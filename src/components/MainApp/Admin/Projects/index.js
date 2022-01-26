@@ -31,7 +31,7 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingProjects, data: projectData, refetch: getNewProjects } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingProjects, data: projectData, refetch: getNewProjects } = useQuery('projects', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
 
     useEffect(() => {
         setIsLoading( isLoadingProjects )

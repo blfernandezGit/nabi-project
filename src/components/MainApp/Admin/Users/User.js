@@ -20,7 +20,6 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
     const handleOpenDelete = () => setOpenDelete(true)
     const handleCloseDelete = () => setOpenDelete(false)
 
-    console.log(userDetails)
     return (
         <>
             <MaterialTableRow>
@@ -52,12 +51,12 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
                 </HideTableCell>
                 <HideTableCell>
                     <MaterialTypography>
-                        { user.relationships?.author_tickets?.data?.length || 0 }
+                        { userDetails.author_tickets?.length || 0 }
                     </MaterialTypography>
                 </HideTableCell>
                 <HideTableCell>
                     <Link to={`${userDetails?.username}`} style = {{textDecoration: 'none', color: 'black'}}>
-                        { user.relationships?.projects?.data?.length || 0 }
+                        { userDetails?.projects?.length || 0 }
                     </Link>
                 </HideTableCell>
                 <MaterialTableCell>

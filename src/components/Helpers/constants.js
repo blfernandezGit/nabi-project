@@ -8,6 +8,7 @@ export const ticketListUrl = 'tickets'
 export const commentsListUrl = 'comments'
 export const updateUserProjectsUrl = 'update_user_projects'
 export const updateProjectUsersUrl = 'update_project_users'
+export const currentUserProjectsUrl = 'current_user_projects'
 
 // Audit Trail
 export const loginAuditText = 'Create User Session'

@@ -35,20 +35,17 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const { isLoading: isLoadingProject, data: projectData } = useQuery( `${ code }`, apiClient(`${projectListUrl}/${code}`, currentUser.headers, null, 'GET' ), {retry: false})
-    const { isLoading: isLoadingTicket, data: ticketData, refetch: getNewTickets} = useQuery( `${ code }_ticketsData`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
-    
-    const projectDetails = projectData?.attributes
+    const { isLoading: isLoadingProjectTickets, data: projectTicketsData, refetch: getUpdatedProjectTickets} = useQuery( `${ code }_tickets`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}`, currentUser.headers, null, 'GET' ), {retry: false})
 
     useEffect(() => {
-        setIsLoading( isLoadingTicket || isLoadingProject )
+        setIsLoading( isLoadingProjectTickets )
         // eslint-disable-next-line
-    }, [ isLoadingTicket, isLoadingProject ])
+    }, [ isLoadingProjectTickets ])
 
     useEffect(() => {
-        setTitle(projectDetails?.name)
-        //eslint-disable-next-line
-    }, [projectDetails])
+        setTitle(projectTicketsData ? projectTicketsData[0]?.attributes?.project?.name : code)
+        // eslint-disable-next-line
+    }, [code])
 
     return (
         <ColumnContainer maxWidth='xl'>
@@ -88,9 +85,9 @@ const Index = () => {
                                     <MaterialTableCell>
                                         Status
                                     </MaterialTableCell>
-                                    {/* <HideTableCell>
+                                    <HideTableCell>
                                         Assignee
-                                    </HideTableCell> */}
+                                    </HideTableCell>
                                     <HideTableCell>
                                         Created At
                                     </HideTableCell>
@@ -100,18 +97,15 @@ const Index = () => {
                                 </MaterialTableRow>
                             </MaterialTableHeader>
                             <MaterialTableBody>
-                            { ticketData && 
-                                ticketData
+                            { projectTicketsData && 
+                                projectTicketsData
                                 .filter( ticket => {return ['title', 'description', 'ticket_no'].some(key => ticket?.attributes[key].toString().toLowerCase().includes(debouncedFilter.toLowerCase()))})
                                 .map( ticket => {
                                     return <Ticket
                                                 key = { ticket.id } 
                                                 ticket = { ticket }
-                                                ticketData = { ticketData }
-                                                userListUrl = { userListUrl }
-                                                apiClient = { apiClient }
-                                                useQuery = { useQuery }
-                                                currentUser = { currentUser }
+                                                ticketsData = { projectTicketsData }
+                                                useState = { useState }
                                                 useEffect = { useEffect }
                                                 HideTableCell = { HideTableCell }
                                                 MaterialTableCell = { MaterialTableCell }
@@ -131,7 +125,7 @@ const Index = () => {
                 aria-describedby="modal-modal-description"
             >
                 <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <TicketCreate code = { code } handleclose = { handleClose } getNewTickets = { getNewTickets }/>
+                    <TicketCreate code = { code } handleclose = { handleClose } getUpdatedProjectTickets = { getUpdatedProjectTickets }/>
                 </FormContainer>
             </MaterialModal>
             <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>

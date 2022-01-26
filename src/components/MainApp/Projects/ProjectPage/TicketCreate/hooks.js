@@ -1,9 +1,7 @@
 import { useContext, useRef } from 'react'
 import { AppContext } from '../../../../Context/AppContext'
 import { postAPI } from '../../../../Helpers/postAPI'
-import { projectListUrl, ticketListUrl, userListUrl, createTicketAuditText } from '../../../../Helpers/constants'
-import { useQuery } from 'react-query'
-import { apiClient } from '../../../../Helpers/apiClient'
+import { projectListUrl, ticketListUrl, createTicketAuditText } from '../../../../Helpers/constants'
 
 
 const useHooks = ( code  ) => {
@@ -12,8 +10,6 @@ const useHooks = ( code  ) => {
     const description = useRef()
     const status = useRef()
     const assignee = useRef()
-
-    // const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
 
     const handleCreateTicket = ( e, handleclose, getNewTickets ) => {
         e.preventDefault()

@@ -34,8 +34,8 @@ const Index = () => {
     const handleClose = () => setOpen(false)
 
     const {isLoading: isLoadingUser, data: userData, refetch: getNewProjects  } = useQuery(`${user_username}`, apiClient(`${userListUrl}/${user_username}`, currentUser.headers, null, 'GET'), { retry: false })
-    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
-
+    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projects', apiClient(projectListUrl, currentUser.headers, null, 'GET'), { retry: false })
+    const userDetails = userData?.attributes
     
     useEffect(() => {
         setIsLoading( isLoadingUser || isLoadingProjects )
@@ -43,8 +43,7 @@ const Index = () => {
         // eslint-disable-next-line
     }, [ isLoadingUser, isLoadingProjects ])
 
-    const userProjectsData = userData?.relationships?.projects?.data
-    const userProjects = projectsData?.filter(project => userProjectsData?.map(userProject => { return userProject.id }).includes(project.id))
+    const userProjects = userDetails?.projects
     
     return (
         <ColumnContainer maxWidth = 'xl'>
@@ -81,12 +80,6 @@ const Index = () => {
                                     <HideTableCell>
                                         Description
                                     </HideTableCell>
-                                    <HideTableCell>
-                                        # Tickets
-                                    </HideTableCell>
-                                    <MaterialTableCell>
-                                        # Members
-                                    </MaterialTableCell>
                                     <HideTableCell>
                                         Created At
                                     </HideTableCell>
@@ -132,7 +125,7 @@ const Index = () => {
                     />
                 </FormContainer>
             </MaterialModal>
-            { projectsData && userProjectsData && (userProjectsData.length !== projectsData.length) &&
+            { projectsData && userProjects && (userProjects.length !== projectsData.length) &&
                 <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
             }
         </ColumnContainer>

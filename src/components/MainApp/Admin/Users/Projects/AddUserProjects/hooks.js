@@ -8,7 +8,6 @@ const useHooks = ( userData ) => {
     const { currentUser } = useContext( AppContext )
 
     const handleAddUserProjects = ( e, handleclose, getNewProjects, selectedProjects ) => {
-        console.log(currentUser.headers)
         e.preventDefault()
         const requestData = {
             user_id: userData.id,

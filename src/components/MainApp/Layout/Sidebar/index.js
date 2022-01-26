@@ -101,7 +101,7 @@ export const Toolbar = styled( MaterialToolbar ) `
 `
 
 export default function MiniDrawer(props) {
-    const { myProjects, handleLogout, stringAvatar } = useHooks()
+    const { currentUserProjectsData: myProjects, handleLogout, stringAvatar } = useHooks()
     const theme = useTheme()
     const [open, setOpen] = useState(false)
     const [openCollapse, setOpenCollapse] = useState(false)

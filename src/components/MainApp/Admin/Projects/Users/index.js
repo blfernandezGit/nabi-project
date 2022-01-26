@@ -34,21 +34,20 @@ const Index = () => {
     const handleClose = () => setOpen(false)
 
     const {isLoading: isLoadingProject, data: projectData, refetch: getNewUsers  } = useQuery(`${project_code}`, apiClient(`${projectListUrl}/${project_code}`, currentUser.headers, null, 'GET'), { retry: false })
-    const {isLoading: isLoadingUsers, data: usersData } = useQuery('userList', apiClient(userListUrl, currentUser.headers, null, 'GET'), { retry: false })
-
+    const {isLoading: isLoadingUsers, data: usersData  } = useQuery('users', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), { retry: false })
+    const projectDetails = projectData?.attributes
     
     useEffect(() => {
         setIsLoading( isLoadingProject || isLoadingUsers )
-        setTitle(`Users in ${ project_code }`)
+        setTitle(`Users in ${ projectDetails?.name }`)
         // eslint-disable-next-line
     }, [ isLoadingProject, isLoadingUsers ])
 
-    const projectUsersData = projectData?.relationships?.users?.data
-    const projectUsers = usersData?.filter(user => projectUsersData?.map(projectUser => { return projectUser.id }).includes(user.id))
+    const projectUsers = projectDetails?.users
     
     return (
         <ColumnContainer maxWidth = 'xl'>
-            <MainLoading isLoading = { isLoadingUsers } />
+            <MainLoading isLoading = { isLoadingProject } />
             <TitleContainer maxWidth = 'l'>
                 <MaterialGrid container>
                     <MaterialGrid item xs={12} sm={12} md={6}>
@@ -88,12 +87,6 @@ const Index = () => {
                                         Email Address
                                     </HideTableCell>
                                     <HideTableCell>
-                                        # Tickets
-                                    </HideTableCell>
-                                    <MaterialTableCell>
-                                        # Projects
-                                    </MaterialTableCell>
-                                    <HideTableCell>
                                         Created At
                                     </HideTableCell>
                                     <HideTableCell>
@@ -107,7 +100,7 @@ const Index = () => {
                                 .filter( user => debouncedFilter === '' || user?.attributes?.username?.toLowerCase().includes(debouncedFilter?.toLowerCase()) )
                                 .map( user => {
                                     return <User
-                                                key = { user.id } 
+                                                key = { user.username } 
                                                 user = { user }
                                                 projectUsers = { projectUsers }
                                                 HideTableCell = { HideTableCell }
@@ -138,7 +131,7 @@ const Index = () => {
                     />
                 </FormContainer>
             </MaterialModal>
-            { usersData && projectUsersData && (projectUsersData.length !== usersData.length) &&
+            { usersData && projectUsers && (projectUsers.length !== usersData.length) &&
                 <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
             }
         </ColumnContainer>

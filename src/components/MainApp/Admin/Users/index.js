@@ -31,15 +31,13 @@ const Index = () => {
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingUsers, data: userData, refetch: getNewUsers } = useQuery('userList', apiClient(userListUrl, currentUser.headers, null, 'GET'), { retry: false })
+    const {isLoading: isLoadingUsers, data: userData, refetch: getNewUsers } = useQuery('users', apiClient(userListUrl, currentUser.headers, null, 'GET'), { retry: false })
 
     useEffect(() => {
         setIsLoading( isLoadingUsers )
         setTitle('All Users')
         // eslint-disable-next-line
     }, [ isLoadingUsers ])
-
-    console.log(userData)
     
     return (
         <ColumnContainer maxWidth = 'xl'>

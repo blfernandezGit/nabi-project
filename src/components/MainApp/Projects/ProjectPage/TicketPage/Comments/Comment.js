@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { detailedDateFormatter, userListUrl } from '../../../../../Helpers/constants'
+import { detailedDateFormatter } from '../../../../../Helpers/constants'
 import { Paper, Avatar } from './customComponents'
 import { TitleContainer } from '../../../../Layout/Elements'
 import useHooks from '../hooks'
@@ -11,35 +11,31 @@ import { CommentContainer } from '../customComponents'
 import MaterialModal from '@mui/material/Modal'
 
 
-const Comment = ({ code,ticket_no, getNewComments, comment, apiClient, useQuery, currentUser }) => {
-    const commentDetails = comment?.attributes
+const Comment = ({  code, ticket_no, getNewComments, comment, currentUser }) => {
     const {  stringAvatar } = useHooks()
     const [ isAuthor, setIsAuthor ] = useState()
     const [ open, setOpen ] = useState(false)
     const handleOpen = () => setOpen(true)
     const handleClose = () => setOpen(false)
 
-    const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
-    const author = usersData && commentDetails?.user_id && usersData.filter(author => author?.id === commentDetails?.user_id )[0]?.attributes
-
     useEffect(() => {
-        if( author?.username === currentUser?.details?.username ) {
+        if( comment?.author?.username === currentUser?.details?.username ) {
             setIsAuthor( true )
         }
         // eslint-disable-next-line
-    }, [ isLoadingUsers ])
+    }, [])
 
     return (
         <>
         <Paper sx = {{ my: 2, py: 2 }}>
             <TitleContainer sx = {{ m: 1 }}>
-                {author &&
+                {comment?.author &&
                     <>
-                        <Avatar {...stringAvatar(`${author?.first_name} ${author?.last_name}`)}/>
+                        <Avatar {...stringAvatar(`${comment?.author?.first_name} ${comment?.author?.last_name}`)}/>
                         <MaterialTypography
                             variant = "h7"
                             sx = {{ m: 1 }}>
-                            {author?.username} on { detailedDateFormatter.format(Date.parse(commentDetails?.created_at)) }
+                            {comment?.author?.username} on { detailedDateFormatter.format(Date.parse(comment?.created_at)) }
                             { isAuthor &&
                                 <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpen}>
                                     <MaterialEditIcon />
@@ -52,7 +48,7 @@ const Comment = ({ code,ticket_no, getNewComments, comment, apiClient, useQuery,
             <MaterialTypography
                 variant = "body1"
                 sx = {{ m: 2 }}>
-                { commentDetails?.comment_text }
+                { comment?.comment_text }
             </MaterialTypography>
         </Paper>
         <MaterialModal
@@ -70,7 +66,7 @@ const Comment = ({ code,ticket_no, getNewComments, comment, apiClient, useQuery,
                     handleclose = { handleClose } 
                     getNewComments = { getNewComments }
                     commentId = { comment?.id }
-                    origCommentText = { commentDetails?.comment_text }
+                    origCommentText = { comment?.comment_text }
                 />
             </CommentContainer>
         </MaterialModal>

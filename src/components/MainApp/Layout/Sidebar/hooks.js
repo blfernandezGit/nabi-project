@@ -2,18 +2,15 @@ import { useContext } from 'react'
 import { AppContext } from '../../../Context/AppContext'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../../Helpers/apiClient'
-import { userListUrl, projectListUrl } from '../../../Helpers/constants'
+import { userListUrl, projectListUrl, currentUserProjectsUrl } from '../../../Helpers/constants'
 import Cookies from 'js-cookie'
 
 const useHooks = () => {
     const { currentUser, setCurrentUser, setIsSignedIn } = useContext( AppContext )
     
-    const {isLoading: isLoadingUser, data: userData } = useQuery(`${currentUser.details.username}`, apiClient(`${userListUrl}/${currentUser.details.username}`, currentUser.headers, null, 'GET'), {retry: false})
-    const {isLoading: isLoadingProjects, data: projectsData } = useQuery('projectList', apiClient(projectListUrl, currentUser.headers, null, 'GET'), {retry: false})
+    const {isLoading: isLoadingCurrentUserProjects, data: currentUserProjectsData } = useQuery(`${currentUser?.details?.username}_projects`, apiClient(currentUserProjectsUrl, currentUser.headers, null, 'GET'), {retry: false})
 
-    const myProjectsData = userData?.relationships?.projects?.data
-    const myProjects = projectsData?.filter(project => myProjectsData?.map(myProject => { return myProject.id }).includes(project.id))
-
+    console.log(currentUserProjectsData)
     const handleLogout = () => {
         setIsSignedIn(false)
         Cookies.remove('user')
@@ -50,7 +47,7 @@ const useHooks = () => {
     }
 
     return {
-        myProjects,
+        currentUserProjectsData,
         handleLogout,
         stringAvatar
     }

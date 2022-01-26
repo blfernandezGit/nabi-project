@@ -2,14 +2,11 @@ import { useContext, useRef } from 'react'
 import { AppContext } from '../../../../../Context/AppContext'
 import { postAPI } from '../../../../../Helpers/postAPI'
 import { projectListUrl, ticketListUrl, commentsListUrl, createCommentAuditText } from '../../../../../Helpers/constants'
-import { useQuery } from 'react-query'
-import { apiClient } from '../../../../../Helpers/apiClient'
 
 
 const useHooks = ( code, ticket_no, commentId  ) => {
     const { currentUser } = useContext( AppContext )
     const comment_text = useRef()
-    // const {isLoading: isLoadingUsers, data: usersData, refetch: getUsersData } = useQuery('userList', apiClient(`${userListUrl}`, currentUser.headers, null, 'GET'), {retry: false, enabled:false})
 
     const handleEditComment = ( e, handleclose, getNewComments ) => {
         e.preventDefault()
