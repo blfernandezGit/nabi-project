@@ -4,11 +4,12 @@ import { useQuery } from 'react-query'
 import { useParams } from 'react-router-dom'
 import { apiClient } from '../../../../Helpers/apiClient'
 import useHooks from './hooks'
-import { userListUrl, projectListUrl, ticketListUrl, commentsListUrl, detailedDateFormatter } from '../../../../Helpers/constants'
+import { projectListUrl, ticketListUrl, detailedDateFormatter } from '../../../../Helpers/constants'
 import { ColumnContainer, TitleContainer } from '../../../Layout/Elements'
 import FloatingButton from '../../../Layout/FloatingButton'
 import TicketEdit from '../TicketEdit'
 import Comments from './Comments'
+import RelatedTickets from './RelatedTickets'
 import CommentCreate from './CommentCreate'
 import MainLoading from '../../../Layout/LoadingScreen/MainLoading'
 import { FormContainer } from '../customComponents'
@@ -136,6 +137,7 @@ const Index = () => {
                     </MaterialTypography>
                 </MaterialContainer>
             }
+            <RelatedTickets related_tickets = { ticketDetails?.related_tickets || [] } inverse_related_tickets = { ticketDetails?.inverse_related_tickets || [] } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
             <Comments comments = { ticketDetails?.comments } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
             <MaterialModal
                 open={open}
