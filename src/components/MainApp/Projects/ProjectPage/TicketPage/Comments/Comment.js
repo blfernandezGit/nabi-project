@@ -9,6 +9,8 @@ import MaterialEditIcon from '@mui/icons-material/Edit'
 import CommentEdit from '../CommentEdit'
 import { CommentContainer } from '../customComponents'
 import MaterialModal from '@mui/material/Modal'
+import MaterialChip from '@mui/material/Chip'
+import MaterialAvatar from '@mui/material/Avatar'
 
 
 const Comment = ({  code, ticket_no, getNewComments, comment, currentUser }) => {
@@ -28,20 +30,19 @@ const Comment = ({  code, ticket_no, getNewComments, comment, currentUser }) => 
     return (
         <>
         <Paper sx = {{ my: 2, py: 2 }}>
-            <TitleContainer sx = {{ m: 1 }}>
+            <TitleContainer sx={{justifyContent: 'space-between'}}>
                 {comment?.author &&
                     <>
-                        <Avatar {...stringAvatar(`${comment?.author?.first_name} ${comment?.author?.last_name}`)}/>
-                        <MaterialTypography
-                            variant = "h7"
-                            sx = {{ m: 1 }}>
-                            {comment?.author?.username} on { detailedDateFormatter.format(Date.parse(comment?.created_at)) }
-                            { isAuthor &&
-                                <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpen}>
-                                    <MaterialEditIcon />
-                                </MaterialIconButton>
-                            }
-                        </MaterialTypography>
+                    <MaterialChip 
+                        label={`${comment?.author?.username} on ${ detailedDateFormatter.format(Date.parse(comment?.created_at)) }`}
+                        avatar={<MaterialAvatar {...stringAvatar(`${comment?.author?.first_name} ${comment?.author?.last_name}`)}/>}
+                        variant="outlined"
+                    />
+                        { isAuthor &&
+                            <MaterialIconButton size = 'small' component = 'span' onClick = {handleOpen}>
+                                <MaterialEditIcon />
+                            </MaterialIconButton>
+                        }
                     </>
                 }
             </TitleContainer>

@@ -10,7 +10,6 @@ const useHooks = () => {
     
     const {isLoading: isLoadingCurrentUserProjects, data: currentUserProjectsData } = useQuery(`${currentUser?.details?.username}_projects`, apiClient(currentUserProjectsUrl, currentUser.headers, null, 'GET'), {retry: false})
 
-    console.log(currentUserProjectsData)
     const handleLogout = () => {
         setIsSignedIn(false)
         Cookies.remove('user')

@@ -21,6 +21,7 @@ import MaterialMessageIcon from '@mui/icons-material/Message'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
 import MaterialModal from '@mui/material/Modal'
+import MaterialStack from '@mui/material/Stack'
 
 const Index = () => {
     const { currentUser, setTitle } = useContext( AppContext )
@@ -39,8 +40,8 @@ const Index = () => {
     const { isLoading: isLoadingTicket, data: ticketData, refetch: getUpdatedTicket } = useQuery( `${ code }_${ ticket_no }`, apiClient(`${projectListUrl}/${code}/${ticketListUrl}/${ticket_no}`, currentUser.headers, null, 'GET' ), {retry: false})
     const ticketDetails = ticketData?.attributes
    
-    const assignee = ticketData?.assignee?.username
-    const author = ticketData?.author?.username
+    const assignee = ticketDetails?.assignee
+    const author = ticketDetails?.author
 
     useEffect(() => {
         if( author?.username === currentUser?.details?.username ) {
@@ -98,17 +99,18 @@ const Index = () => {
                     }
                 </MaterialTypography>
             </TitleContainer>
-            <TitleContainer maxWidth = 'md' sx = {{ my: 2 }}>
-                {author &&
-                    <>
-                        <MaterialAvatar  {...stringAvatar(`${author.first_name} ${author.last_name}`)}/>
-                        <MaterialTypography
-                            variant = "h7"
-                            sx = {{ m: 1 }}>
-                            {author?.username} on { detailedDateFormatter.format(Date.parse(ticketDetails?.created_at)) }
-                        </MaterialTypography>
-                    </>
+            <TitleContainer maxWidth = 'md' sx = {{ mb: 2 }}>
+                <MaterialStack direction="row" spacing={1}>
+                {ticketData &&
+                    <MaterialChip 
+                        label={`${author?.username} on ${ detailedDateFormatter.format(Date.parse(ticketDetails?.created_at)) }`}
+                        avatar={<MaterialAvatar {...stringAvatar(`${author.first_name} ${author.last_name}`)}/>}
+                    />
                 }
+                {ticketData && assignee &&
+                    <MaterialChip label={`Assigned to: ${assignee?.username}`} color={color} variant="outlined"></MaterialChip>
+                }
+                </MaterialStack>
             </TitleContainer>
             <MainLoading isLoading = { isLoading } />
             <MaterialContainer maxWidth = 'md'>
