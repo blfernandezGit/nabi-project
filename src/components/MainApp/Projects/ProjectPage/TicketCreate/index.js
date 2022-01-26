@@ -1,15 +1,41 @@
-import { Formik } from 'formik'
+import { useContext, useEffect, useState } from 'react'
+import { Formik, Field as FormikField } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
+import { useQuery } from 'react-query'
+import { apiClient } from '../../../../Helpers/apiClient'
+import { AppContext } from '../../../../Context/AppContext'
+import { projectListUrl } from '../../../../Helpers/constants'
 import { Button } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialMenuItem from '@mui/material/MenuItem'
+import MaterialAutocomplete from '@mui/material/Autocomplete'
+
 
 const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
     const { title, description, status, handleCreateTicket,
         // assignee
-     } = useHooks(code);
+     } = useHooks(code)
+
+     const { currentUser } = useContext ( AppContext )
+     const [ projectUsers , setProjectUsers ] = useState()
+     const [selectedAssignee, setSelectedAssignee] = useState(null)
+ 
+     const { isLoading: isLoadingProject, data: projectData } = useQuery( `${ code }`, apiClient(`${projectListUrl}/${code}`, currentUser.headers, null, 'GET' ), {retry: false})
+
+     useEffect(() => {
+        setProjectUsers(
+            projectData?.attributes?.users
+            .map( user => {
+                return ({
+                    label: user?.username,
+                    id: user?.id 
+                })
+            })
+        )
+    //eslint-disable-next-line
+    }, [isLoadingProject])
 
     return (
         <>
@@ -40,7 +66,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                 isValid,
                 dirty
             }) => (
-                <form onSubmit = { handleSubmit }>
+                <form onSubmit = { handleSubmit } style= {{width: '80%'}}>
                     <MaterialTextField
                         label = "Title"
                         type = "text"
@@ -65,7 +91,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                         error = {Boolean( touched.status && errors.status )}
                         helperText = { touched.status && errors.status }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mt: 3 }}
                         select
                     >
                         <MaterialMenuItem value='Open'>Open</MaterialMenuItem>
@@ -74,19 +100,26 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                         <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
                         <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
                     </MaterialTextField>
-                    {/* <MaterialTextField
-                        label = "Assignee"
-                        type = "text"
-                        name = "assignee"
-                        onChange = { handleChange }
-                        onBlur = { handleBlur }
-                        value = { values.assignee }
-                        inputRef = { assignee }
-                        error = {Boolean( touched.assignee && errors.assignee )}
-                        helperText = { touched.assignee && errors.assignee }
-                        fullWidth
-                        sx = {{ mb: 3 }}
-                    /> */}
+                    {projectUsers &&
+                        <MaterialAutocomplete
+                            value = { selectedAssignee }
+                            name = 'assignee'
+                            options={ projectUsers }
+                            onChange={(e, value) => {
+                                setSelectedAssignee(value)
+                            }}
+                            isOptionEqualToValue={(option, value) => option?.id === value?.id}
+                            sx={{ width: 300, my: 3 }}
+                            renderInput={params => (
+                                <MaterialTextField
+                                    {...params}
+                                    label="Assignee"
+                                    name = 'assignee'
+                                    fullWidth
+                                />
+                            )}
+                        />
+                    }
                     <MaterialTextField
                         label = "Description"
                         type = "text"
@@ -105,7 +138,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                     <Button 
                         type = "submit"
                         disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
-                        onClick = {( e ) => handleCreateTicket( e, handleclose, getUpdatedProjectTickets )}
+                        onClick = {( e ) => handleCreateTicket( e, handleclose, getUpdatedProjectTickets, selectedAssignee )}
                         variant = "contained"
                         size = "large"
                     >

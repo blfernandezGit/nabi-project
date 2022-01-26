@@ -9,15 +9,14 @@ const useHooks = ( code  ) => {
     const title = useRef()
     const description = useRef()
     const status = useRef()
-    const assignee = useRef()
 
-    const handleCreateTicket = ( e, handleclose, getNewTickets ) => {
+    const handleCreateTicket = ( e, handleclose, getNewTickets, selectedAssignee ) => {
         e.preventDefault()
         const requestData = {
             title: title.current.value,
             description: description.current.value,
             status: status.current.value,
-            // assignee_id: assignee.current.value
+            assignee_id: selectedAssignee?.id,
         }
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
         postAPI(`${projectListUrl}/${code}/${ticketListUrl}`, requestData, currentUser.headers, createTicketAuditText, 'POST')
@@ -34,8 +33,7 @@ const useHooks = ( code  ) => {
         handleCreateTicket,
         title,
         description,
-        status,
-        assignee
+        status
     }
 }
 

@@ -20,7 +20,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
 
     const { currentUser } = useContext ( AppContext )
     const [ projectUsers , setProjectUsers ] = useState()
-    const [selectedAssignee, setSelectedAssignee] = useState(origAssignee);
+    const [selectedAssignee, setSelectedAssignee] = useState(origAssignee)
 
     const { isLoading: isLoadingProject, data: projectData } = useQuery( `${ code }`, apiClient(`${projectListUrl}/${code}`, currentUser.headers, null, 'GET' ), {retry: false})
 

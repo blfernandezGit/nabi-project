@@ -101,7 +101,7 @@ const Index = () => {
             </TitleContainer>
             <TitleContainer maxWidth = 'md' sx = {{ mb: 2 }}>
                 <MaterialStack 
-                    direction={{ sm: 'column', md: 'row' }}
+                    direction={{ xs: 'column', sm: 'column', md: 'row' }}
                     spacing={1}>
                 {ticketData &&
                     <MaterialChip 
