@@ -26,9 +26,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                 }}
                 validationSchema={Yup.object().shape({
                     title: Yup.string().max(255).required('Title is required'),
-                    description: Yup.string().nullable(),
-                    status: Yup.string().required('Status is required'),
-                    // assignee: Yup.string().nullable()
+                    status: Yup.string().required('Status is required')
                 })}
             >
             {({

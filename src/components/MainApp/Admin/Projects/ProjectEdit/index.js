@@ -22,8 +22,7 @@ const Index = ({ code, origName, origDescription, handleclose, getNewProjects })
             <Formik
                 initialValues={{ name: origName, description: origDescription }}
                 validationSchema={Yup.object().shape({
-                    name: Yup.string().max(255).required('Project Name is required'),
-                    description: Yup.string().nullable(),
+                    name: Yup.string().max(255).required('Project Name is required')
                 })}
             >
             {({

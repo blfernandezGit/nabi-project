@@ -100,14 +100,16 @@ const Index = () => {
                 </MaterialTypography>
             </TitleContainer>
             <TitleContainer maxWidth = 'md' sx = {{ mb: 2 }}>
-                <MaterialStack direction="row" spacing={1}>
+                <MaterialStack 
+                    direction={{ sm: 'column', md: 'row' }}
+                    spacing={1}>
                 {ticketData &&
                     <MaterialChip 
                         label={`${author?.username} on ${ detailedDateFormatter.format(Date.parse(ticketDetails?.created_at)) }`}
                         avatar={<MaterialAvatar {...stringAvatar(`${author.first_name} ${author.last_name}`)}/>}
                     />
                 }
-                {ticketData && assignee &&
+                {ticketData && assignee?.username &&
                     <MaterialChip label={`Assigned to: ${assignee?.username}`} color={color} variant="outlined"></MaterialChip>
                 }
                 </MaterialStack>
@@ -147,7 +149,7 @@ const Index = () => {
                         origTitle = { ticketDetails?.title } 
                         origDescription = {ticketDetails?.description}
                         origStatus = { ticketDetails?.status }
-                        // origAssignee = { ticketDetails?.assignee_id }
+                        origAssignee = { ticketDetails?.assignee?.username ? {label: ticketDetails?.assignee?.username, id: ticketDetails?.assignee?.id} : null }
                         origResolution = { ticketDetails?.resolution }
                         code = { code } 
                         ticket_no = { ticketDetails?.ticket_no }

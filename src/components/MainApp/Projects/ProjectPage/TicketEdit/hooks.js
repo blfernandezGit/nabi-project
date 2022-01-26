@@ -9,16 +9,15 @@ const useHooks = ( code, ticket_no ) => {
     const title = useRef()
     const description = useRef()
     const status = useRef()
-    const assignee = useRef()
     const resolution = useRef()
 
-    const handleEditTicket = ( e, handleclose, getUpdatedTicket ) => {
+    const handleEditTicket = ( e, handleclose, getUpdatedTicket, selectedAssignee ) => {
         e.preventDefault()
         const requestData = {
             title: title.current.value,
             description: description.current.value,
             status: status.current.value,
-            // assignee_id: assignee.current.value,
+            assignee_id: selectedAssignee?.id,
             resolution: resolution.current.value
         }
         // Call function from useAxiosPost.js - postAPI(url, requestData, headers, auditTrail, method)
@@ -37,7 +36,6 @@ const useHooks = ( code, ticket_no ) => {
         title,
         description,
         status,
-        assignee,
         resolution
     }
 }
