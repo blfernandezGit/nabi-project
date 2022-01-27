@@ -9,6 +9,8 @@ export const commentsListUrl = 'comments'
 export const updateUserProjectsUrl = 'update_user_projects'
 export const updateProjectUsersUrl = 'update_project_users'
 export const currentUserProjectsUrl = 'current_user_projects'
+export const addRelatedTicketUrl = 'add_related_ticket'
+export const deleteRelatedTicketUrl = 'delete_related_ticket'
 
 // Audit Trail
 export const loginAuditText = 'Create User Session'

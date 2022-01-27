@@ -13,8 +13,6 @@ import RelatedTickets from './RelatedTickets'
 import CommentCreate from './CommentCreate'
 import Dialog from '../../../Layout/Dialog'
 import MainLoading from '../../../Layout/LoadingScreen/MainLoading'
-import { FormContainer } from '../customComponents'
-import { CommentContainer } from './customComponents'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
 import MaterialChip from '@mui/material/Chip'
@@ -22,7 +20,6 @@ import MaterialAvatar from '@mui/material/Avatar'
 import MaterialMessageIcon from '@mui/icons-material/Message'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
-import MaterialModal from '@mui/material/Modal'
 import MaterialStack from '@mui/material/Stack'
 
 const Index = () => {
@@ -133,12 +130,21 @@ const Index = () => {
                     </MaterialTypography>
                     <MaterialTypography
                         variant = "body1"
-                        sx ={{mb: 2}}>
+                        sx ={{mb: 2, whiteSpace: 'pre-line'}}>
                         {ticketDetails?.resolution}
                     </MaterialTypography>
                 </MaterialContainer>
             }
-            <RelatedTickets related_tickets = { ticketDetails?.related_tickets || [] } inverse_related_tickets = { ticketDetails?.inverse_related_tickets || [] } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
+            <RelatedTickets 
+                related_tickets = { ticketDetails?.related_tickets || [] } 
+                inverse_related_tickets = { ticketDetails?.inverse_related_tickets || [] } 
+                getUpdatedTicket = { getUpdatedTicket } 
+                currentUser = { currentUser } 
+                code = { code } 
+                ticket_no = { ticket_no } 
+                useState = { useState }
+                ticketData = { ticketData }
+            />
             <Comments comments = { ticketDetails?.comments } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
             <Dialog
                 open={open}
