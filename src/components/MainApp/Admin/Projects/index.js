@@ -7,6 +7,7 @@ import { apiClient } from '../../../Helpers/apiClient'
 import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../Layout/Elements'
 import useDebounce from '../../../Helpers/useDebounce'
 import MainLoading from '../../Layout/LoadingScreen/MainLoading'
+import Dialog from '../../Layout/Dialog'
 import Search from '../../Layout/Search'
 import ProjectCreate from './ProjectCreate'
 import FloatingButton from '../../Layout/FloatingButton'
@@ -111,16 +112,14 @@ const Index = () => {
                         </MaterialTable>
                     </MaterialTableContainer>
             </ColumnContainer>
-            <MaterialModal
+            <Dialog
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="create-project-modal"
-                aria-describedby="modal-for-creating-projects-in-admin-screen"
+                setOpen={setOpen}
+                maxWidth = 'md'
+                title='Create Project'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <ProjectCreate handleclose = { handleClose } getNewProjects = { getNewProjects }/>
-                </FormContainer>
-            </MaterialModal>
+                <ProjectCreate handleclose = { handleClose } getNewProjects = { getNewProjects }/>
+            </Dialog>
             <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
         </ColumnContainer>
     )

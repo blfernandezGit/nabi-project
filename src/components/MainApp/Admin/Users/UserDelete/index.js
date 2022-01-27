@@ -2,30 +2,23 @@ import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
-import MaterialMenuItem from '@mui/material/MenuItem'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
+import MaterialDialogContentText from '@mui/material/DialogContentText'
 
 const Index = ({ username, handleclose, getNewUsers }) => {
     const { inputUsername, handleDeleteUser } = useHooks( username );
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Delete User
-            </MaterialTypography>
-            <MaterialTypography
+            <MaterialDialogContentText
                 color="error"
                 variant="subtitle2"
                 sx = {{ my: 2 }}
             >
-                Warning: This action will delete the user permanently as well as all the tickets and comments created by the user. Please type username of user to be deleted to proceed.
-            </MaterialTypography>
+                Warning: This action will delete the selected user permanently as well as all the tickets and comments created by the user. Please type username of user to be deleted to proceed.
+            </MaterialDialogContentText>
             <Formik
                 initialValues={{ inputUsername: '' }}
                 validationSchema={Yup.object().shape({
@@ -55,15 +48,19 @@ const Index = ({ username, handleclose, getNewUsers }) => {
                         fullWidth
                         sx = {{ my: 2 }}
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting }
-                        onClick = {( e ) => handleDeleteUser( e, handleclose, getNewUsers )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Delete User
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled = { isSubmitting }
+                            onClick = {( e ) => handleDeleteUser( e, handleclose, getNewUsers )}
+                            autoFocus
+                        >
+                            Delete User
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

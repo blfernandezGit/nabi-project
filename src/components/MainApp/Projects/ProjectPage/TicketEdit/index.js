@@ -12,6 +12,8 @@ import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialMenuItem from '@mui/material/MenuItem'
 import MaterialAutocomplete from '@mui/material/Autocomplete'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResolution, code, ticket_no, handleclose, getUpdatedTicket }) => {
     const { title, description, status, resolution, handleEditTicket,
@@ -35,20 +37,12 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
             })
         )
     //eslint-disable-next-line
-    }, [isLoadingProject])
+    }, [projectData])
 
     return (
         <>
             <MainLoading isLoading = { isLoadingProject } />
-            { !isLoadingProject &&
             <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Edit Ticket
-            </MaterialTypography>
             <Formik
                 initialValues={{ title: origTitle, description: origDescription || '', status: origStatus, resolution: origResolution || '',
                 assignee: origAssignee || {label: '', id: ''}
@@ -66,10 +60,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                 handleChange,
                 handleSubmit,
                 isSubmitting,
-                isValid,
-                setFieldTouched,
-                setFieldValue,
-                onBlur
+                isValid
             }) => (
                 <form onSubmit = { handleSubmit }>
                     <MaterialTextField
@@ -105,7 +96,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                         <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
                         <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
                     </MaterialTextField>
-                    {projectUsers &&
+                    {projectData && projectUsers &&
                         <MaterialAutocomplete
                             value = { selectedAssignee }
                             name = 'assignee'
@@ -114,7 +105,7 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                                 setSelectedAssignee(value)
                             }}
                             isOptionEqualToValue={(option, value) => option?.id === value?.id}
-                            sx={{ width: 300, mt: 2 }}
+                            sx={{ mt: 2 }}
                             renderInput={params => (
                                 <MaterialTextField
                                     {...params}
@@ -155,20 +146,23 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                         rows = {4}
                         sx = {{ my: 2 }}
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting ? isSubmitting : !isValid }
-                        onClick = {( e ) => handleEditTicket( e, handleclose, getUpdatedTicket, selectedAssignee )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Update Ticket
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            onClick = {( e ) => handleEditTicket( e, handleclose, getUpdatedTicket, selectedAssignee )}
+                            disabled = { isSubmitting ? isSubmitting : !isValid }
+                            autoFocus
+                        >
+                            Update Bug
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>
             </>
-            }
         </>
     )
 }

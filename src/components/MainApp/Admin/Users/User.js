@@ -3,10 +3,10 @@ import { Link } from "react-router-dom"
 import { dateFormatter } from '../../../Helpers/constants'
 import UserEdit from './UserEdit'
 import UserDelete from './UserDelete'
+import Dialog from '../../Layout/Dialog'
 import MaterialDeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
-import MaterialModal from '@mui/material/Modal'
 import MaterialCancelIcon from '@mui/icons-material/Cancel'
 import MaterialCheckCircleIcon from '@mui/icons-material/CheckCircle'
 import MaterialLink from '@mui/material/Link'
@@ -87,42 +87,36 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
                     </MaterialIconButton>
                 </MaterialTableCell>
             </MaterialTableRow>
-            <MaterialModal
+            <Dialog
                 open={openEdit}
-                onClose={handleCloseEdit}
-                aria-labelledby="edit-user-modal"
-                aria-describedby="modal-for-editing-users"
-                sx = {{overflow: 'scroll'}}
+                setOpen={setOpenEdit}
+                maxWidth = 'md'
+                title='Edit User'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <UserEdit 
-                        username = { userDetails?.username } 
-                        handleOpen = { handleOpenEdit }
-                        handleclose = { handleCloseEdit } 
-                        getNewUsers = { getNewUsers }
-                        origFirstName = { userDetails?.first_name }
-                        origLastName = { userDetails?.last_name }
-                        origIsAdmin = { userDetails?.is_admin }
-                    />
-                </FormContainer>
-            </MaterialModal>
-            <MaterialModal
+                <UserEdit 
+                    username = { userDetails?.username } 
+                    handleOpen = { handleOpenEdit }
+                    handleclose = { handleCloseEdit } 
+                    getNewUsers = { getNewUsers }
+                    origFirstName = { userDetails?.first_name }
+                    origLastName = { userDetails?.last_name }
+                    origIsAdmin = { userDetails?.is_admin }
+                />
+            </Dialog>
+            <Dialog
                 open={openDelete}
-                onClose={handleCloseDelete}
-                aria-labelledby="delete-user-modal"
-                aria-describedby="modal-for-deleting-users"
-                sx = {{overflow: 'scroll'}}
+                setOpen={setOpenDelete}
+                maxWidth = 'md'
+                title='Delete User'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <UserDelete 
-                        code = { userDetails?.code } 
-                        username = { userDetails?.username } 
-                        handleOpen = { handleOpenDelete }
-                        handleclose = { handleCloseDelete } 
-                        getNewUsers = { getNewUsers }
-                    />
-                </FormContainer>
-            </MaterialModal>
+                <UserDelete 
+                    code = { userDetails?.code } 
+                    username = { userDetails?.username } 
+                    handleOpen = { handleOpenDelete }
+                    handleclose = { handleCloseDelete } 
+                    getNewUsers = { getNewUsers }
+                />
+            </Dialog>
         </>
     )
 }

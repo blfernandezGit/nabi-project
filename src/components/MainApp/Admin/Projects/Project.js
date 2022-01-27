@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { dateFormatter } from '../../../Helpers/constants'
 import ProjectEdit from './ProjectEdit'
 import ProjectDelete from './ProjectDelete'
+import Dialog from '../../Layout/Dialog'
 import MaterialDeleteForeverIcon from '@mui/icons-material/DeleteForever'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import MaterialIconButton from '@mui/material/IconButton'
@@ -68,41 +69,35 @@ const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, Ma
                     </MaterialIconButton>
                 </MaterialTableCell>
             </MaterialTableRow>
-            <MaterialModal
+            <Dialog
                 open={openEdit}
-                onClose={handleCloseEdit}
-                aria-labelledby="edit-project-modal"
-                aria-describedby="modal-for-editing-projects"
-                sx = {{overflow: 'scroll'}}
+                setOpen={setOpenEdit}
+                maxWidth = 'md'
+                title='Edit Project'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <ProjectEdit 
-                        code = { projectDetails?.code } 
-                        handleOpen = { handleOpenEdit }
-                        handleclose = { handleCloseEdit } 
-                        getNewProjects = { getNewProjects }
-                        origName = { projectDetails?.name }
-                        origDescription = { projectDetails?.description }
-                    />
-                </FormContainer>
-            </MaterialModal>
-            <MaterialModal
+                <ProjectEdit 
+                    code = { projectDetails?.code } 
+                    handleOpen = { handleOpenEdit }
+                    handleclose = { handleCloseEdit } 
+                    getNewProjects = { getNewProjects }
+                    origName = { projectDetails?.name }
+                    origDescription = { projectDetails?.description }
+                />
+            </Dialog>
+            <Dialog
                 open={openDelete}
-                onClose={handleCloseDelete}
-                aria-labelledby="delete-project-modal"
-                aria-describedby="modal-for-deleting-projects"
-                sx = {{overflow: 'scroll'}}
+                setOpen={setOpenDelete}
+                maxWidth = 'md'
+                title='Delete Project'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <ProjectDelete 
+                <ProjectDelete 
                         code = { projectDetails?.code } 
                         projectName = { projectDetails?.name } 
                         handleOpen = { handleOpenDelete }
                         handleclose = { handleCloseDelete } 
                         getNewProjects = { getNewProjects }
                     />
-                </FormContainer>
-            </MaterialModal>
+            </Dialog>
         </>
     )
 }

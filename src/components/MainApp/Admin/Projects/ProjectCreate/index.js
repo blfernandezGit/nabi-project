@@ -2,22 +2,15 @@ import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container, Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ handleclose, getNewProjects }) => {
     const { name, description, handleCreateProject } = useHooks();
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Create New Project
-            </MaterialTypography>
             <Formik
                 initialValues={{ name: '', description: '' }}
                 validationSchema={Yup.object().shape({
@@ -64,15 +57,19 @@ const Index = ({ handleclose, getNewProjects }) => {
                         rows = { 5 }
                         sx = {{ my: 3 }}
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
-                        onClick = {( e ) => handleCreateProject( e, handleclose, getNewProjects )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Create Project
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
+                            onClick = {( e ) => handleCreateProject( e, handleclose, getNewProjects )}
+                            autoFocus
+                        >
+                            Create Project
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

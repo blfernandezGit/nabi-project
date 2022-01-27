@@ -11,6 +11,7 @@ import TicketEdit from '../TicketEdit'
 import Comments from './Comments'
 import RelatedTickets from './RelatedTickets'
 import CommentCreate from './CommentCreate'
+import Dialog from '../../../Layout/Dialog'
 import MainLoading from '../../../Layout/LoadingScreen/MainLoading'
 import { FormContainer } from '../customComponents'
 import { CommentContainer } from './customComponents'
@@ -139,44 +140,38 @@ const Index = () => {
             }
             <RelatedTickets related_tickets = { ticketDetails?.related_tickets || [] } inverse_related_tickets = { ticketDetails?.inverse_related_tickets || [] } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
             <Comments comments = { ticketDetails?.comments } getUpdatedTicket = { getUpdatedTicket } currentUser = { currentUser } code = { code } ticket_no = { ticket_no }/>
-            <MaterialModal
+            <Dialog
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="edit-ticket-modal"
-                aria-describedby="modal-for-ticket-editing"
-                sx = {{overflow: 'scroll'}}
+                setOpen={setOpen}
+                maxWidth = 'md'
+                title='Edit Comment'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <TicketEdit 
-                        origTitle = { ticketDetails?.title } 
-                        origDescription = {ticketDetails?.description}
-                        origStatus = { ticketDetails?.status }
-                        origAssignee = { ticketDetails?.assignee?.username ? {label: ticketDetails?.assignee?.username, id: ticketDetails?.assignee?.id} : null }
-                        origResolution = { ticketDetails?.resolution }
-                        code = { code } 
-                        ticket_no = { ticketDetails?.ticket_no }
-                        handleclose = { handleClose } 
-                        getUpdatedTicket = { getUpdatedTicket }
-                    />
-                </FormContainer>
-            </MaterialModal>
+                <TicketEdit
+                    origTitle = { ticketDetails?.title } 
+                    origDescription = {ticketDetails?.description}
+                    origStatus = { ticketDetails?.status }
+                    origAssignee = { ticketDetails?.assignee?.username ? {label: ticketDetails?.assignee?.username, id: ticketDetails?.assignee?.id} : null }
+                    origResolution = { ticketDetails?.resolution }
+                    code = { code } 
+                    ticket_no = { ticketDetails?.ticket_no }
+                    handleclose = { handleClose } 
+                    getUpdatedTicket = { getUpdatedTicket }
+                />
+            </Dialog>
             <FloatingButton Icon = { MaterialMessageIcon } func = { handleOpenComment }/>
-            <MaterialModal
+            <Dialog
                 open={openComment}
-                onClose={handleCloseComment}
-                aria-labelledby="add-comment-modal"
-                aria-describedby="modal-for-creating-new-comments"
-                sx = {{overflow: 'scroll'}}
+                setOpen={setOpenComment}
+                maxWidth = 'md'
+                title='Add Comment'
             >
-                <CommentContainer maxWidth="md" sx={{borderRadius: 2}}>
                     <CommentCreate 
                         code = { code } 
                         ticket_no = { ticketDetails?.ticket_no }
                         handleclose = { handleCloseComment } 
                         getNewComments = { getUpdatedTicket }
                     />
-                </CommentContainer>
-            </MaterialModal>
+            </Dialog>
         </ColumnContainer>
     );
 };

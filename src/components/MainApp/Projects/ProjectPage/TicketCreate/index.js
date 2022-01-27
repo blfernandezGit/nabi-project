@@ -6,11 +6,12 @@ import { useQuery } from 'react-query'
 import { apiClient } from '../../../../Helpers/apiClient'
 import { AppContext } from '../../../../Context/AppContext'
 import { projectListUrl } from '../../../../Helpers/constants'
-import { Button } from '../../../Layout/Elements'
+import MainLoading from '../../../Layout/LoadingScreen/MainLoading'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
 import MaterialMenuItem from '@mui/material/MenuItem'
 import MaterialAutocomplete from '@mui/material/Autocomplete'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 
 const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
@@ -35,17 +36,11 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
             })
         )
     //eslint-disable-next-line
-    }, [isLoadingProject])
+    }, [projectData])
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Create New Ticket
-            </MaterialTypography>
+            <MainLoading isLoading = { isLoadingProject } />
             <Formik
                 initialValues={{ title: '', description: '', status: 'Open',
                 //  assignee: ''
@@ -66,7 +61,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                 isValid,
                 dirty
             }) => (
-                <form onSubmit = { handleSubmit } style= {{width: '80%'}}>
+                <form onSubmit = { handleSubmit } style={{paddingTop: '8px'}}>
                     <MaterialTextField
                         label = "Title"
                         type = "text"
@@ -78,7 +73,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                         error = {Boolean( touched.title && errors.title )}
                         helperText = { touched.title && errors.title }
                         fullWidth
-                        sx = {{ mt: 2 }}
+                        sx = {{ mb: 2 }}
                     />
                     <MaterialTextField
                         label = "Status"
@@ -91,7 +86,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                         error = {Boolean( touched.status && errors.status )}
                         helperText = { touched.status && errors.status }
                         fullWidth
-                        sx = {{ mt: 3 }}
+                        sx = {{ mb: 2 }}
                         select
                     >
                         <MaterialMenuItem value='Open'>Open</MaterialMenuItem>
@@ -100,7 +95,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                         <MaterialMenuItem value='Closed'>Closed</MaterialMenuItem>
                         <MaterialMenuItem value='Cancelled'>Cancelled</MaterialMenuItem>
                     </MaterialTextField>
-                    {projectUsers &&
+                    {projectData && projectUsers &&
                         <MaterialAutocomplete
                             value = { selectedAssignee }
                             name = 'assignee'
@@ -109,7 +104,7 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                                 setSelectedAssignee(value)
                             }}
                             isOptionEqualToValue={(option, value) => option?.id === value?.id}
-                            sx={{ width: 300, my: 3 }}
+                            sx={{ mb: 2 }}
                             renderInput={params => (
                                 <MaterialTextField
                                     {...params}
@@ -133,20 +128,25 @@ const Index = ({ code, handleclose, getUpdatedProjectTickets }) => {
                         fullWidth
                         multiline
                         rows = {4}
-                        sx = {{ mb: 3 }}
+                        sx = {{ mb: 2 }}
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
-                        onClick = {( e ) => handleCreateTicket( e, handleclose, getUpdatedProjectTickets, selectedAssignee )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Create Ticket
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            onClick={( e ) => handleCreateTicket( e, handleclose, getUpdatedProjectTickets, selectedAssignee )} 
+                            disabled = { isSubmitting ? isSubmitting : !(isValid && dirty) }
+                            autoFocus
+                        >
+                            Add Bug
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>
+            <MainLoading/>
         </>
     )
 }

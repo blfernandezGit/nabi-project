@@ -3,9 +3,9 @@ import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container, Link, Logo } from '../../../../Layout/Elements'
-import MaterialTypography from '@mui/material/Typography'
 import Select from 'react-select'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ projectUsers, projectData, usersData, handleclose, getNewUsers }) => {
     const { handleAddProjectUsers } = useHooks( projectData )
@@ -30,13 +30,6 @@ const Index = ({ projectUsers, projectData, usersData, handleclose, getNewUsers 
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Add users to project
-            </MaterialTypography>
             <Formik
                 initialValues={{ name: '' }}
             >
@@ -47,7 +40,7 @@ const Index = ({ projectUsers, projectData, usersData, handleclose, getNewUsers 
                 setFieldTouched,
                 dirty
             }) => (
-                <form onSubmit = { handleSubmit } style = {{ width: '80%' }}>
+                <form onSubmit = { handleSubmit } style = {{ minHeight: '300px' }}>
                     <Select
                         options = { usersList }
                         isMulti
@@ -55,16 +48,19 @@ const Index = ({ projectUsers, projectData, usersData, handleclose, getNewUsers 
                         onBlur = { setFieldTouched }
                         name = "name"
                     />
-                    <Button
-                        type = "submit"
-                        disabled = { isSubmitting ? isSubmitting : !dirty }
-                        onClick = {( e ) => handleAddProjectUsers( e, handleclose, getNewUsers, selectedUsers )}
-                        variant = "contained"
-                        size = "large"
-                        sx = {{ my: 3}}
-                    >
-                        Add Users
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled = { isSubmitting ? isSubmitting : !dirty }
+                            onClick = {( e ) => handleAddProjectUsers( e, handleclose, getNewUsers, selectedUsers )}
+                            autoFocus
+                        >
+                            Add Users
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

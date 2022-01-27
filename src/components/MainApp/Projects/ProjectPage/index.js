@@ -10,6 +10,7 @@ import MainLoading from '../../Layout/LoadingScreen/MainLoading'
 import Search from '../../Layout/Search'
 import Ticket from './Ticket'
 import TicketCreate from './TicketCreate'
+import Dialog from '../../Layout/Dialog'
 import FloatingButton from '../../Layout/FloatingButton'
 import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
 import MaterialTableContainer from '@mui/material/TableContainer'
@@ -118,16 +119,14 @@ const Index = () => {
                         </MaterialTable>
                     </MaterialTableContainer>
             </MaterialContainer>
-            <MaterialModal
+            <Dialog
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
+                setOpen={setOpen}
+                maxWidth = 'md'
+                title='Add New Bug'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <TicketCreate code = { code } handleclose = { handleClose } getUpdatedProjectTickets = { getUpdatedProjectTickets }/>
-                </FormContainer>
-            </MaterialModal>
+                <TicketCreate code = { code } handleclose = { handleClose } getUpdatedProjectTickets = { getUpdatedProjectTickets }/>
+            </Dialog>
             <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
         </ColumnContainer>
     )

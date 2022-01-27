@@ -8,6 +8,7 @@ import MaterialIconButton from '@mui/material/IconButton'
 import MaterialEditIcon from '@mui/icons-material/Edit'
 import CommentEdit from '../CommentEdit'
 import { CommentContainer } from '../customComponents'
+import Dialog from '../../../../Layout/Dialog'
 import MaterialModal from '@mui/material/Modal'
 import MaterialChip from '@mui/material/Chip'
 import MaterialAvatar from '@mui/material/Avatar'
@@ -51,15 +52,12 @@ const Comment = ({  code, ticket_no, getNewComments, comment, currentUser }) => 
                 sx = {{ m: 2 }}>
                 { comment?.comment_text }
             </MaterialTypography>
-        </Paper>
-        <MaterialModal
-            open={open}
-            onClose={handleClose}
-            aria-labelledby="edit-comment-modal"
-            aria-describedby="modal-for-editing-comments"
-            sx = {{overflow: 'scroll'}}
-        >
-            <CommentContainer maxWidth="md" sx={{borderRadius: 2}}>
+            <Dialog
+                open={open}
+                setOpen={setOpen}
+                maxWidth = 'md'
+                title='Add Comment'
+            >
                 <CommentEdit 
                     code = { code } 
                     ticket_no = { ticket_no }
@@ -69,8 +67,8 @@ const Comment = ({  code, ticket_no, getNewComments, comment, currentUser }) => 
                     commentId = { comment?.id }
                     origCommentText = { comment?.comment_text }
                 />
-            </CommentContainer>
-        </MaterialModal>
+            </Dialog>
+        </Paper>
         </>
     );
 };

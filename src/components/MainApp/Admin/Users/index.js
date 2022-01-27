@@ -9,6 +9,7 @@ import useDebounce from '../../../Helpers/useDebounce'
 import MainLoading from '../../Layout/LoadingScreen/MainLoading'
 import Search from '../../Layout/Search'
 import UserCreate from './UserCreate'
+import Dialog from '../../Layout/Dialog'
 import FloatingButton from '../../Layout/FloatingButton'
 import nabi_logo_img from '../../../../assets/nabi_logo_img.png'
 import MaterialTableContainer from '@mui/material/TableContainer'
@@ -121,16 +122,14 @@ const Index = () => {
                         </MaterialTable>
                     </MaterialTableContainer>
             </ColumnContainer>
-            <MaterialModal
+            <Dialog
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="add-user-modal"
-                aria-describedby="modal-for-creating-users-in-admin-screen"
+                setOpen={setOpen}
+                maxWidth = 'md'
+                title='Add User'
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <UserCreate handleclose = { handleClose } getNewUsers = { getNewUsers }/>
-                </FormContainer>
-            </MaterialModal>
+                <UserCreate handleclose = { handleClose } getNewUsers = { getNewUsers }/>
+            </Dialog>
             <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
         </ColumnContainer>
     )

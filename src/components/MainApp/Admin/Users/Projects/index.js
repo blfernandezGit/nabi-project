@@ -8,6 +8,7 @@ import { useQuery } from 'react-query'
 import { apiClient } from '../../../../Helpers/apiClient'
 import { ColumnContainer, TitleContainer, LogoImg, HideTableCell, FormContainer } from '../../../Layout/Elements'
 import useDebounce from '../../../../Helpers/useDebounce'
+import Dialog from '../../../Layout/Dialog'
 import MainLoading from '../../../Layout/LoadingScreen/MainLoading'
 import Search from '../../../Layout/Search'
 import FloatingButton from '../../../Layout/FloatingButton'
@@ -21,7 +22,6 @@ import MaterialTableCell from '@mui/material/TableCell'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialContainer from '@mui/material/Container'
 import MaterialAddIcon from '@mui/icons-material/Add'
-import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
 
 const Index = () => {
@@ -109,22 +109,20 @@ const Index = () => {
                         </MaterialTable>
                     </MaterialTableContainer>
             </MaterialContainer>
-            <MaterialModal
+            <Dialog
                 open={open}
-                onClose={handleClose}
-                aria-labelledby="create-project-modal"
-                aria-describedby="modal-for-creating-projects-in-admin-screen"
+                setOpen={setOpen}
+                maxWidth = 'md'
+                title={`Add Projects to ${user_username}`}
             >
-                <FormContainer maxWidth="md" sx={{borderRadius: 2}}>
-                    <AddUserProjects 
-                        handleclose = { handleClose }
-                        getNewProjects = { getNewProjects }
-                        projectsData = { projectsData }
-                        userProjects = { userProjects }
-                        userData = { userData }
-                    />
-                </FormContainer>
-            </MaterialModal>
+                <AddUserProjects 
+                    handleclose = { handleClose }
+                    getNewProjects = { getNewProjects }
+                    projectsData = { projectsData }
+                    userProjects = { userProjects }
+                    userData = { userData }
+                />
+            </Dialog>
             { projectsData && userProjects && (userProjects.length !== projectsData.length) &&
                 <FloatingButton Icon= { MaterialAddIcon } func = {handleOpen}/>
             }

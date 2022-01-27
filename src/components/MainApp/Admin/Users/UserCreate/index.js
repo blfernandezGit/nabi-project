@@ -2,24 +2,17 @@ import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container, Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
 import MaterialFormControlLabel from '@mui/material/FormControlLabel'
 import MaterialCheckbox from '@mui/material/Checkbox'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ handleclose, getNewUsers }) => {
     const { firstName, lastName, username, email, is_admin, password, passwordConfirmation, handleCreateUser} = useHooks()
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Create New User
-            </MaterialTypography>
             <Formik
                 initialValues={{ firstName: '', lastName: '', username: '', email: '', is_admin: false, password: '', passwordConfirmation: ''}}
                 validationSchema={Yup.object().shape({
@@ -55,7 +48,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                         error = {Boolean( touched.firstName && errors.firstName )}
                         helperText = { touched.firstName && errors.firstName }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mt: 3 }}
                     />
                     <MaterialTextField
                         label = "Last Name"
@@ -68,6 +61,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                         error = {Boolean( touched.lastName && errors.lastName )}
                         helperText = { touched.lastName && errors.lastName }
                         fullWidth
+                        sx = {{ mt: 2 }}
                     />
                     <MaterialTextField
                         label = "Username"
@@ -80,7 +74,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                         error = {Boolean( touched.username && errors.username )}
                         helperText = { touched.username && errors.username }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mt: 2 }}
                     />
                     <MaterialTextField
                         label = "Email Address"
@@ -93,6 +87,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                         error = {Boolean( touched.email && errors.email )}
                         helperText = { touched.email && errors.email }
                         fullWidth
+                        sx = {{ mt: 2 }}
                     />
                     <MaterialTextField
                         label = "Password"
@@ -105,7 +100,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                         error = {Boolean( touched.password && errors.password )}
                         helperText = { touched.password && errors.password }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mt: 2 }}
                     />
                     <MaterialTextField
                         label = "Password Confirmation"
@@ -118,7 +113,7 @@ const Index = ({ handleclose, getNewUsers }) => {
                         error = {Boolean( touched.passwordConfirmation && errors.passwordConfirmation )}
                         helperText = { touched.passwordConfirmation && errors.passwordConfirmation }
                         fullWidth
-                        sx = {{ mb: 3 }}
+                        sx = {{ mt: 2 }}
                     />
                     <MaterialFormControlLabel control={
                         <MaterialCheckbox 
@@ -128,16 +123,20 @@ const Index = ({ handleclose, getNewUsers }) => {
                             value = { values.is_admin }
                             inputRef = { is_admin }
                         />
-                    } label="Set User as Administrator" />
-                    <Button 
-                        type = "submit"
-                        disabled={ isSubmitting ? isSubmitting : !(isValid && dirty) }
+                    } label="Set User as Administrator" sx = {{ mt: 2 }} />
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled={ isSubmitting ? isSubmitting : !(isValid && dirty) }
                         onClick = {( e ) => handleCreateUser( e, handleclose, getNewUsers )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Create User
-                    </Button>
+                            autoFocus
+                        >
+                            Create User
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

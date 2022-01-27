@@ -2,23 +2,15 @@ import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
-import MaterialMenuItem from '@mui/material/MenuItem'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ code, origName, origDescription, handleclose, getNewProjects }) => {
     const { name, description, handleEditProject } = useHooks( code );
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Edit Project
-            </MaterialTypography>
             <Formik
                 initialValues={{ name: origName, description: origDescription }}
                 validationSchema={Yup.object().shape({
@@ -64,15 +56,19 @@ const Index = ({ code, origName, origDescription, handleclose, getNewProjects })
                         rows = { 5 }
                         sx = {{ my: 3 }}
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting ? isSubmitting : !isValid }
-                        onClick = {( e ) => handleEditProject( e, handleclose, getNewProjects )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Update Project
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled = { isSubmitting ? isSubmitting : !isValid }
+                            onClick = {( e ) => handleEditProject( e, handleclose, getNewProjects )}
+                            autoFocus
+                        >
+                            Update Project
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

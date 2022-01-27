@@ -2,30 +2,22 @@ import { Link as RouteLink } from 'react-router-dom'
 import { Formik } from 'formik'
 import * as Yup from 'yup'
 import useHooks from './hooks'
-import { Button, Container,  Link, Logo } from '../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
-import MaterialMenuItem from '@mui/material/MenuItem'
+import MaterialDialogContentText from '@mui/material/DialogContentText'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ code, projectName, handleclose, getNewProjects }) => {
     const { name, handleDeleteProject } = useHooks( code, projectName );
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Delete Project
-            </MaterialTypography>
-            <MaterialTypography
+            <MaterialDialogContentText
                 color="error"
                 variant="subtitle2"
-                sx = {{ my: 2 }}
             >
                 Warning: This action will delete the project permanently as well as all the tickets within the project. Please type Project Name to proceed.
-            </MaterialTypography>
+            </MaterialDialogContentText>
             <Formik
                 initialValues={{ name: '' }}
                 validationSchema={Yup.object().shape({
@@ -55,15 +47,19 @@ const Index = ({ code, projectName, handleclose, getNewProjects }) => {
                         fullWidth
                         sx = {{ my: 2 }}
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting }
-                        onClick = {( e ) => handleDeleteProject( e, handleclose, getNewProjects )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Delete Project
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled = { isSubmitting }
+                            onClick = {( e ) => handleDeleteProject( e, handleclose, getNewProjects )}
+                            autoFocus
+                        >
+                            Delete Project
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

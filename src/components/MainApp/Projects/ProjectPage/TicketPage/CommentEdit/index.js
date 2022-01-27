@@ -4,20 +4,14 @@ import * as Yup from 'yup'
 import useHooks from './hooks'
 import { Button, Container,  Link, Logo } from '../../../../Layout/Elements'
 import MaterialTextField from '@mui/material/TextField'
-import MaterialTypography from '@mui/material/Typography'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ commentId, origCommentText, code, ticket_no, handleclose, getNewComments }) => {
     const { handleEditComment, comment_text } = useHooks( code, ticket_no, commentId );
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Edit Comment
-            </MaterialTypography>
             <Formik
                 initialValues={{ comment_text: origCommentText }}
                 validationSchema={Yup.object().shape({
@@ -50,15 +44,19 @@ const Index = ({ commentId, origCommentText, code, ticket_no, handleclose, getNe
                         multiline
                         rows = { 8 }
                     />
-                    <Button 
-                        type = "submit"
-                        disabled = { isSubmitting ? isSubmitting : !isValid }
-                        onClick = {( e ) => handleEditComment( e, handleclose, getNewComments )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Edit Comment
-                    </Button>
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled = { isSubmitting ? isSubmitting : !isValid }
+                            onClick = {( e ) => handleEditComment( e, handleclose, getNewComments )}
+                            autoFocus
+                        >
+                            Update Comment
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>

@@ -6,7 +6,7 @@ const Index = ({ isLoading }) => {
         <>
             { isLoading &&
                 <LoadingContainer maxWidth = 'md'>
-                <CircularProgress color = 'secondary'/>
+                    <CircularProgress color = 'secondary'/>
                 </LoadingContainer>
             }
         </>

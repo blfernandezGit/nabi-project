@@ -7,6 +7,8 @@ import MaterialTextField from '@mui/material/TextField'
 import MaterialTypography from '@mui/material/Typography'
 import MaterialFormControlLabel from '@mui/material/FormControlLabel'
 import MaterialCheckbox from '@mui/material/Checkbox'
+import MaterialButton from '@mui/material/Button'
+import MaterialDialogActions from '@mui/material/DialogActions'
 
 const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose, getNewUsers }) => {
     const { first_name, last_name, is_admin, handleEditUser } = useHooks( username )
@@ -15,13 +17,6 @@ const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose
 
     return (
         <>
-            <MaterialTypography
-                color="textSecondary"
-                variant="body2"
-                sx = {{ my: 2 }}
-            >
-                Edit User
-            </MaterialTypography>
             <Formik
                 initialValues={{ first_name: origFirstName, last_name: origLastName, is_admin: origIsAdmin  }}
                 validationSchema={Yup.object().shape({
@@ -51,7 +46,7 @@ const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose
                         error = {Boolean( touched.first_name && errors.first_name )}
                         helperText = { touched.first_name && errors.first_name }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mt: 3 }}
                     />
                     <MaterialTextField
                         label = "Last Name"
@@ -64,7 +59,7 @@ const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose
                         error = {Boolean( touched.last_name && errors.last_name )}
                         helperText = { touched.last_name && errors.last_name }
                         fullWidth
-                        sx = {{ my: 3 }}
+                        sx = {{ mt: 2 }}
                     />
                     <MaterialFormControlLabel control={
                         <MaterialCheckbox 
@@ -75,16 +70,22 @@ const Index = ({ username, origFirstName, origLastName, origIsAdmin, handleclose
                             inputRef = { is_admin }
                             checked = { checked }
                         />
-                    } label="Set User as Administrator" />
-                    <Button 
-                        type = "submit"
-                        disabled={ isSubmitting ? isSubmitting : !isValid }
-                        onClick = {( e ) => handleEditUser( e, handleclose, getNewUsers )}
-                        variant = "contained"
-                        size = "large"
-                    >
-                        Update User
-                    </Button>
+                    } label="Set User as Administrator"
+                    sx = {{ mt: 2 }}
+                    />
+                    <MaterialDialogActions>
+                        <MaterialButton autoFocus onClick={handleclose}>
+                            Cancel
+                        </MaterialButton>
+                        <MaterialButton 
+                            type = "submit"
+                            disabled={ isSubmitting ? isSubmitting : !isValid }
+                            onClick = {( e ) => handleEditUser( e, handleclose, getNewUsers )}
+                            autoFocus
+                        >
+                            Update User
+                        </MaterialButton>
+                    </MaterialDialogActions>
                 </form>
             )}
             </Formik>
