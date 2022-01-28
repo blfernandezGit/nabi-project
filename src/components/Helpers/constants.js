@@ -1,4 +1,5 @@
 export const baseUrl = 'https://nabi-project-api.herokuapp.com/api/v1/'
+// export const baseUrl = 'http://localhost:3000/api/v1/'
 
 export const loginUrl = 'login'
 export const registerUrl = ''
@@ -11,6 +12,7 @@ export const updateProjectUsersUrl = 'update_project_users'
 export const currentUserProjectsUrl = 'current_user_projects'
 export const addRelatedTicketUrl = 'add_related_ticket'
 export const deleteRelatedTicketUrl = 'delete_related_ticket'
+export const photosUrl = 'photos'
 
 // Audit Trail
 export const loginAuditText = 'Create User Session'

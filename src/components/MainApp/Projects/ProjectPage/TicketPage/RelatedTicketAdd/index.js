@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react'
 import { Formik } from 'formik'
-import * as Yup from 'yup'
 import useHooks from './hooks'
 import { useQuery } from 'react-query'
 import { apiClient } from '../../../../../Helpers/apiClient'

@@ -9,6 +9,7 @@ import { ColumnContainer, TitleContainer } from '../../../Layout/Elements'
 import FloatingButton from '../../../Layout/FloatingButton'
 import TicketEdit from '../TicketEdit'
 import Comments from './Comments'
+import Photos from './Photos'
 import RelatedTickets from './RelatedTickets'
 import CommentCreate from './CommentCreate'
 import Dialog from '../../../Layout/Dialog'
@@ -135,6 +136,7 @@ const Index = () => {
                     </MaterialTypography>
                 </MaterialContainer>
             }
+            {ticketDetails && <Photos image = { ticketDetails?.image }/>}
             <RelatedTickets 
                 related_tickets = { ticketDetails?.related_tickets || [] } 
                 inverse_related_tickets = { ticketDetails?.inverse_related_tickets || [] } 
