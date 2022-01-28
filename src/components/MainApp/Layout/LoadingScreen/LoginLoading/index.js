@@ -1,9 +1,14 @@
+import { LoadingContainer } from '../../Elements'
+import CircularProgress from '@mui/material/CircularProgress'
+
 const Index = () => {
     return (
-        <div>
-            Loading
-        </div>
-    )
-}
+        <>
+            <LoadingContainer maxWidth = 'xl' style={{position:'fixed'}}>
+                <CircularProgress color = 'secondary'/>
+            </LoadingContainer>
+        </>
+    );
+};
 
-export default Index
+export default Index;

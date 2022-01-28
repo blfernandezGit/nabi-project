@@ -5,6 +5,7 @@ import MaterialLink from '@mui/material/Link'
 import styled, { keyframes } from 'styled-components'
 import { fadeIn } from 'react-animations'
 import MaterialTableCell from '@mui/material/TableCell'
+import bg from '../../../../assets/bg.jpg'
 
 const fadeInAnimation = keyframes`${ fadeIn }`
 
@@ -20,7 +21,13 @@ export const Container = styled( MaterialContainer ) `
     height: 100vh !important;
     text-align: center;
     justify-content: center;
-    background: #6667ab !important;
+    background-image: url(${bg}) !important;
+    background-repeat: no-repeat !important;
+    background-position: center center !important;
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    -o-background-size: cover !important;
+    background-size: cover !important;
     animation: 1s ${ fadeInAnimation };
 `
 
