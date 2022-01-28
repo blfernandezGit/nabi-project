@@ -25,7 +25,6 @@ import MaterialAddIcon from '@mui/icons-material/Add'
 import MaterialModal from '@mui/material/Modal'
 import MaterialGrid from '@mui/material/Grid'
 
-// TODO: how to search like google - not exact
 const Index = () => {
     const { code } = useParams()
     const { currentUser, title, setTitle } = useContext( AppContext )
