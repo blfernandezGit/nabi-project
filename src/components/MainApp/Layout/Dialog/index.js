@@ -14,13 +14,14 @@ const Index = ( props ) => {
     return (
         <>
             <MaterialDialog
-                fullScreen={fullScreen}
+                fullScreen={props.fullScreen ? props.fullScreen : fullScreen}
                 open={props.open}
                 maxWidth={props.maxWidth}
-                scrol='paper'
+                scroll='paper'
                 onClose={handleClose}
                 fullWidth
                 aria-labelledby="dialog"
+                style={props.style}
             >
                 <MaterialDialogTitle>
                     { props.title }

@@ -14,10 +14,12 @@ import MaterialMenuItem from '@mui/material/MenuItem'
 import MaterialAutocomplete from '@mui/material/Autocomplete'
 import MaterialButton from '@mui/material/Button'
 import MaterialDialogActions from '@mui/material/DialogActions'
+import MaterialCheckbox from '@mui/material/Checkbox'
+import MaterialFormControlLabel from '@mui/material/FormControlLabel'
 
-const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResolution, code, ticket_no, handleclose, getUpdatedTicket }) => {
+const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResolution, origImage, code, ticket_no, handleclose, getUpdatedTicket }) => {
     const { title, description, status, resolution, handleEditTicket,
-        assignee
+        uploadedImage, deleteImage
     } = useHooks( code, ticket_no )
 
     const { currentUser } = useContext ( AppContext )
@@ -146,6 +148,28 @@ const Index = ({ origTitle, origDescription, origStatus, origAssignee, origResol
                         rows = {4}
                         sx = {{ my: 2 }}
                     />
+                    <MaterialTypography component="span">
+                    {
+                        origImage ?
+                        "Replace Image: "
+                        :
+                        "Add Image: "
+                    }
+                    </MaterialTypography>
+                    <label htmlFor="icon-button-file">
+                        <input accept="image/*" id="icon-button-file" type="file" ref={uploadedImage} />
+                    </label>
+                    { origImage &&
+                        <MaterialFormControlLabel control={
+                            <MaterialCheckbox 
+                                name="delete_image"
+                                onChange = { handleChange }
+                                onBlur = { handleBlur }
+                                value = { values.delete_image }
+                                inputRef = { deleteImage }
+                            />
+                        } label="Delete Image"/>
+                    }
                     <MaterialDialogActions>
                         <MaterialButton autoFocus onClick={handleclose}>
                             Cancel

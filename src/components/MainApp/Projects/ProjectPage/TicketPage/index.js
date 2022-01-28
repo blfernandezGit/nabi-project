@@ -136,7 +136,7 @@ const Index = () => {
                     </MaterialTypography>
                 </MaterialContainer>
             }
-            {ticketDetails && <Photos image = { ticketDetails?.image }/>}
+            {ticketDetails?.image?.url && <Photos image = { ticketDetails?.image }/>}
             <RelatedTickets 
                 related_tickets = { ticketDetails?.related_tickets || [] } 
                 inverse_related_tickets = { ticketDetails?.inverse_related_tickets || [] } 
@@ -160,6 +160,7 @@ const Index = () => {
                     origStatus = { ticketDetails?.status }
                     origAssignee = { ticketDetails?.assignee?.username ? {label: ticketDetails?.assignee?.username, id: ticketDetails?.assignee?.id} : null }
                     origResolution = { ticketDetails?.resolution }
+                    origImage = { ticketDetails?.image?.url }
                     code = { code } 
                     ticket_no = { ticketDetails?.ticket_no }
                     handleclose = { handleClose } 
