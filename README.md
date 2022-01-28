@@ -1,6 +1,6 @@
 # Nabi Project
 
-Nabi Project is a simple bug tracking app that allows user to add bugs in a project. This is the github repository for the application's Frontend (React.js)
+Nabi Project is a simple bug tracking app that allows user to track bugs in a project. This is the github repository for the application's Frontend (React.js)
 
 ## Getting Started
 
