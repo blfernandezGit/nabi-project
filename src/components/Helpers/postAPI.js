@@ -8,7 +8,7 @@ export const postAPI = (url, requestData, headers, auditTrail, method) => {
         // Axios needed parameters to fetch API
         url: url,
         data: requestData || {},
-        headers: headers || {},
+        headers: {...headers, 'Access-Control-Allow-Origin': '*'} || {'Access-Control-Allow-Origin': '*'},
         method: method
     })
     .then(response => {
