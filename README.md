@@ -1,70 +1,75 @@
-# Getting Started with Create React App
+# Nabi Project
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Nabi Project is a simple bug tracking app that allows user to add bugs in a project. This is the github repository for the application's Frontend (React.js)
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
-### `npm start`
+Clone the repo and navigate to main app directory
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+```
+git clone https://github.com/blfernandezGit/nabi-project.git
+cd nabi-project
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Prerequisites
 
-### `npm test`
+Make sure you have node and npm installed. The versions I used for this project are:
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+```
+$ node -v ; npm -v
+v16.8.0
+7.21.0
+```
 
-### `npm run build`
+### Installing
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+A step by step series of examples that tell you how to get a development env running
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Install dependencies
+```
+npm install
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Deployment
 
-### `npm run eject`
+Start the packager
+```
+npm start
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+App will be running in http://localhost:3000/ if port is available
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Built With
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+* [ReactJS](https://reactjs.org)
+* [Ruby on Rails](https://rubyonrails.org)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Environments
 
-## Learn More
+Nabi Project is already deployed in https://blfernandezgit.github.io/nabi-project
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+API repo can be found in https://github.com/blfernandezGit/nabi-project-api
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Can use the following credentials
+```
+email: suppadmin@sharklasers.com
+password: n@b!dEMo818#)
+```
 
-### Code Splitting
+## Screenshots
+![Screen Shot 2022-01-29 at 01 36 12](https://user-images.githubusercontent.com/40425254/151595562-c760f730-a8d0-4403-99fb-c597e0d8ecb8.jpg)
+![Screen Shot 2022-01-29 at 01 37 10](https://user-images.githubusercontent.com/40425254/151595577-4eedaabc-f883-437d-91db-4a690b5f46d6.jpg)
+![Screen Shot 2022-01-29 at 01 37 17](https://user-images.githubusercontent.com/40425254/151595589-5026c397-0eda-4526-8fac-be5ad073625f.jpg)
+![Screen Shot 2022-01-29 at 01 37 31](https://user-images.githubusercontent.com/40425254/151595592-64f87801-25ab-4107-bce8-f99c7da7d536.jpg)
+![Screen Shot 2022-01-29 at 01 37 43](https://user-images.githubusercontent.com/40425254/151595604-1be1e864-6d36-4af7-824a-f8b5ddd35d0e.jpg)
+![Screen Shot 2022-01-29 at 01 37 50](https://user-images.githubusercontent.com/40425254/151595615-5c6a9ee9-20b2-4977-884b-01216660fa7
+![Screen Shot 2022-01-29 at 01 38 03](https://user-images.githubusercontent.com/40425254/151595622-138d7a87-e348-4a4e-bd5f-b7cbff929ad8.jpg)
+5.jpg)
+![Screen Shot 2022-01-29 at 01 38 22](https://user-images.githubusercontent.com/40425254/151595634-d61ca833-9fb6-4464-8594-4b5588f83090.jpg)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+## Authors
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+* **Brigette Elizabeth Fernandez** - *Frontend + Backend* - [Nabi Project](https://github.com/blfernandezGit/nabi-project)
