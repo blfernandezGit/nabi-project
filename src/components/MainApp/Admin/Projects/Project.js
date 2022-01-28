@@ -59,14 +59,18 @@ const Project = ({ project, getNewProjects, HideTableCell, MaterialTableCell, Ma
                     </MaterialTypography>
                 </HideTableCell>
                 <MaterialTableCell>
+                { projectDetails?.code !== 'nabi-project' &&
                     <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpenEdit}>
                         <MaterialEditIcon />
                     </MaterialIconButton>
+                }
                 </MaterialTableCell>
                 <MaterialTableCell>
+                { projectDetails?.code !== 'nabi-project' &&
                     <MaterialIconButton size = 'small' color = 'error' component = 'span' onClick = {handleOpenDelete}>
                         <MaterialDeleteForeverIcon />
                     </MaterialIconButton>
+                }
                 </MaterialTableCell>
             </MaterialTableRow>
             <Dialog

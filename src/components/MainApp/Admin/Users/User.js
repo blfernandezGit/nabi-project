@@ -77,14 +77,18 @@ const User = ({ user, getNewUsers, HideTableCell, MaterialTableCell, MaterialTab
                     </MaterialTypography>
                 </HideTableCell>
                 <MaterialTableCell>
+                { userDetails?.username !== 'suppadmin' && userDetails?.username !== 'blfernandez' &&
                     <MaterialIconButton size = 'small' color = 'secondary' component = 'span' onClick = {handleOpenEdit}>
                         <MaterialEditIcon />
                     </MaterialIconButton>
+                }
                 </MaterialTableCell>
                 <MaterialTableCell>
+                { userDetails?.username !== 'suppadmin' && userDetails?.username !== 'blfernandez' &&
                     <MaterialIconButton size = 'small' color = 'error' component = 'span' onClick = {handleOpenDelete}>
                         <MaterialDeleteForeverIcon />
                     </MaterialIconButton>
+                }
                 </MaterialTableCell>
             </MaterialTableRow>
             <Dialog
