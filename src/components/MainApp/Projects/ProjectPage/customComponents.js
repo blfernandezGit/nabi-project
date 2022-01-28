@@ -1,12 +1,12 @@
-import styled from 'styled-components';
-import MaterialTableCell from '@mui/material/TableCell';
-import MaterialContainer from '@mui/material/Container';
+import styled from 'styled-components'
+import MaterialTableCell from '@mui/material/TableCell'
+import MaterialContainer from '@mui/material/Container'
 
 export const HideTableCell = styled(MaterialTableCell) `
     @media (max-width: 900px) {
         display: none !important;
     }
-`;
+`
 
 export const FormContainer = styled( MaterialContainer ) `
     position: absolute;
@@ -23,4 +23,4 @@ export const FormContainer = styled( MaterialContainer ) `
     @media (min-width: 600px) {
         height: 80% !important;
     }
-`;
+`

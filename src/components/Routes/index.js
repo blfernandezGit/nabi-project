@@ -1,18 +1,18 @@
-import Login from '../MainApp/Login';
-import Register from '../MainApp/Register';
+import Login from '../MainApp/Login'
+import Register from "../MainApp/Register"
 import AuthRoute from './AuthRoute';
-import ReverseAuthRoute from './ReverseAuthRoute';
-import AdminAuthRoute from './AdminAuthRoute';
-import AdminProjects from '../MainApp/Admin/Projects';
-import AdminUsers from '../MainApp/Admin/Users';
-import AdminProjectUsers from '../MainApp/Admin/Projects/Users';
-import AdminUserProjects from '../MainApp/Admin/Users/Projects';
-import Projects from '../MainApp/Projects';
-import Project from '../MainApp/Projects/ProjectPage';
-import Ticket from '../MainApp/Projects/ProjectPage/TicketPage';
-import Sidebar from '../MainApp/Layout/Sidebar';
+import ReverseAuthRoute from './ReverseAuthRoute'
+import AdminAuthRoute from './AdminAuthRoute'
+import AdminProjects from '../MainApp/Admin/Projects'
+import AdminUsers from '../MainApp/Admin/Users'
+import AdminProjectUsers from '../MainApp/Admin/Projects/Users'
+import AdminUserProjects from '../MainApp/Admin/Users/Projects'
+import Projects from '../MainApp/Projects'
+import Project from '../MainApp/Projects/ProjectPage'
+import Ticket from '../MainApp/Projects/ProjectPage/TicketPage'
+import Sidebar from '../MainApp/Layout/Sidebar'
 
-const Index = ({Routes, Route, isSignedIn, currentUser}) => {
+const Index = ({ Routes, Route, isSignedIn, currentUser }) => {
   return (
     <>
       <Routes>
@@ -39,7 +39,7 @@ const Index = ({Routes, Route, isSignedIn, currentUser}) => {
         </Route>
       </Routes>
     </>
-  );
-};
+  )
+}
 
-export default Index;
+export default Index

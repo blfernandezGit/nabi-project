@@ -1,19 +1,19 @@
-import MaterialBox from '@mui/material/Box';
-import MaterialContainer from '@mui/material/Container';
-import MaterialButton from '@mui/material/Button';
-import MaterialLink from '@mui/material/Link';
-import styled, {keyframes} from 'styled-components';
-import {fadeIn} from 'react-animations';
-import MaterialTableCell from '@mui/material/TableCell';
-import bg from '../../../../assets/bg.jpg';
+import MaterialBox from '@mui/material/Box'
+import MaterialContainer from '@mui/material/Container'
+import MaterialButton from '@mui/material/Button'
+import MaterialLink from '@mui/material/Link'
+import styled, { keyframes } from 'styled-components'
+import { fadeIn } from 'react-animations'
+import MaterialTableCell from '@mui/material/TableCell'
+import bg from '../../../../assets/bg.jpg'
 
-const fadeInAnimation = keyframes`${ fadeIn }`;
+const fadeInAnimation = keyframes`${ fadeIn }`
 
 export const Box = styled(MaterialBox) `
     display: flex !important;
     flex-direction: column !important;
     
-`;
+`
 
 export const Container = styled( MaterialContainer ) `
     display: flex !important;
@@ -29,7 +29,7 @@ export const Container = styled( MaterialContainer ) `
     -o-background-size: cover !important;
     background-size: cover !important;
     animation: 1s ${ fadeInAnimation };
-`;
+`
 
 export const ColumnContainer = styled( MaterialContainer ) `
     display: flex !important;
@@ -45,30 +45,30 @@ export const ColumnContainer = styled( MaterialContainer ) `
         padding: 16px !important;
         padding-bottom: 50px !important;
     }
-`;
+`
 
 export const TitleContainer = styled( MaterialContainer ) `
     display: flex !important;
     align-items: center !important;
-`;
+`
 
 export const Button = styled( MaterialButton ) `
     background: #6667ab !important;
     &:hover {
         background: #000000 !important;
     }
-`;
+`
 export const Link = styled( MaterialLink ) `
     color: #6667ab !important;
-`;
+`
 
-export const Logo = styled.img ``;
+export const Logo = styled.img ``
 
 export const LogoImg = styled.img `
     width: 29 px;
     height: 40px;
     padding-right: 11px;
-`;
+`
 
 export const LoadingContainer = styled( MaterialContainer ) `
   position: absolute !important;
@@ -77,13 +77,13 @@ export const LoadingContainer = styled( MaterialContainer ) `
   height: 100% !important;
   text-align: center;
   justify-content: center;
-`;
+`
 
 export const HideTableCell = styled(MaterialTableCell) `
     @media (max-width: 900px) {
         display: none !important;
     }
-`;
+`
 
 export const FormContainer = styled( MaterialContainer ) `
     position: absolute;
@@ -101,4 +101,4 @@ export const FormContainer = styled( MaterialContainer ) `
     @media (min-width: 600px) {
         height: 80% !important;
     }
-`;
+`

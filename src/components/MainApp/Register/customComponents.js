@@ -1,5 +1,5 @@
-import MaterialContainer from '@mui/material/Container';
-import styled from 'styled-components';
+import MaterialContainer from '@mui/material/Container'
+import styled from 'styled-components'
 
 export const RegisterContainer = styled( MaterialContainer ) `
     display: flex !important;
@@ -13,7 +13,7 @@ export const RegisterContainer = styled( MaterialContainer ) `
     @media (max-width: 900px) {
         width: 100% !important;
     }
-`;
+`
 
 export const LogoContainer = styled( MaterialContainer ) `
     display: flex !important;
@@ -26,10 +26,10 @@ export const LogoContainer = styled( MaterialContainer ) `
     @media (max-width: 900px) {
         display: none !important;
     }
-`;
+`
 
 export const LogoFormContainer = styled( MaterialContainer ) `
     @media (min-width: 900px) {
         display: none !important;
     }
-`;
+`
