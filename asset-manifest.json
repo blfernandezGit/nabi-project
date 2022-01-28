@@ -1,15 +1,16 @@
 {
   "files": {
     "main.css": "/nabi-project/static/css/main.e6c13ad2.css",
-    "main.js": "/nabi-project/static/js/main.99ef1bbd.js",
+    "main.js": "/nabi-project/static/js/main.c5c28643.js",
     "static/js/787.e6693230.chunk.js": "/nabi-project/static/js/787.e6693230.chunk.js",
+    "static/media/bg.jpg": "/nabi-project/static/media/bg.65062872d5349f002423.jpg",
     "index.html": "/nabi-project/index.html",
     "main.e6c13ad2.css.map": "/nabi-project/static/css/main.e6c13ad2.css.map",
-    "main.99ef1bbd.js.map": "/nabi-project/static/js/main.99ef1bbd.js.map",
+    "main.c5c28643.js.map": "/nabi-project/static/js/main.c5c28643.js.map",
     "787.e6693230.chunk.js.map": "/nabi-project/static/js/787.e6693230.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e6c13ad2.css",
-    "static/js/main.99ef1bbd.js"
+    "static/js/main.c5c28643.js"
   ]
 }
