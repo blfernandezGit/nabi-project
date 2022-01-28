@@ -1,5 +1,5 @@
-import styled from 'styled-components'
-import MaterialContainer from '@mui/material/Container'
+import styled from 'styled-components';
+import MaterialContainer from '@mui/material/Container';
 
 export const CommentContainer = styled( MaterialContainer ) `
     position: absolute;
@@ -16,4 +16,4 @@ export const CommentContainer = styled( MaterialContainer ) `
     @media (min-width: 600px) {
         height: 60% !important;
     }
-`
+`;

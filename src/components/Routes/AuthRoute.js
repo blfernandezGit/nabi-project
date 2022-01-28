@@ -1,8 +1,8 @@
-import { Navigate, Outlet } from 'react-router-dom'
+import {Navigate, Outlet} from 'react-router-dom';
 
 
-const AuthRoute = ({ isSignedIn }) => {
-    return isSignedIn ? <Outlet/> : <Navigate replace to="/login" />
-}
+const AuthRoute = ({isSignedIn}) => {
+  return isSignedIn ? <Outlet/> : <Navigate replace to="/login" />;
+};
 
 export default AuthRoute;

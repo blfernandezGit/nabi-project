@@ -1,5 +1,5 @@
-import MaterialContainer from '@mui/material/Container'
-import styled from 'styled-components'
+import MaterialContainer from '@mui/material/Container';
+import styled from 'styled-components';
 
 export const LoginContainer = styled( MaterialContainer ) `
     display: flex !important;
@@ -12,4 +12,4 @@ export const LoginContainer = styled( MaterialContainer ) `
     @media (min-width: 600px) {
         height: 80% !important;
     }
-`
+`;
