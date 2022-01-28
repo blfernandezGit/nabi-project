@@ -8,18 +8,18 @@ import MaterialTableRow from '@mui/material/TableRow'
 import MaterialIconButton from '@mui/material/IconButton'
 
 
-const RelatedTicket = ({ code, ticket_no, getNewRelatedTickets, relatedTicket }) => {
+const RelatedTicket = ({ code, ticket_no, getNewRelatedTickets, relatedTicket, currentUser }) => {
   const { handleRemoveRelatedTicket } = useHooks( code, ticket_no )
 
     return (
         <MaterialTableRow>
           <MaterialTableCell scope='row'>
-            <Link replace to={`${projectListUrl}/${code}/${ticketListUrl}/${relatedTicket?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
+            <Link replace to={`/app/${currentUser?.details?.username}/${projectListUrl}/${code}/${relatedTicket?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
               #{relatedTicket?.ticket_no}
             </Link>
           </MaterialTableCell>
           <MaterialTableCell>
-            <Link replace to={`${projectListUrl}/${code}/${ticketListUrl}/${relatedTicket?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
+            <Link replace to={`/app/${currentUser?.details?.username}/${projectListUrl}/${code}/${relatedTicket?.ticket_no}`} style = {{textDecoration: 'none', color: 'black'}}>
               {relatedTicket?.title}
             </Link>
           </MaterialTableCell>
